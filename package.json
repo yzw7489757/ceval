@@ -1,0 +1,77 @@
+{
+  "name": "ceval",
+  "version": "0.1.0",
+  "description": "js parser",
+  "main": "lib/index.js",
+  "files": [
+    "build",
+    "lib"
+  ],
+  "precommit.silent": true,
+  "pre-commit": [
+    "lint",
+    "build:typings",
+    "test"
+  ],
+  "scripts": {
+    "start": "webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?mock=true'",
+    "https": "HTTPS=true npm start",
+    "build:umd": "webpack --config script/webpack.umd.js --hide-modules --progress --colors",
+    "build:typings": "tsc -p tsconfig.d.json",
+    "build": "rm -rf lib/ && tnpm i && npm run test && npm run build:umd && cp lib/*.js ./",
+    "tpublish": "rm -rf node_modules && npm run build && npm run build:typings && tnpm publish",
+    "lint": "eslint --quiet ./src",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "lodash": "^4.17.5"
+  },
+  "devDependencies": {
+    "@ali/mid-local-demo": "^0.2.1",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-async-generator-functions": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.7.0",
+    "@babel/plugin-transform-runtime": "^7.5.5",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.0.0",
+    "@babel/runtime": "^7.5.5",
+    "@types/react": "^16.9.2",
+    "@types/react-dom": "^16.9.5",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "babel-loader": "^8.0.0",
+    "css-loader": "^1.0.0",
+    "eslint": "^6.0.0",
+    "eslint-config-airbnb": "^18.0.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-loader": "^3.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "jest": "^25.0.0",
+    "less": "^3.0.0",
+    "less-loader": "^5.0.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "~1.17.0",
+    "react": "^16.13.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
+    "style-loader": "^1.0.0",
+    "typescript": "3.7.3",
+    "webpack": "^4.16.3",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npm.alibaba-inc.com"
+  },
+  "author": "",
+  "license": "ISC"
+}

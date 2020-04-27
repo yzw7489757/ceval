@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "noEmit": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "target": "esnext",
+    "jsx": "react"
+  },
+  "include": [
+    "src",
+    "entry",
+    "script",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
