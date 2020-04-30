@@ -1,38 +1,47 @@
-import * as funcs from './functions';
+import { 
+  // 功能性
+  random, min, max, arrayMap as map, 
+  // 二元
+  add, sub, mul, divide, mod, concat, equal, notEqual, greaterThan, lessThan, greaterThanEqual, lessThanEqual, inOperator, setVar, arrayIndex,
+  // 三元
+  condition
+ } from './functions';
 
 const system = {
   functions: {
-    random: funcs.random,
-    min: funcs.min,
-    max: funcs.max,
-    map: funcs.arrayMap
+    random,
+    min,
+    max,
+    map
   },
   consts: {
     E: Math.E,
     PI: Math.PI,
     'true': true,
-    'false': false
+    'false': false,
+    "undefined": false,
+    "null": false
   },
   binaryOps :{
-    '+':funcs.add,
-    '-':funcs.sub,
-    '*':funcs.mul,
-    '/':funcs.divide,
-    '%':funcs.mod,
-    '^':Math.pow,
-    '||':funcs.concat,
-    '==':funcs.equal,
-    '!=':funcs.notEqual,
-    '>':funcs.greaterThan,
-    '<':funcs.lessThan,
-    '>=':funcs.greaterThanEqual,
-    '<=':funcs.lessThanEqual,
-    'in':funcs.inOperator,
-    '=':funcs.setVar,
-    '[':funcs.arrayIndex
+    '+': add,
+    '-': sub,
+    '*': mul,
+    '/': divide,
+    '%': mod,
+    '^': Math.pow,
+    '||': concat,
+    '==': equal,
+    '!=': notEqual,
+    '>': greaterThan,
+    '<': lessThan,
+    '>=': greaterThanEqual,
+    '<=': lessThanEqual,
+    'in': inOperator,
+    '=': setVar,
+    '[': arrayIndex
   },
   ternaryOps :{
-    '?': funcs.condition
+    '?': condition
   },
   unaryOps: {
     sin: Math.sin,
@@ -55,27 +64,17 @@ export type TypeBinary = typeof system.binaryOps;
 export type TypeTernary = typeof system.ternaryOps;
 
 /** @desc 运算符映射表 */ 
-export const optionNameMap = {
-  '+': 'add',
-  '-': 'subtract',
-  '*': 'multiply',
-  '/': 'divide',
-  '%': 'remainder',
-  '^': 'power',
-  '!': 'factorial',
-  '<': 'comparison',
-  '>': 'comparison',
-  '<=': 'comparison',
-  '>=': 'comparison',
-  '==': 'comparison',
-  '!=': 'comparison',
-  '||': 'concatenate',
-  'and': 'logical',
-  'or': 'logical',
-  'not': 'logical',
-  '?': 'conditional',
-  ':': 'conditional',
-  '=': 'assignment',
-  '[': 'array',
-  '()=': 'fndef'
-};
+const opsMap = {};
+
+(function(optionsMap){
+  Object.keys(system).forEach(opsKey => {
+    if(opsKey === 'consts') return
+    const funcs = system[opsKey]
+    Object.keys(funcs).forEach(key => {
+      const k = "name" in funcs[key] ? funcs[key].name : key;
+      optionsMap[optionsMap[key] = k] = key
+    })
+  })
+})(opsMap)
+
+export const optionNameMap = opsMap

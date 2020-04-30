@@ -1,7 +1,13 @@
-import Token, { END, TSTRING, TNUMBER } from './token';
+import Token, { END, TSTRING, TNUMBER, TNAME, TOP } from './token';
 import { TypeToken, TypeCeval } from './interface';
-import { whitespace, comment, string, number2bit, number8bit, number10bit, number16bit } from './regExp'
+import { whitespace, comment, string, number2bit, number8bit, number10bit, number16bit, variable, operator } from './regExp';
+import { jsWord, jsAttr } from './utils/reservedWord';
+import { lowerCaseLetters, uppperCaseLetters } from './utils/letter';
 
+/**
+ * 语法解析
+ * @class TokenStream
+ */
 export default class TokenStream {
   // 当前指针
   pos = 0; 
@@ -12,21 +18,43 @@ export default class TokenStream {
   // 暂存指针
   savedPosition = 0;
   
-  // 暂存解析character，在某些情况下做预判比如, cos是函数，cos() || map(cos) “cos)”可能被函数parser判定为语法错误
-  savedCurrent: TypeToken = null; 
+  // 暂存解析character，在某些情况下做预判比如, cos是函数，cos() || map(cos) “cos)” 可能被函数parser判定为语法错误
+  savedCurrent: null | TypeToken = null; 
 
   constructor(public parser: TypeCeval, public expression: string) {
     console.log(this.parser)
   }
   
-  getFirstCode = (offset?: number) => {
+  /**
+   * @desc 获取单个code
+   * @memberof TokenStream
+   */
+  getFirstCode = (offset?: number): string => {
     return this.expression.charAt(this.pos + offset === undefined ? 0 : offset)
   }
 
+  /**
+   * @desc 某些情况下做正则优化，比如operator至多3位，所以截取3位再匹配
+   * @see charAt与substr性能对比 https://jsperf.com/substr-or-charat
+   * @memberof TokenStream
+   */
+  getSomeCode = (len = 1): string => {
+    const { length } = this.expression;
+    return this.expression.substr(this.pos, (this.pos + len) > length ? length - this.pos : len )
+  }
+
+  /**
+   * 创建新的fieldType实例
+   * @memberof TokenStream
+   */
   newToken = (type: string, value: any, pos?: number): TypeToken => {
     return new Token(type, value, pos != null ? pos : this.pos);
   }
 
+  /**
+   * 解析下一个 field
+   * @memberof TokenStream
+   */
   next = (): TypeToken => {
     if (this.pos >= this.expression.length) {
       return this.newToken(END, 'END');
@@ -36,7 +64,8 @@ export default class TokenStream {
       return this.next()
     }else if(
       this.isNumber() || 
-      this.isString()
+      this.isString() || 
+      this.isName()
       ){
       return this.current
     }else{
@@ -58,7 +87,7 @@ export default class TokenStream {
   }
   
   /**
-   * 过滤注释 /* 
+   * 过滤注释 /*  *\/
    * @memberof TokenStream
    */
   isComment = (): boolean => {
@@ -74,7 +103,7 @@ export default class TokenStream {
   }
 
   /**
-   * 获取数字 
+   * 数字 
    * @see 说明 需要考虑到 2进制0b10100 === 8进制024 === 10进制20 === 16进制0x14 === 10e0 === 20.000
    * @memberof TokenStream
    */
@@ -124,6 +153,11 @@ export default class TokenStream {
     return true
   }
 
+  /**
+   * 字符串
+   * @see 说明 需要考虑到 2进制0b10100 === 8进制024 === 10进制20 === 16进制0x14 === 10e0 === 20.000
+   * @memberof TokenStream
+   */
   isString = (): boolean => {
     const first = this.getFirstCode()
 
@@ -136,6 +170,61 @@ export default class TokenStream {
       }
     }
 
+    return false
+  }
+
+  /**
+   * 变量，可能是名称
+   * @see 遵循变量申明规范 可以以 $_ 开头，其他可以是 $_数字字母 ，排除保留字
+   * @memberof TokenStream
+   */
+  isName = (): boolean => {
+    const first = this.getFirstCode()
+    let result
+    if(first === '_' || first === '$' || [...lowerCaseLetters, ...uppperCaseLetters].indexOf(first) !== -1){
+      variable.lastIndex = 0
+      result = variable.exec(this.expression)
+    }
+
+    if(result === undefined || result === null || typeof result[1] !== "string"){
+      return false
+    }
+
+    if(~jsWord.indexOf(result[1])) {
+      // 检测到保留字
+      this.parseError(`parser an reserved word: ${result[1]}`)
+      return false
+    }
+
+    if(~jsAttr.indexOf(result[1])) {
+      // 检测到window属性
+      this.parseError(`parser an window native attributes or methods: ${result[1]}`)
+      return false
+    }
+
+
+    this.pos += result.length
+    this.current = this.newToken(TNAME, result[1])
+    return true
+  }
+
+  /**
+   * 判断是否操作符 
+   * @see 操作符 + - * / || % ^ ? : . > < = >= <= | == === != !== 
+   * @memberof TokenStream
+   */
+  isOperator = (): boolean => {
+    const str = this.getSomeCode(3); // 操作符至多3位
+    
+    if(!str || /^(\w|\d)/.test(str)) return false
+    operator.lastIndex = 0;
+    const result = operator.exec(str)
+
+    if(result && result[1]){
+      this.pos += result[1].length
+      this.current = this.newToken(TOP, result[1])
+      return true
+    }
     return false
   }
 

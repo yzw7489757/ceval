@@ -1,4 +1,4 @@
-import { contains } from './utils';
+import { contains } from './utils/index';
 
 export function max(...args: number[]) {
   if (arguments.length === 1 && Array.isArray(args[0])) {
