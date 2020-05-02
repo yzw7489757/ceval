@@ -22,7 +22,7 @@ export const IARRAY = 'IARRAY';
 /**
  * @desc 指令实例
  */
-export class Instruction {
+export default class Instruction {
 
   value: any;
 
@@ -33,5 +33,3 @@ export class Instruction {
     this.value = (value !== undefined && value !== null) ? value : 0;
   }
 }
-
-export type TypeInstruction = InstanceType<typeof Instruction>

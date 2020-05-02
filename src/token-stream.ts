@@ -3,6 +3,7 @@ import { TypeToken, TypeCeval } from './interface';
 import { whitespace, comment, string, number2bit, number8bit, number10bit, number16bit, variable, operator } from './regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
 import { lowerCaseLetters, uppperCaseLetters } from './utils/letter';
+import { TSEMICOLON } from './local_demo/token';
 
 /**
  * 语法解析
@@ -93,7 +94,7 @@ export default class TokenStream {
   isComment = (): boolean => {
     if(this.getFirstCode() === '/' && this.getFirstCode(1) === '*'){
       comment.lastIndex = 0;
-      const matchResult = comment.exec(this.expression)
+      const matchResult = comment.exec(this.expression.substr(this.pos))
       if(matchResult && matchResult[1]){
         this.pos += matchResult[1].length + 2 + 2; // /*matchResult[1]*/
         return true
@@ -110,28 +111,28 @@ export default class TokenStream {
   isNumber = (): boolean => {
     const first = this.getFirstCode()
     let number
-
+    const expr = this.expression.substr(this.pos)
     if(first === '0') {
-      if(number2bit.test(this.expression)){
+      if(number2bit.test(expr)){
         // 2进制
         number2bit.lastIndex = 0;
-        const bit2Result = number2bit.exec(this.expression)
+        const bit2Result = number2bit.exec(expr)
         number = bit2Result ? bit2Result[1] : undefined;
-      }else if(number8bit.test(this.expression)){
+      }else if(number8bit.test(expr)){
         // 8进制
         // @see 080 || 079 都是十进制  并非8进制
         number8bit.lastIndex = 0;
-        const bit8Result = number8bit.exec(this.expression)
+        const bit8Result = number8bit.exec(expr)
         number = bit8Result ? bit8Result[1] : undefined;
-      }else if(number16bit.test(this.expression)){
+      }else if(number16bit.test(expr)){
         // 16进制 0xadf
         number16bit.lastIndex = 0;
-        const bit16Result = number16bit.exec(this.expression)
+        const bit16Result = number16bit.exec(expr)
         number = bit16Result ? bit16Result[1] : undefined;
-      }else if(number10bit.test(this.expression)){
+      }else if(number10bit.test(expr)){
         // 十进制 .200 || 079 || 080 0b30
         number10bit.lastIndex = 0;
-        const bit10Result = number10bit.exec(this.expression)
+        const bit10Result = number10bit.exec(expr)
         number = bit10Result ? bit10Result[1] : undefined;
       }
 
@@ -140,9 +141,9 @@ export default class TokenStream {
         return false
       }
       
-    }else if(number10bit.test(this.expression)){
+    }else if(number10bit.test(expr)){
         number10bit.lastIndex = 0;
-        const bit10Result = number10bit.exec(this.expression)
+        const bit10Result = number10bit.exec(expr)
         number = bit10Result ? bit10Result[1] : undefined;
     }
 
@@ -162,7 +163,7 @@ export default class TokenStream {
     const first = this.getFirstCode()
 
     if(first === '\"' || first === '\'') {
-      const matchString = string.exec(this.expression);
+      const matchString = string.exec(this.expression.substr(this.pos));
       if(matchString && matchString[1]){
         this.current = this.newToken(TSTRING, matchString[1], this.pos)
         this.pos += matchString[1].length;
@@ -183,7 +184,7 @@ export default class TokenStream {
     let result
     if(first === '_' || first === '$' || [...lowerCaseLetters, ...uppperCaseLetters].indexOf(first) !== -1){
       variable.lastIndex = 0
-      result = variable.exec(this.expression)
+      result = variable.exec(this.expression.substr(this.pos))
     }
 
     if(result === undefined || result === null || typeof result[1] !== "string"){
@@ -207,6 +208,43 @@ export default class TokenStream {
     this.current = this.newToken(TNAME, result[1])
     return true
   }
+
+  /**
+   * 内置常量
+   * @see const 例如 true false PI
+   * @memberof TokenStream
+   */
+  isConst = (): boolean => {
+    const first = this.getFirstCode()
+    let keys = Object.keys(this.parser.consts)
+
+    if(keys.map(k => k[0]).indexOf(first) === -1) return false
+
+    const result = new RegExp(`(${keys.join('|')})`).exec(this.expression.substr(this.pos))
+
+    if(result[1]){
+      this.current = this.newToken(TNAME, result[1])
+      this.pos += result.length;
+      return true
+    }
+
+    return false
+  }
+
+  /**
+   * 分号
+   * @see ;
+   * @memberof TokenStream
+   */
+  isSemicolon =  () => {
+    var first = this.getFirstCode();
+    if (first === ';') {
+      this.current = this.newToken(TSEMICOLON, ';');
+      this.pos++;
+      return true;
+    }
+    return false;
+  };
 
   /**
    * 判断是否操作符 
