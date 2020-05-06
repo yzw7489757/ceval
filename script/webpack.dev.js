@@ -1,4 +1,5 @@
 const { resolve } = require('path')
+const WebpackNotifier = require('webpack-notifier');
 
 const {name} = require('../package.json');
 const base = require('./webpack.base');
@@ -8,7 +9,7 @@ const IN_HTTPS = !!process.env.HTTPS;
 
 const devBaseConfig = {
   ...base,
-
+  
   mode: 'development',
 
   devServer: {
@@ -31,6 +32,15 @@ const devBaseConfig = {
       amd: library,
     },
   },
+
+  plugins: [
+    ...base.plugins,
+    new WebpackNotifier({
+      title: name,
+      excludeWarnings: true,
+      skipFirstNotification: true
+    })
+  ]
 };
 
 module.exports = [{

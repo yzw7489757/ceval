@@ -1,21 +1,23 @@
 /** @desc 结束标记 */
-export const END = 'END';
-/** @desc 有效类型 */
-export const TOP = 'TOP';
+export const TOKEN_END = 'TOKEN_END';
+/** @desc 操作符类型 */
+export const TOKEN_OPERATOR = 'TOKEN_OP';
 /** @desc 数字类型 */
-export const TNUMBER = 'TNUMBER';
+export const TOKEN_NUMBER = 'TOKEN_NUMBER';
 /** @desc 字符串类型 */
-export const TSTRING = 'TSTRING';
+export const TOKEN_STRING = 'TOKEN_STRING';
 /** @desc 圆括号，调用 */
-export const TPAREN = 'TPAREN';
+export const TOKEN_PAREN = 'TOKEN_PAREN';
 /** @desc 方括号，成员访问 [] */
-export const TBRACKET = 'TBRACKET';
+export const TOKEN_SQUARE = 'TOKEN_SQUARE';
 /** @desc 逗号 , */
-export const TCOMMA = 'TCOMMA';
+export const TOKEN_COMMA = 'TOKEN_COMMA';
+/** @desc 变量 , */
+export const TOKEN_VAR = 'TOKEN_VAR';
 /** @desc 变量名称 */
-export const TNAME = 'TNAME';
+export const TOKEN_NAME = 'TOKEN_NAME';
 /** @desc 结束标记; */
-export const TSEMICOLON = 'TSEMICOLON';
+export const TOKEN_SEMICOLON = 'TOKEN_SEMICOLON';
 
 /**
  * tokenStream 解析阶段指令

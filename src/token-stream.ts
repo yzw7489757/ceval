@@ -1,9 +1,9 @@
-import Token, { END, TSTRING, TNUMBER, TNAME, TOP } from './token';
+import cloneDeep from 'lodash/cloneDeep'
+import Token, { TOKEN_END, TOKEN_STRING, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR } from './token';
 import { TypeToken, TypeCeval } from './interface';
 import { whitespace, comment, string, number2bit, number8bit, number10bit, number16bit, variable, operator } from './regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
 import { lowerCaseLetters, uppperCaseLetters } from './utils/letter';
-import { TSEMICOLON } from './local_demo/token';
 
 /**
  * 语法解析
@@ -25,13 +25,21 @@ export default class TokenStream {
   constructor(public parser: TypeCeval, public expression: string) {
     console.log(this.parser)
   }
-  
+
   /**
-   * @desc 获取单个code
+   * @desc 适用语法校验检查
    * @memberof TokenStream
    */
-  getFirstCode = (offset?: number): string => {
-    return this.expression.charAt(this.pos + offset === undefined ? 0 : offset)
+  checkNextAccessGrammar = (): TypeToken => {
+    const pos = this.pos;
+    const current = cloneDeep(this.current)
+
+    const next = this.next();
+
+    this.current = current;
+    this.pos = pos
+    
+    return next
   }
 
   /**
@@ -39,9 +47,19 @@ export default class TokenStream {
    * @see charAt与substr性能对比 https://jsperf.com/substr-or-charat
    * @memberof TokenStream
    */
-  getSomeCode = (len = 1): string => {
+  getSomeCode = (len = 1, offset = 0): string => {
+    const start = offset + this.pos
     const { length } = this.expression;
-    return this.expression.substr(this.pos, (this.pos + len) > length ? length - this.pos : len )
+    return this.expression.substr(start, start + len > length ? Math.max(length - len, 0) : len )
+  }
+
+  /**
+   * @desc 获取首个单词
+   * @memberof TokenStream
+   */
+  getFirstWord = (): string => {
+    const result = this.expression.match(/\b\w*\b/)
+    return result ? result[0] : ''
   }
 
   /**
@@ -58,7 +76,7 @@ export default class TokenStream {
    */
   next = (): TypeToken => {
     if (this.pos >= this.expression.length) {
-      return this.newToken(END, 'END');
+      return this.newToken(TOKEN_END, 'END');
     }
 
     if(this.isWhiteSpace() || this.isComment()) {
@@ -66,7 +84,11 @@ export default class TokenStream {
     }else if(
       this.isNumber() || 
       this.isString() || 
-      this.isName()
+      this.isName()   ||
+      this.isOperator() ||
+      this.isSemicolon() ||
+      this.isConst()  ||
+      this.isParenthesis()
       ){
       return this.current
     }else{
@@ -79,7 +101,7 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isWhiteSpace = (): boolean => {
-    const matchWS = whitespace.exec(this.getFirstCode())
+    const matchWS = whitespace.exec(this.getSomeCode())
     while(matchWS && matchWS[1]){
       this.pos++
       return true
@@ -92,7 +114,7 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isComment = (): boolean => {
-    if(this.getFirstCode() === '/' && this.getFirstCode(1) === '*'){
+    if(this.getSomeCode() === '/' && this.getSomeCode(1, 1) === '*'){
       comment.lastIndex = 0;
       const matchResult = comment.exec(this.expression.substr(this.pos))
       if(matchResult && matchResult[1]){
@@ -104,14 +126,32 @@ export default class TokenStream {
   }
 
   /**
+   * 申明变量
+   * @memberof TokenStream
+   */
+  isVariable = (): boolean => {
+    const word = this.getFirstWord()
+    if(['const','var', 'let'].indexOf(word) !== -1){
+      this.pos += word.length;
+      this.current = this.newToken(TOKEN_VAR, word)
+      const nextToken = this.checkNextAccessGrammar()
+      if(nextToken.type !== TOKEN_NAME){
+        throw new Error(`${word} ${nextToken.value} : This syntax Not as expected, should be ${TOKEN_NAME}, but is ${nextToken.type}`)
+      }
+      return true
+    }
+    return false
+  }
+
+  /**
    * 数字 
    * @see 说明 需要考虑到 2进制0b10100 === 8进制024 === 10进制20 === 16进制0x14 === 10e0 === 20.000
    * @memberof TokenStream
    */
   isNumber = (): boolean => {
-    const first = this.getFirstCode()
+    const first = this.getSomeCode()
     let number
-    const expr = this.expression.substr(this.pos)
+    const expr = this.getSomeCode(this.expression.length - this.pos)
     if(first === '0') {
       if(number2bit.test(expr)){
         // 2进制
@@ -149,7 +189,7 @@ export default class TokenStream {
 
     if(!number) return false
     this.pos += number.length
-    this.current = this.newToken(TNUMBER, parseFloat(number))
+    this.current = this.newToken(TOKEN_NUMBER, parseFloat(number))
 
     return true
   }
@@ -160,12 +200,12 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isString = (): boolean => {
-    const first = this.getFirstCode()
+    const first = this.getSomeCode()
 
     if(first === '\"' || first === '\'') {
       const matchString = string.exec(this.expression.substr(this.pos));
       if(matchString && matchString[1]){
-        this.current = this.newToken(TSTRING, matchString[1], this.pos)
+        this.current = this.newToken(TOKEN_STRING, matchString[1], this.pos)
         this.pos += matchString[1].length;
         return true
       }
@@ -180,7 +220,7 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isName = (): boolean => {
-    const first = this.getFirstCode()
+    const first = this.getSomeCode()
     let result
     if(first === '_' || first === '$' || [...lowerCaseLetters, ...uppperCaseLetters].indexOf(first) !== -1){
       variable.lastIndex = 0
@@ -205,7 +245,7 @@ export default class TokenStream {
 
 
     this.pos += result.length
-    this.current = this.newToken(TNAME, result[1])
+    this.current = this.newToken(TOKEN_NAME, result[1])
     return true
   }
 
@@ -215,15 +255,15 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isConst = (): boolean => {
-    const first = this.getFirstCode()
-    let keys = Object.keys(this.parser.consts)
+    const first = this.getSomeCode()
+    const keys = Object.keys(this.parser.consts)
 
     if(keys.map(k => k[0]).indexOf(first) === -1) return false
 
     const result = new RegExp(`(${keys.join('|')})`).exec(this.expression.substr(this.pos))
 
     if(result[1]){
-      this.current = this.newToken(TNAME, result[1])
+      this.current = this.newToken(TOKEN_NAME, result[1])
       this.pos += result.length;
       return true
     }
@@ -237,9 +277,24 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isSemicolon =  () => {
-    var first = this.getFirstCode();
+    var first = this.getSomeCode();
     if (first === ';') {
-      this.current = this.newToken(TSEMICOLON, ';');
+      this.current = this.newToken(TOKEN_SEMICOLON, ';');
+      this.pos++;
+      return true;
+    }
+    return false;
+  };
+
+  /**
+   * 圆括号
+   * @see ;
+   * @memberof TokenStream
+   */
+  isParenthesis =  () => {
+    var first = this.getSomeCode(1);
+    if (first === '(' || first === ')') {
+      this.current = this.newToken(TOKEN_PAREN, first);
       this.pos++;
       return true;
     }
@@ -260,7 +315,7 @@ export default class TokenStream {
 
     if(result && result[1]){
       this.pos += result[1].length
-      this.current = this.newToken(TOP, result[1])
+      this.current = this.newToken(TOKEN_OPERATOR, result[1])
       return true
     }
     return false

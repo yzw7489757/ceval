@@ -35,7 +35,8 @@ export default class Ceval {
     const tokens = new TokenStream(this, expression);
 
     const parser = new Parser(this, tokens)
-
+    parser.parseExpression(instr)
+    console.log(parser,instr)
   }
 
 } 

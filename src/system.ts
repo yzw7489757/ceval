@@ -44,6 +44,13 @@ const system = {
     '?': condition
   },
   unaryOps: {
+    '+': (v) => +v,
+    '-': (v) => -v,
+    '!': (v) => !v,
+    '~': (v) => ~v,
+    '++': (v) => v+=1,
+    '--': (v) => v-=1,
+    'typeof': (v) => typeof v,
     sin: Math.sin,
     cos: Math.cos,
     tan: Math.tan
