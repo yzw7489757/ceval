@@ -44,13 +44,13 @@ const system = {
     '?': condition
   },
   unaryOps: {
-    '+': (v) => +v,
-    '-': (v) => -v,
-    '!': (v) => !v,
-    '~': (v) => ~v,
-    '++': (v) => v+=1,
-    '--': (v) => v-=1,
-    'typeof': (v) => typeof v,
+    '+': (v):number => +v,
+    '-': (v):number  => -v,
+    '!': (v):boolean  => !v,
+    '~': (v):number  => ~v,
+    '++': (v):number  => v+=1,
+    '--': (v):number  => v-=1,
+    'typeof':(v) :string => typeof v,
     sin: Math.sin,
     cos: Math.cos,
     tan: Math.tan

@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 import Token, { TOKEN_END, TOKEN_STRING, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR } from './token';
 import { TypeToken, TypeCeval } from './interface';
-import { whitespace, comment, string, number2bit, number8bit, number10bit, number16bit, variable, operator } from './regExp';
+import { whitespaceReg, commentReg, stringReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg } from './regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
 import { lowerCaseLetters, uppperCaseLetters } from './utils/letter';
 
@@ -22,9 +22,8 @@ export default class TokenStream {
   // 暂存解析character，在某些情况下做预判比如, cos是函数，cos() || map(cos) “cos)” 可能被函数parser判定为语法错误
   savedCurrent: null | TypeToken = null; 
 
-  constructor(public parser: TypeCeval, public expression: string) {
-    console.log(this.parser)
-  }
+  // eslint-disable-next-line
+  constructor(public parser: TypeCeval, public expression: string) {}
 
   /**
    * @desc 适用语法校验检查
@@ -50,7 +49,8 @@ export default class TokenStream {
   getSomeCode = (len = 1, offset = 0): string => {
     const start = offset + this.pos
     const { length } = this.expression;
-    return this.expression.substr(start, start + len > length ? Math.max(length - len, 0) : len )
+    // debugger
+    return this.expression.substr(start, start + len > length ? length - start : len )
   }
 
   /**
@@ -84,10 +84,11 @@ export default class TokenStream {
     }else if(
       this.isNumber() || 
       this.isString() || 
-      this.isName()   ||
       this.isOperator() ||
+      this.isName()   ||
       this.isSemicolon() ||
       this.isConst()  ||
+      this.isBoolean() ||
       this.isParenthesis()
       ){
       return this.current
@@ -96,12 +97,22 @@ export default class TokenStream {
     }
   }
   
+  temporarySaved = () => {
+    this.savedPosition = this.pos;
+    this.savedCurrent = this.current;
+  }
+
+  restore = () => {
+    this.pos = this.savedPosition;
+    this.current = this.savedCurrent
+  }
+
   /**
    * 过滤空格 \t \r \n
    * @memberof TokenStream
    */
   isWhiteSpace = (): boolean => {
-    const matchWS = whitespace.exec(this.getSomeCode())
+    const matchWS = whitespaceReg.exec(this.getSomeCode())
     while(matchWS && matchWS[1]){
       this.pos++
       return true
@@ -115,12 +126,25 @@ export default class TokenStream {
    */
   isComment = (): boolean => {
     if(this.getSomeCode() === '/' && this.getSomeCode(1, 1) === '*'){
-      comment.lastIndex = 0;
-      const matchResult = comment.exec(this.expression.substr(this.pos))
+      commentReg.lastIndex = 0;
+      const matchResult = commentReg.exec(this.getSomeCode(Infinity))
       if(matchResult && matchResult[1]){
         this.pos += matchResult[1].length + 2 + 2; // /*matchResult[1]*/
         return true
       }
+    }
+    return false
+  }
+
+  /**
+   * 过滤空格 \t \r \n
+   * @memberof TokenStream
+   */
+  isBoolean = (): boolean => {
+    const matchWS = booleanReg.exec(this.getSomeCode())
+    while(matchWS && matchWS[1]){
+      this.pos++
+      return true
     }
     return false
   }
@@ -153,26 +177,26 @@ export default class TokenStream {
     let number
     const expr = this.getSomeCode(this.expression.length - this.pos)
     if(first === '0') {
-      if(number2bit.test(expr)){
+      if(number2bitReg.test(expr)){
         // 2进制
-        number2bit.lastIndex = 0;
-        const bit2Result = number2bit.exec(expr)
+        number2bitReg.lastIndex = 0;
+        const bit2Result = number2bitReg.exec(expr)
         number = bit2Result ? bit2Result[1] : undefined;
-      }else if(number8bit.test(expr)){
+      }else if(number8bitReg.test(expr)){
         // 8进制
         // @see 080 || 079 都是十进制  并非8进制
-        number8bit.lastIndex = 0;
-        const bit8Result = number8bit.exec(expr)
+        number8bitReg.lastIndex = 0;
+        const bit8Result = number8bitReg.exec(expr)
         number = bit8Result ? bit8Result[1] : undefined;
-      }else if(number16bit.test(expr)){
+      }else if(number16bitReg.test(expr)){
         // 16进制 0xadf
-        number16bit.lastIndex = 0;
-        const bit16Result = number16bit.exec(expr)
+        number16bitReg.lastIndex = 0;
+        const bit16Result = number16bitReg.exec(expr)
         number = bit16Result ? bit16Result[1] : undefined;
-      }else if(number10bit.test(expr)){
+      }else if(number10bitReg.test(expr)){
         // 十进制 .200 || 079 || 080 0b30
-        number10bit.lastIndex = 0;
-        const bit10Result = number10bit.exec(expr)
+        number10bitReg.lastIndex = 0;
+        const bit10Result = number10bitReg.exec(expr)
         number = bit10Result ? bit10Result[1] : undefined;
       }
 
@@ -181,9 +205,9 @@ export default class TokenStream {
         return false
       }
       
-    }else if(number10bit.test(expr)){
-        number10bit.lastIndex = 0;
-        const bit10Result = number10bit.exec(expr)
+    }else if(number10bitReg.test(expr)){
+        number10bitReg.lastIndex = 0;
+        const bit10Result = number10bitReg.exec(expr)
         number = bit10Result ? bit10Result[1] : undefined;
     }
 
@@ -203,7 +227,7 @@ export default class TokenStream {
     const first = this.getSomeCode()
 
     if(first === '\"' || first === '\'') {
-      const matchString = string.exec(this.expression.substr(this.pos));
+      const matchString = stringReg.exec(this.getSomeCode(Infinity));
       if(matchString && matchString[1]){
         this.current = this.newToken(TOKEN_STRING, matchString[1], this.pos)
         this.pos += matchString[1].length;
@@ -223,8 +247,8 @@ export default class TokenStream {
     const first = this.getSomeCode()
     let result
     if(first === '_' || first === '$' || [...lowerCaseLetters, ...uppperCaseLetters].indexOf(first) !== -1){
-      variable.lastIndex = 0
-      result = variable.exec(this.expression.substr(this.pos))
+      variableReg.lastIndex = 0
+      result = variableReg.exec(this.getSomeCode(Infinity))
     }
 
     if(result === undefined || result === null || typeof result[1] !== "string"){
@@ -260,7 +284,7 @@ export default class TokenStream {
 
     if(keys.map(k => k[0]).indexOf(first) === -1) return false
 
-    const result = new RegExp(`(${keys.join('|')})`).exec(this.expression.substr(this.pos))
+    const result = new RegExp(`(${keys.join('|')})`).exec(this.getSomeCode(Infinity))
 
     if(result[1]){
       this.current = this.newToken(TOKEN_NAME, result[1])
@@ -292,7 +316,7 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isParenthesis =  () => {
-    var first = this.getSomeCode(1);
+    var first = this.getSomeCode();
     if (first === '(' || first === ')') {
       this.current = this.newToken(TOKEN_PAREN, first);
       this.pos++;
@@ -307,12 +331,17 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isOperator = (): boolean => {
-    const str = this.getSomeCode(3); // 操作符至多3位
-    
-    if(!str || /^(\w|\d)/.test(str)) return false
-    operator.lastIndex = 0;
-    const result = operator.exec(str)
+    const str = this.getSomeCode(Infinity); // 操作符至多3位
+    let result 
 
+    if(operatorReg.test(str)){
+      operatorReg.lastIndex = 0;
+      result = operatorReg.exec(str)
+    }else if(unaryMapReg.test(str)){
+      unaryMapReg.lastIndex = 0
+      result = unaryMapReg.exec(str)
+    }
+    
     if(result && result[1]){
       this.pos += result[1].length
       this.current = this.newToken(TOKEN_OPERATOR, result[1])

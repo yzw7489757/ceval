@@ -20,6 +20,8 @@ export const INSTR_FUNDEF = 'INSTR_FUNDEF';
 export const INSTR_ARRAY = 'INSTR_ARRAY';
 /** @desc 表达式类型 */
 export const INSTR_EXPRE = 'INSTR_EXPRE';
+/** @desc 简单类型，表示不用处理 */
+export const INSTR_PLAIN = 'INSTR_PLAIN';
 
 
 /**
@@ -27,7 +29,7 @@ export const INSTR_EXPRE = 'INSTR_EXPRE';
  */
 export default class Instruction {
 
-  value: number | string | object | any[];
+  value: string;
 
   constructor(public type: string, value?: any){
     this.value = (value !== undefined && value !== null) ? value : 0;

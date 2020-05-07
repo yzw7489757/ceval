@@ -2,6 +2,7 @@
   "compilerOptions": {
     "resolveJsonModule": true,
     "allowJs": true,
+    "noImplicitThis":true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "experimentalDecorators": true,

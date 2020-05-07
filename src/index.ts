@@ -1,6 +1,8 @@
 import Parser from './parser';
 import system, { TypeUnary, TypeBinary, TypeTernary, TypeConst, TypeFunction, optionNameMap } from './system';
 import TokenStream from './token-stream';
+import Instruction from './instruction';
+import calculation from './calculation';
 
 interface Options {
   operators?: any;
@@ -18,7 +20,7 @@ export default class Ceval {
 
   functions: TypeFunction;
 
-  constructor(public options: Options){
+  constructor(public options: Options = {}){
     Object.assign(this, system)
   }
 
@@ -30,13 +32,23 @@ export default class Ceval {
     return Object.prototype.hasOwnProperty.call(optionNameMap, ops)? optionNameMap[ops] : null
   } 
 
-  parseString = (expression: string) => {
-    const instr = [];
+  parseString = (expression: string, values = {}) => {
+    const instr: Instruction[] = [];
     const tokens = new TokenStream(this, expression);
 
     const parser = new Parser(this, tokens)
+
     parser.parseExpression(instr)
-    console.log(parser,instr)
+
+    return this.injectValueToCalc(instr, values)
+  }
+
+  injectValueToCalc = (tokens: Instruction[], values: object = {}): any => {
+    const presetVal = {}
+    // @TODO 检查敏感字
+    // @TODO 检查关键字
+    const result = calculation(tokens, Object.assign(presetVal, values), this)
+    return result
   }
 
 } 

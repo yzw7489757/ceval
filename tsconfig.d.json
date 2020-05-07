@@ -9,6 +9,7 @@
     "jsx": "react",
     "removeComments": false,
     "declaration": true,
+    "noImplicitThis": true,
     "emitDeclarationOnly": true,
     "declarationDir": "./lib"
   },
