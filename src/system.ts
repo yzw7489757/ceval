@@ -19,8 +19,8 @@ const system = {
     PI: Math.PI,
     'true': true,
     'false': false,
-    "undefined": false,
-    "null": false
+    "undefined": undefined,
+    "null": null
   },
   binaryOps :{
     '+': add,

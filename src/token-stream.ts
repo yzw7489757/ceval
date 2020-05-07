@@ -84,11 +84,11 @@ export default class TokenStream {
     }else if(
       this.isNumber() || 
       this.isString() || 
+      this.isBoolean() ||
       this.isOperator() ||
-      this.isName()   ||
       this.isSemicolon() ||
       this.isConst()  ||
-      this.isBoolean() ||
+      this.isName()   ||
       this.isParenthesis()
       ){
       return this.current
@@ -279,14 +279,11 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isConst = (): boolean => {
-    const first = this.getSomeCode()
     const keys = Object.keys(this.parser.consts)
-
-    if(keys.map(k => k[0]).indexOf(first) === -1) return false
 
     const result = new RegExp(`(${keys.join('|')})`).exec(this.getSomeCode(Infinity))
 
-    if(result[1]){
+    if(result && result[1]){
       this.current = this.newToken(TOKEN_NAME, result[1])
       this.pos += result.length;
       return true

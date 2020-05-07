@@ -1,6 +1,6 @@
 import system from './system';
 
-const supportOperator = ['===', '==', '!==', '!=', ':', '?', '!', '>=', '>', '<=', '<', '+', '-', '*', '/', '|']
+const supportOperator = ['===', '==', '!==', '!=', ':', '?', '!', '>=', '>', '<=', '<', '++', '--', '+', '-', '*', '/', '|']
 
 export const whitespaceReg = /(\t|\n|\r|\s+)/;
 export const booleanReg = /^(false|true)/;

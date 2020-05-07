@@ -12,23 +12,31 @@ test('unary ["+", "-"]', () => {
   expect(p.parseString('+true')).toEqual(1)
 }, 0)
 
-// test('++1', () => {
-//   expect(p.parseString('++1')).toEqual(2)
-// }, 0)
-// test('--1', () => {
-//   expect(p.parseString('--1')).toEqual(0)
-// }, 0)
+test('++1', () => {
+  expect(p.parseString('++1')).toEqual(2)
+}, 0)
 
-// generatorTestInstance('!1', false)
-// generatorTestInstance('!0', true)
-// generatorTestInstance('!false', true)
-// generatorTestInstance('!true', false)
-// generatorTestInstance('!undefined', true)
-// generatorTestInstance('!null', true)
-// generatorTestInstance('!!false', false)
-// generatorTestInstance('!!true', true)
-// generatorTestInstance('!!undefined', false)
-// generatorTestInstance('!!null', false)
+test('--1', () => {
+  expect(p.parseString('--1')).toEqual(0)
+}, 0)
+
+test('unary ! !!', () => {
+  expect(p.parseString('!1')).toEqual(false)
+  expect(p.parseString('!0')).toEqual(true)
+
+  expect(p.parseString('!!1')).toEqual(true)
+  expect(p.parseString('!!0')).toEqual(false)
+
+  expect(p.parseString('!false')).toEqual(true)
+  expect(p.parseString('!true')).toEqual(false)
+  expect(p.parseString('!undefined')).toEqual(true)
+  expect(p.parseString('!null')).toEqual(true)
+
+  expect(p.parseString('!!false')).toEqual(false)
+  expect(p.parseString('!!true')).toEqual(true)
+  expect(p.parseString('!!undefined')).toEqual(false)
+  expect(p.parseString('!!null')).toEqual(false)
+}, 0)
 
 // generatorTestInstance('~-1', 0)
 // generatorTestInstance('~0', -1)
