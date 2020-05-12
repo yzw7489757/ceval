@@ -1,16 +1,16 @@
 import { contains } from './utils/index';
 
 export function max(...args: number[]) {
-  if (arguments.length === 1 && Array.isArray(args[0])) {
-    return Math.max.apply(Math, args[0]);
+  if (args.length === 1) {
+    return Math.max.apply(Math, args);
   } else {
     return Math.max.apply(Math, args);
   }
 }
 
 export function min(...args: number[]) {
-  if (arguments.length === 1 && Array.isArray(args[0])) {
-    return Math.min.apply(Math, args[0]);
+  if (args.length === 1) {
+    return Math.min.apply(Math, args);
   } else {
     return Math.min.apply(Math, args);
   }
@@ -58,8 +58,12 @@ export function concat(a, b) {
   }
   return '' + a + b;
 }
-
 export function equal(a, b) {
+  // eslint-disable-next-line
+  return a == b;
+}
+
+export function strictEqual(a, b) {
   return a === b;
 }
 

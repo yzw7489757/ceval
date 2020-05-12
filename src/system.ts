@@ -1,10 +1,12 @@
+import { contains, mapVal } from './utils/index';
 import { 
   // 功能性
   random, min, max, arrayMap as map, 
   // 二元
   add, sub, mul, divide, mod, concat, equal, notEqual, greaterThan, lessThan, greaterThanEqual, lessThanEqual, inOperator, setVar, arrayIndex,
   // 三元
-  condition
+  condition,
+  strictEqual
  } from './functions';
 
 const system = {
@@ -38,7 +40,8 @@ const system = {
     '<=': lessThanEqual,
     'in': inOperator,
     '=': setVar,
-    '[': arrayIndex
+    '[': arrayIndex,
+    '===': strictEqual
   },
   ternaryOps :{
     '?': condition
@@ -71,17 +74,4 @@ export type TypeBinary = typeof system.binaryOps;
 export type TypeTernary = typeof system.ternaryOps;
 
 /** @desc 运算符映射表 */ 
-const opsMap = {};
-
-(function(optionsMap){
-  Object.keys(system).forEach(opsKey => {
-    if(opsKey === 'consts') return
-    const funcs = system[opsKey]
-    Object.keys(funcs).forEach(key => {
-      const k = "name" in funcs[key] ? funcs[key].name : key;
-      optionsMap[optionsMap[key] = k] = key
-    })
-  })
-})(opsMap)
-
-export const optionNameMap = opsMap
+export const optionNameMap = mapVal({}, system, (maps, key, val) => maps[key] = val)

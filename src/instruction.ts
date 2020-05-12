@@ -8,7 +8,7 @@ export const INSTR_OPERA2 = 'INSTR_OP2';
 export const INSTR_OPERA3 = 'INSTR_OP3';
 /** @desc 变量类型 */
 export const INSTR_VAR = 'INSTR_VAR';
-/** @desc 变量名称类型 */
+/** @desc 变量名称类型, 区别是内声明 */
 export const INSTR_VARNAME = 'INSTR_VARNAME';
 /** @desc 函数调用 */
 export const INSTR_FUNCALL = 'INSTR_FUNCALL';

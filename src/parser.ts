@@ -19,16 +19,22 @@ export default class Parser {
 
   savedNextToken: TypeToken = null;
 
-  constructor(public parser: Ceval, public tokens: TypeTokenStream) {
+  constructor(public parser: Ceval, public tokens: TypeTokenStream, exprInstr: Instruction[]) {
     this.next();
+    this.parseExpression(exprInstr)
+  }
+
+  static generatorParser = (parser: Ceval, tokens: TypeTokenStream, exprInstr: Instruction[]) => {
+    return new Parser(parser, tokens, exprInstr)
   }
 
   next = () => {
     this.current = this.nextToken;
-    return (this.nextToken = this.tokens.next());
+    this.nextToken = this.tokens.next()
+    return this.nextToken
   }
 
-  matchToken = (value: any): boolean => {
+  matchToken = (value: undefined | ((value: TypeToken) => boolean) | string | number): boolean => {
     if (value === undefined) {
       return true
     } else if (Array.isArray(value)){
@@ -49,7 +55,7 @@ export default class Parser {
    * @memberof Parser
    */
   accept = (type: string, value?, next = true) => {
-    if (this.nextToken && type === this.nextToken.type && this.matchToken(value)) {
+    if (this.nextToken && (this.nextToken.type === type) && this.matchToken(value)) {
       if(next) this.next()
       return true
     }
