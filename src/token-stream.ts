@@ -184,8 +184,8 @@ export default class TokenStream {
     const [n] = expr.match(/^(0(x|b)+[0-9a-zA-Z]{1,})|(^0?\d*(\.\d+)?)/); // 019 可能会被8进制拦截掉01， 所以必须要做^$
 
     number10bitReg.lastIndex = 0;
-    if (first === '0' && n.length > 1) { 
-      if(contains<string>(['b', 'x'], this.getSomeCode(1, 1)) && this.getSomeCode(1, n.length) === '.') { 
+    if (first === '0' && n.length > 1) {
+      if (contains<string>(['b', 'x'], this.getSomeCode(1, 1)) && this.getSomeCode(1, n.length) === '.') {
         // 0b0101.1 0xaf.1 ❌
         // 099.1 属于十进制 ✅
         this.parseError(`number '${n}' cannot is a floating point number, but actual is: '${n}${this.getSomeCode(3, n.length)}'`, SyntaxError)
@@ -208,7 +208,7 @@ export default class TokenStream {
         // @see 0xadf
         number = execNumberReg(number16bitReg, n)
         bit = number === undefined ? undefined : 16
-      } else if (number010bitReg.test(n) ) { 
+      } else if (number010bitReg.test(n)) {
         // 0开头十进制 
         // @see 079 || 080 || 0100  ✅
         // @warn 03.1 || 00.1 || 00.  ❌
@@ -227,9 +227,9 @@ export default class TokenStream {
       return false
     }
 
-    if(bit === 10) {
+    if (bit === 10) {
       this.current = this.newToken(TOKEN_NUMBER, parseFloat(number))
-    }else{
+    } else {
       this.current = this.newToken(TOKEN_NUMBER, parseInt(number.replace('0b', '').replace('0x', ''), bit))
     }
 
@@ -349,7 +349,8 @@ export default class TokenStream {
   isOperator = (): boolean => {
     const str = this.getSomeCode(Infinity); // 操作符至多3位
     let result
-
+    console.log(str)
+    console.log('operatorReg.test(str): ', operatorReg);
     if (operatorReg.test(str)) {
       operatorReg.lastIndex = 0;
       result = operatorReg.exec(str)

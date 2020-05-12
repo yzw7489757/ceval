@@ -1,6 +1,6 @@
 import Ceval from './index';
 import { TypeTokenStream, TypeToken } from './interface';
-import Instruction, { INSTR_EXPRE, INSTR_FUNCALL, INSTR_OPERA1, INSTR_MEMBER, INSTR_OPERA2, INSTR_OPERA3, INSTR_ARRAY, INSTR_NUMBER, INSTR_VAR  } from './instruction';
+import Instruction, { INSTR_EXPRE, INSTR_FUNCALL, INSTR_OPERA1, INSTR_MEMBER, INSTR_OPERA2, INSTR_OPERA3, INSTR_ARRAY, INSTR_NUMBER, INSTR_VAR } from './instruction';
 import { TOKEN_OPERATOR, TOKEN_NAME, TOKEN_SQUARE, TOKEN_PAREN, TOKEN_NUMBER, TOKEN_STRING, TOKEN_COMMA, TOKEN_SEMICOLON, TOKEN_END } from './token';
 import { unarySymbolMapReg, unaryMapReg } from './regExp';
 
@@ -37,11 +37,11 @@ export default class Parser {
   matchToken = (value: undefined | ((value: TypeToken) => boolean) | string | number): boolean => {
     if (value === undefined) {
       return true
-    } else if (Array.isArray(value)){
+    } else if (Array.isArray(value)) {
       return value.indexOf(this.nextToken.value) !== -1
-    } else if(typeof value === 'function') {
+    } else if (typeof value === 'function') {
       return value(this.nextToken)
-    } else if(typeof value === 'string' || typeof value === 'number') {
+    } else if (typeof value === 'string' || typeof value === 'number') {
       return value === this.nextToken.value
     } else {
       return false
@@ -56,7 +56,7 @@ export default class Parser {
    */
   accept = (type: string, value?, next = true) => {
     if (this.nextToken && (this.nextToken.type === type) && this.matchToken(value)) {
-      if(next) this.next()
+      if (next) this.next()
       return true
     }
     return false
@@ -131,12 +131,12 @@ export default class Parser {
    */
   parseOrExpression = (exprInstr: Instruction[]): void => {
     this.parseAndExpression(exprInstr)
-    while(this.accept(TOKEN_OPERATOR, '||')) {
+    while (this.accept(TOKEN_OPERATOR, '||')) {
       var branch = []
       this.parseAndExpression(branch)
       exprInstr.push(new Instruction(INSTR_EXPRE, branch))
       exprInstr.push(new Instruction(INSTR_OPERA2, '||'))
-    } 
+    }
   }
 
   /**
@@ -144,12 +144,36 @@ export default class Parser {
    * @memberof Parser
    */
   parseAndExpression = (exprInstr: Instruction[]): void => {
-    this.parseEqualExpression(exprInstr)
-    while(this.accept(TOKEN_OPERATOR, '&&')) {
+    this.parseBitwiseOrExpression(exprInstr)
+    while (this.accept(TOKEN_OPERATOR, '&&')) {
       var branch = []
-      this.parseEqualExpression(branch)
+      this.parseBitwiseOrExpression(branch)
       exprInstr.push(new Instruction(INSTR_EXPRE, branch))
       exprInstr.push(new Instruction(INSTR_OPERA2, '&&'))
+    }
+  }
+
+  /**
+   * 解析 ^ 按位异或
+   * @memberof Parser
+   */
+  parseBitwiseOrExpression = (exprInstr: Instruction[]): void => {
+    this.parseBitwiseAndExpression(exprInstr)
+    while (this.accept(TOKEN_OPERATOR, '^')) {
+      this.parseBitwiseAndExpression(exprInstr)
+      exprInstr.push(new Instruction(INSTR_OPERA2, '^'))
+    }
+  }
+
+  /**
+   * 解析 & 按位与
+   * @memberof Parser
+   */
+  parseBitwiseAndExpression = (exprInstr: Instruction[]): void => {
+    this.parseEqualExpression(exprInstr)
+    while (this.accept(TOKEN_OPERATOR, '&')) {
+      this.parseBitwiseAndExpression(exprInstr)
+      exprInstr.push(new Instruction(INSTR_OPERA2, '&'))
     }
   }
 
@@ -159,7 +183,7 @@ export default class Parser {
    */
   parseEqualExpression = (exprInstr: Instruction[]): void => {
     this.parseCompareExpression(exprInstr)
-    while(this.accept(TOKEN_OPERATOR, ['==', '===', '!=', '!=='])) {
+    while (this.accept(TOKEN_OPERATOR, ['==', '===', '!=', '!=='])) {
       var op = this.current
       this.parseCompareExpression(exprInstr)
       exprInstr.push(new Instruction(INSTR_OPERA2, op.value))
@@ -172,7 +196,7 @@ export default class Parser {
    */
   parseCompareExpression = (exprInstr: Instruction[]): void => {
     this.parseBitwiseMoveExpression(exprInstr)
-    while(this.accept(TOKEN_OPERATOR, ['<', '<=', '>=', '>'])) {
+    while (this.accept(TOKEN_OPERATOR, ['<', '<=', '>=', '>'])) {
       var op = this.current
       this.parseBitwiseMoveExpression(exprInstr)
       exprInstr.push(new Instruction(INSTR_OPERA2, op.value))
@@ -185,23 +209,23 @@ export default class Parser {
    */
   parseBitwiseMoveExpression = (exprInstr: Instruction[]): void => {
     this.parseAddOrSubExpression(exprInstr)
-    while(this.accept(TOKEN_OPERATOR, [">>", ">>>", "<<"])) {
+    while (this.accept(TOKEN_OPERATOR, [">>", ">>>", "<<"])) {
       var op = this.current
       this.parseAddOrSubExpression(exprInstr)
       exprInstr.push(new Instruction(INSTR_OPERA2, op.value))
     }
   }
-  
+
   /**
    * 解析加减法 + -
    * @memberof Parser
    */
   parseAddOrSubExpression = (exprInstr: Instruction[]): void => {
     this.parseMulOrDivExpression(exprInstr)
-    while(this.accept(TOKEN_OPERATOR, ["+", "-"])) {
-        var op = this.current
-        this.parseMulOrDivExpression(exprInstr)
-        exprInstr.push(new Instruction(INSTR_OPERA2, op.value))
+    while (this.accept(TOKEN_OPERATOR, ["+", "-"])) {
+      var op = this.current
+      this.parseMulOrDivExpression(exprInstr)
+      exprInstr.push(new Instruction(INSTR_OPERA2, op.value))
     }
   }
 
@@ -211,7 +235,7 @@ export default class Parser {
    */
   parseMulOrDivExpression = (exprInstr: Instruction[]): void => {
     this.parseUnaryExpression(exprInstr)
-    while(this.accept(TOKEN_OPERATOR, ["*", "/", "%"])) {
+    while (this.accept(TOKEN_OPERATOR, ["*", "/", "%"])) {
       var op = this.current
       this.parseUnaryExpression(exprInstr)
       exprInstr.push(new Instruction(INSTR_OPERA2, op.value))
@@ -224,47 +248,24 @@ export default class Parser {
    */
   parseUnaryExpression = (exprInstr: Instruction[]): void => {
     this.temporarySaved();
-    if(this.accept(TOKEN_OPERATOR,({ value }) => value in this.parser.unaryOps)){
-        if(unarySymbolMapReg.test(this.current.value)){ // +, ++, +, -, !, ~,
-          const op = this.current
-          this.parseUnaryExpression(exprInstr); // 兼容 ++-1
-          exprInstr.push(new Instruction(INSTR_OPERA1, op.value))
-        } else if(this.accept(TOKEN_PAREN, '(', false)) { // typeof(
-          this.restore()
-          this.parseBitwiseOrExpression(exprInstr)
-        } else if (
-          [TOKEN_COMMA, TOKEN_SEMICOLON, TOKEN_END].indexOf(this.nextToken.type) !== -1 || // typeof, typeof; typeof
-          (this.nextToken.type === TOKEN_PAREN && this.nextToken.value === ')') // typeof)
-        ) {
-          this.restore(); 
-          this.parseField(exprInstr);
-        }
-    }else{
+    if (this.accept(TOKEN_OPERATOR, ({ value }) => value in this.parser.unaryOps)) {
+      if (unarySymbolMapReg.test(this.current.value)) { // +, ++, +, -, !, ~,
+        const op = this.current
+        this.parseUnaryExpression(exprInstr); // 兼容 ++-1
+        exprInstr.push(new Instruction(INSTR_OPERA1, op.value))
+      } else if (this.accept(TOKEN_PAREN, '(', false)) { // typeof(
+        this.restore()
+        // this.parseBitwiseOrExpression(exprInstr)
+        this.parseFuncCallExpression(exprInstr)
+      } else if (
+        [TOKEN_COMMA, TOKEN_SEMICOLON, TOKEN_END].indexOf(this.nextToken.type) !== -1 || // typeof, typeof; typeof
+        (this.nextToken.type === TOKEN_PAREN && this.nextToken.value === ')') // typeof)
+      ) {
+        this.restore();
+        this.parseField(exprInstr);
+      }
+    } else {
       this.parseField(exprInstr)
-    }
-  }
-
-  /**
-   * 解析 ^ 按位异或
-   * @memberof Parser
-   */
-  parseBitwiseOrExpression = (exprInstr: Instruction[]): void => {
-    this.parseBitwiseAndExpression(exprInstr)
-    while(this.accept(TOKEN_OPERATOR, '^')) {
-      this.parseUnaryExpression(exprInstr)
-      exprInstr.push(new Instruction(INSTR_OPERA2, '^'))
-    }
-  }
-
-  /**
-   * 解析 & 按位与
-   * @memberof Parser
-   */
-  parseBitwiseAndExpression = (exprInstr: Instruction[]): void => {
-    this.parseFuncCallExpression(exprInstr)
-    while(this.accept(TOKEN_OPERATOR, '&')) {
-      this.parseUnaryExpression(exprInstr)
-      exprInstr.push(new Instruction(INSTR_OPERA2, '&'))
     }
   }
 
@@ -273,19 +274,19 @@ export default class Parser {
    * @memberof Parser
    */
   parseFuncCallExpression = (exprInstr: Instruction[]): void => {
-    if(this.accept(TOKEN_OPERATOR, ({ value }) => unaryMapReg.test(value))) {
+    if (this.accept(TOKEN_OPERATOR, ({ value }) => unaryMapReg.test(value))) {
       var op = this.current
       this.parseField(exprInstr)
       exprInstr.push(new Instruction(INSTR_OPERA1, op.value))
-    }else {
+    } else {
       this.parseMemberAccessExpression(exprInstr); // a.b()
-      while(this.accept(TOKEN_PAREN, '(')) {
-        if(this.accept(TOKEN_PAREN, ')')) {
+      while (this.accept(TOKEN_PAREN, '(')) {
+        if (this.accept(TOKEN_PAREN, ')')) {
           // 立即调用
           exprInstr.push(new Instruction(INSTR_FUNCALL, 0)) // 参数长度 
         } else {
           let count = 0
-          while(!this.accept(TOKEN_PAREN, ')')) {
+          while (!this.accept(TOKEN_PAREN, ')')) {
             this.parseExpression(exprInstr);
             count++
             while (this.accept(TOKEN_COMMA)) {
@@ -305,8 +306,8 @@ export default class Parser {
    */
   parseMemberAccessExpression = (exprInstr: Instruction[]): void => {
     this.parseField(exprInstr);
-    while(this.accept(TOKEN_OPERATOR, '.') || this.accept(TOKEN_SQUARE, '[')) {
-      if(this.current.value === '.') {
+    while (this.accept(TOKEN_OPERATOR, '.') || this.accept(TOKEN_SQUARE, '[')) {
+      if (this.current.value === '.') {
         this.expect(TOKEN_NAME); // a.name ✔️  a.1×
         exprInstr.push(new Instruction(INSTR_MEMBER, this.current.value))
       } else if (this.current.value === '[') {

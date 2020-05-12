@@ -28,6 +28,7 @@
     "import/extensions":0,
     "jsx-filename-extension":0,
     "import/no-unresolved": 0,
+    "no-unneeded-ternary":0,
     "no-restricted-globals":0,
     "class-methods-use-this":0,
     "no-useless-escape":0,

@@ -26,12 +26,12 @@ export default class Ceval {
   binaryOps: TypeBinary;
 
   ternaryOps: TypeTernary;
-  
+
   consts: TypeConst;
 
   functions: TypeFunction;
 
-  constructor(public options: Options = {}){
+  constructor(public options: Options = {}) {
     Object.assign(defaultOptions, this.options)
     Object.assign(this, system)
   }
@@ -42,8 +42,8 @@ export default class Ceval {
    * @memberof Ceval
    */
   getSupportOperationMap = (ops: string): null | Function => {
-    return Object.prototype.hasOwnProperty.call(optionNameMap, ops)? optionNameMap[ops] : null
-  } 
+    return Object.prototype.hasOwnProperty.call(optionNameMap, ops) ? optionNameMap[ops] : null
+  }
 
   parseString = (expression: string, values = {}) => {
     const instr: Instruction[] = [];

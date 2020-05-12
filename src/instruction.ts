@@ -31,7 +31,7 @@ export default class Instruction {
 
   value: string;
 
-  constructor(public type: string, value?: any){
+  constructor(public type: string, value?: any) {
     this.value = (value !== undefined && value !== null) ? value : 0;
   }
 }

@@ -1,14 +1,16 @@
 import system from './system';
+import { contains } from './utils/index';
 
+const WHITE_LIST = []
 const supportOperator = Array.from(new Set(
-                      [].concat(
-                        Object.keys(system.unaryOps),
-                        Object.keys(system.binaryOps), 
-                        Object.keys(system.ternaryOps)
-                      )
-                      .filter(item=> !/\b\w+\b/.test(item))
-                      .sort((a,b)=> b.length - a.length)
-                      ))
+  [].concat(
+    Object.keys(system.unaryOps).filter(item => !/\b\w+\b/.test(item)),
+    Object.keys(system.binaryOps),
+    Object.keys(system.ternaryOps)
+  )
+    .filter(op => !contains(WHITE_LIST, op))
+    .sort((a, b) => b.length - a.length)
+))
 
 export const whitespaceReg = /(\t|\n|\r|\s+)/;
 export const booleanReg = /^(false|true)/;
@@ -17,19 +19,19 @@ export const stringReg = /^((\"(.+)\")|(\'(.+)\'))/;
 export const number2bitReg = /^(0b[0|1]{1,})$/;
 export const number8bitReg = /^(0[0-7]{1,})$/;
 export const number010bitReg = /^(0\d*[8-9]{1,}\d*(\.\d+)?)$/; // 0开头的十进制 019 038 078
-export const number10bitReg =  /(^([1-9]\d*(\.\d+)|(\d*(\.\d+)?)))/; // 1-9 或者.开头的十进制
+export const number10bitReg = /(^([1-9]\d*(\.\d+)|(\d*(\.\d+)?)))/; // 1-9 或者.开头的十进制
 export const number16bitReg = /^(0x[0-9a-fA-F]{1,})$/;
 export const variableReg = /^((_|$)?[0-9a-zA-Z|$|_]{1,})/;
-export const operatorReg = new RegExp(`^(${supportOperator.map(r => `(\\${r.split('').join('\\')})`).join('|')})`);
+export const operatorReg = new RegExp(`^(${supportOperator.map(r => `(\\${/\b\w+\b/.test(r) ? r : r.split('').join('\\')})`).join('|')})`);
 export const unaryMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => /\b\w+\b/.test(item)).join('|')})`);
-export const unarySymbolMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => !(/\b\w+\b/.test(item))).map(r=>`\\s*\\${r}\\s*`).join('|')})`);
+export const unarySymbolMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => !(/\b\w+\b/.test(item))).map(r => `\\s*\\${r}\\s*`).join('|')})`);
 
-export const execNumberReg = (reg: RegExp, expr: string, cb: <T>(v:T) => T = (v => v)):string | undefined => {
+export const execNumberReg = (reg: RegExp, expr: string, cb: <T>(v: T) => T = (v => v)): string | undefined => {
   reg.lastIndex = 0;
   const result = reg.exec(expr);
-  if(result === null || result[0] === '') {
+  if (result === null || result[0] === '') {
     return cb(undefined)
-  }else {
+  } else {
     return cb(result[1])
   }
 }

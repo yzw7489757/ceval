@@ -68,6 +68,11 @@ export function strictEqual(a, b) {
 }
 
 export function notEqual(a, b) {
+  // eslint-disable-next-line
+  return a != b;
+}
+export function strictNotEqual(a, b) {
+  // eslint-disable-next-line
   return a !== b;
 }
 
@@ -91,6 +96,9 @@ export function inOperator(a, b) {
   return contains(b, a);
 }
 
+export function bitWiseOr(a, b) {
+  return a ^ b
+}
 export function setVar(name, value, variables) {
   if (variables) variables[name] = value;
   return value;
