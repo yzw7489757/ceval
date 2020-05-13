@@ -1,4 +1,4 @@
-import { contains } from './index';
+import { contains, isObject, eliminateQuote } from './index';
 
 export function add(a, b) {
   return Number(a) + Number(b);
@@ -54,8 +54,9 @@ export function lessThanEqual(a, b) {
   return a <= b;
 }
 
-export function inTheArr(a, b) {
-  return contains(b, a);
+export function inTheTarget(a, b) {
+  if(typeof b !== 'object' || String(a) !== `${a}` ) throw new Error('first argument must be original type, second must be Array or Object')
+  return isObject(b) ? Object.prototype.hasOwnProperty.call(b, eliminateQuote(a)) : contains(b, a)
 }
 
 export function bitWiseOr(a, b) {

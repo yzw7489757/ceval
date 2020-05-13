@@ -4,21 +4,8 @@ import TokenStream from './token-stream';
 import Instruction from './instruction';
 import calculation from './calculation';
 import presetVariable from './utils/presetVariable';
-
-interface Options {
-  /* @desc 允许使用运算符 */
-  endableOperators?: boolean;
-  /* @desc 允许启用多位进制Number */
-  endableBitNumber?: boolean;
-  /* @desc 允许访问成员 */
-  allowMemberAccess?: boolean;
-}
-
-const defaultOptions = {
-  endableOperators: true,
-  endableBitNumber: true,
-  allowMemberAccess: true
-}
+import { merge } from './utils/index';
+import { CevalOptions } from './interface';
 
 export default class Ceval {
   unaryOps: TypeUnary;
@@ -31,9 +18,9 @@ export default class Ceval {
 
   functions: TypeFunction;
 
-  constructor(public options: Options = {}) {
-    Object.assign(defaultOptions, this.options)
+  constructor(public options: Readonly<CevalOptions> = {}) {
     Object.assign(this, systemMap)
+    merge(this.options, new CevalOptions())
   }
 
   /**
@@ -57,7 +44,7 @@ export default class Ceval {
     // @TODO 检查敏感字
     // @TODO 检查关键字
     const result = calculation(tokens, Object.assign(presetVariable, values), this)
-    return result
+    return result === undefined ? this.options.defaultReturnValues : result
   }
 
 } 

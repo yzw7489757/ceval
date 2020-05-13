@@ -366,11 +366,33 @@ test('binary <=', () => {
 }, 0)
 
 test('binary in', () => {
+  expect(parse(`1 in [1, 2, 3]`)).toBe(true)
+  expect(parse(`2 in [1, 2, 3]`)).toBe(true)
+  expect(parse(`4 in [1, 2, 3]`)).toBe(false)
+  expect(parse(`false in [1, 2, 3]`)).toBe(false)
+  expect(parse(`true in [1, 2, true]`)).toBe(true)
+  expect(parse(`false in [1, 2, true]`)).toBe(false)
+  expect(parse(`undefined in [1, 2, true]`)).toBe(false)
+  expect(parse(`null in [1, 2, true]`)).toBe(false)
+  expect(parse(`undefined in []`)).toBe(false)
 
+  // done: support Object literal declaration
+  const obj = '{ a: 1, b: 2, c: 3, d: { e: 4, f: 5}}'
+
+  expect(parse(`\'a\' in ${obj}`)).toBe(true)
+  expect(parse(`\"\'b\'\" in ${obj}`)).toBe(true)
+  expect(parse(`\'\'c\'\' in ${obj}`)).toBe(true)
+  expect(parse(`\'e\' in ${obj}`)).toBe(false)
+
+  // TODO: supoort ObjectMember
+  // expect(parse(`\'e\' in ${obj}.d`)).toBe(false)
 }, 0)
 
 test('binary =', () => {
+  // TODO: support assignment literal declaration
 
+  // expect(parse(`var obj = { a: '1', b: 2, c: 3, d: { e: 4, f: 5}}`))
+  // expect(parse(`var obj = b = { a: '1', b: 2, c: 3, d: { e: 4, f: 5}}`))
 }, 0)
 
 test('binary ===', () => {

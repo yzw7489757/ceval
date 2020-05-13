@@ -10,6 +10,8 @@ export const TOKEN_STRING = 'TOKEN_STRING';
 export const TOKEN_PAREN = 'TOKEN_PAREN';
 /** @desc 方括号，成员访问 [] */
 export const TOKEN_SQUARE = 'TOKEN_SQUARE';
+/** @desc 花括号，字面量声明 */
+export const TOKEN_CURLY = 'TOKEN_CURLY';
 /** @desc 逗号 , */
 export const TOKEN_COMMA = 'TOKEN_COMMA';
 /** @desc 变量 , */

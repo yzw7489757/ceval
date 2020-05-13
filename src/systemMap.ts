@@ -3,7 +3,7 @@ import {
   // 功能性
   random, min, max, arrayMap as map,
   // 二元
-  add, sub, mul, divide, mod, withOr, withAlso, equal, notEqual, greaterThan, lessThan, greaterThanEqual, lessThanEqual, inTheArr, setVar, arrayIndex, bitWiseOr, strictNotEqual,
+  add, sub, mul, divide, mod, withOr, withAlso, equal, notEqual, greaterThan, lessThan, greaterThanEqual, lessThanEqual, inTheTarget, setVar, arrayIndex, bitWiseOr, strictNotEqual,
   // 三元
   condition,
   strictEqual
@@ -22,7 +22,7 @@ const system = {
     'true': true,
     'false': false,
     "undefined": undefined,
-    "null": null
+    "null": null,
   },
   binaryOps: {
     '+': add,
@@ -43,7 +43,7 @@ const system = {
     '=': setVar,
     '[': arrayIndex,
     '===': strictEqual,
-    'in': inTheArr,
+    'in': inTheTarget,
     // 'instanceOf'
   },
   ternaryOps: {
@@ -63,7 +63,7 @@ const system = {
     pow: Math.pow,
   },
   syntaxOperator: {
-    ',': null
+    ':': null
   }
 }
 

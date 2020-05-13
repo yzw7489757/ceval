@@ -1,8 +1,8 @@
 import Ceval from './index';
 import { TypeTokenStream, TypeToken } from './interface';
-import Instruction, { INSTR_EXPRE, INSTR_FUNCALL, INSTR_OPERA1, INSTR_MEMBER, INSTR_OPERA2, INSTR_OPERA3, INSTR_ARRAY, INSTR_NUMBER, INSTR_VAR } from './instruction';
-import { TOKEN_OPERATOR, TOKEN_NAME, TOKEN_SQUARE, TOKEN_PAREN, TOKEN_NUMBER, TOKEN_STRING, TOKEN_COMMA, TOKEN_SEMICOLON, TOKEN_END } from './token';
-import { unarySymbolMapReg, unaryMapReg } from './utils/regExp';
+import Instruction, { INSTR_EXPRE, INSTR_FUNCALL, INSTR_OBJECT, INSTR_OPERA1, INSTR_MEMBER, INSTR_OPERA2, INSTR_OPERA3, INSTR_ARRAY, INSTR_NUMBER, INSTR_VAR } from './instruction';
+import { TOKEN_OPERATOR, TOKEN_NAME, TOKEN_SQUARE, TOKEN_PAREN, TOKEN_NUMBER, TOKEN_STRING, TOKEN_COMMA, TOKEN_SEMICOLON, TOKEN_END, TOKEN_CURLY, TOKEN_VAR } from './token';
+import { unarySymbolMapReg, isUnaryOpeator } from './utils/regExp';
 
 /**
  * 解析器
@@ -64,7 +64,11 @@ export default class Parser {
 
   expect = (type: string, value?): never | void => {
     if (!this.accept(type, value)) {
-      throw new Error('Unexpected resolution');
+      const { line, column } = this.tokens.getCoordinates()
+      this.printLog(`> line:${line} column:${column-1} "${this.current.value}"\nThe next tag should be "${value}", But the reality is`,`${this.nextToken.type === TOKEN_END ? 'empty content' : `"${this.nextToken.value}"`}`
+        , console.error
+      )
+      throw new Error('Unexpected Tag');
     }
   }
 
@@ -95,7 +99,7 @@ export default class Parser {
   parseMultipleEvaluation = (exprInstr: Instruction[]): void => {
     this.parseAssignmentExpression(exprInstr)
 
-    while (this.accept(TOKEN_OPERATOR, ',')) {
+    while (this.accept(TOKEN_COMMA, ',')) {
       this.parseExpression(exprInstr)
     }
   }
@@ -199,8 +203,17 @@ export default class Parser {
    * @memberof Parser
    */
   parseCompareExpression = (exprInstr: Instruction[]): void => {
-    this.parseBitwiseMoveExpression(exprInstr)
+    this.parseInOrAtExpression(exprInstr)
     while (this.accept(TOKEN_OPERATOR, ['<', '<=', '>=', '>'])) {
+      var op = this.current
+      this.parseInOrAtExpression(exprInstr)
+      exprInstr.push(new Instruction(INSTR_OPERA2, op.value))
+    }
+  }
+
+  parseInOrAtExpression = (exprInstr: Instruction[]): void => {
+    this.parseBitwiseMoveExpression(exprInstr)
+    while (this.accept(TOKEN_OPERATOR, ['in', '@'])) {
       var op = this.current
       this.parseBitwiseMoveExpression(exprInstr)
       exprInstr.push(new Instruction(INSTR_OPERA2, op.value))
@@ -252,7 +265,7 @@ export default class Parser {
    */
   parseUnaryExpression = (exprInstr: Instruction[]): void => {
     this.temporarySaved();
-    if (this.accept(TOKEN_OPERATOR, ({ value }) => value in this.parser.unaryOps)) {
+    if (this.accept(TOKEN_OPERATOR, isUnaryOpeator)) {
       if (unarySymbolMapReg.test(this.current.value)) { // +, ++, +, -, !, ~,
         const op = this.current
         this.parseUnaryExpression(exprInstr); // 兼容 ++-1
@@ -278,7 +291,7 @@ export default class Parser {
    * @memberof Parser
    */
   parseFuncCallExpression = (exprInstr: Instruction[]): void => {
-    if (this.accept(TOKEN_OPERATOR, ({ value }) => unaryMapReg.test(value))) {
+    if (this.accept(TOKEN_OPERATOR, isUnaryOpeator)) {
       var op = this.current
       this.parseField(exprInstr)
       exprInstr.push(new Instruction(INSTR_OPERA1, op.value))
@@ -322,8 +335,12 @@ export default class Parser {
     }
   }
 
+  /**
+   * 解析字面值、字段值 number||string||operator(typeof cos tan)||[1,2,3]|| {a:1,b:{}} || (expression)
+   * @memberof Parser
+   */
   parseField = (exprInstr: Instruction[]): void => {
-    if (this.accept(TOKEN_NAME) || this.accept(TOKEN_OPERATOR, ({ value }) => unaryMapReg.test(value))) {
+    if (this.accept(TOKEN_NAME) || this.accept(TOKEN_OPERATOR, isUnaryOpeator)) {
       // 属于变量名称(单词)或者当前token.type 属于前缀运算 cos tan - +
       exprInstr.push(new Instruction(INSTR_VAR, this.current.value));
     } else if (this.accept(TOKEN_NUMBER)) {
@@ -336,21 +353,52 @@ export default class Parser {
       // 圆括号，调用 或 表达式(a=1)
       this.parseExpression(exprInstr);
       this.expect(TOKEN_PAREN, ')');
-    } else if(this.accept(TOKEN_SQUARE, '[')) {
+    } else if (this.accept(TOKEN_SQUARE, '[')) {
+      // Array字面量声明 TODO: 需要和 obj['a'] 做区分
       const instr = []
-      if(this.accept(TOKEN_SQUARE, ']')){ // []
+      if (this.accept(TOKEN_SQUARE, ']')) { // []
         exprInstr.push(new Instruction(INSTR_ARRAY, instr))
-        return 
+        return
       }
       this.parseExpression(instr)
       this.expect(TOKEN_SQUARE, ']')
       exprInstr.push(new Instruction(INSTR_ARRAY, instr))
+    } else if (this.accept(TOKEN_CURLY, '{', false)) {
+      // Object字面量声明
+      this.parseObjectLiteralDeclaration(exprInstr)
     } else {
       throw new Error('unexpected ' + this.nextToken);
     }
   }
 
-  printLog = (msg: string) => {
-    console.log(`%c${msg} `, `margin: 0 .5em;text-decoration-line: underline;text-decoration-color: red;text-decoration-style: wavy;line-height: 2em;color: red;`)
+  /**
+   * 解析对象字面量 { a: 1, b: 2, c: {}}
+   * @memberof Parser
+   */
+  parseObjectLiteralDeclaration = (exprInstr: Instruction[]) => {
+    while (this.accept(TOKEN_CURLY, '{')) {
+      const instr = {}
+      if (this.accept(TOKEN_CURLY, '}')) { // {}
+        exprInstr.push(new Instruction(INSTR_OBJECT, instr))
+        return
+      }
+      while (this.accept(TOKEN_NAME) || this.accept(TOKEN_NUMBER) || this.accept(TOKEN_STRING)) {
+        const key = this.current.value
+        this.expect(TOKEN_OPERATOR, ':');
+        instr[key] = [];
+        if (this.accept(TOKEN_CURLY, '{', false)) {
+          this.parseObjectLiteralDeclaration(instr[key])
+        } else {
+          this.parseConditionalExpression(instr[key]);
+        }
+        this.accept(TOKEN_COMMA, ',');
+      }
+      this.expect(TOKEN_CURLY, '}');
+      exprInstr.push(new Instruction(INSTR_OBJECT, instr))
+    }
+  }
+
+  printLog = (msg: string, tip: string,  c: Console["log" | "error" | "warn"] = console.log) => {
+    c(`${msg} %c${tip}`, `margin: 0 .5em;text-decoration-line: underline;text-decoration-color: red;text-decoration-style: wavy;line-height: 2em;color: red;`)
   }
 }

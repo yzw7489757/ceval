@@ -1,3 +1,5 @@
+import { quoteReg } from './regExp';
+
 const toString = Object.prototype.toString
 
 export function isObject(obj: object): obj is object {
@@ -46,4 +48,33 @@ export function mapVal<T extends object>(data: T, object: object, cb: (data: T, 
     return isObject(object[key]) ? mapVal(data, object[key], cb) : cb(data, key, object[key])
   })
   return data
+}
+
+/**
+ * merge two objects, the former is dominant
+ * @template T object
+ * @param {T} target
+ * @param {T} source
+ */
+export function merge<T>(target:T, source:T) {
+  Object.keys(source).forEach(key => {
+    const v = source[key]
+    if(Object.prototype.hasOwnProperty.call(target, key)) return 
+    if(v && typeof v === 'object') {
+      merge(target[key] = {}, source[key])
+    }else{
+      target[key] = source[key]
+    }
+  })
+}
+
+/**
+ * 替换\'\' \"\" 在 处理 in operator 需要到
+ * @param {string} str string Field
+ * @returns {string} 没有对称引号的字符串
+ */
+export function eliminateQuote(str: string): string {
+  if(!quoteReg.test(str)) return str
+  const res = quoteReg.exec(str)[1] || quoteReg.exec(str)[2]
+  return eliminateQuote(res)
 }

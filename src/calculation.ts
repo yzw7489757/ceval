@@ -1,4 +1,4 @@
-import Instruction, { INSTR_EXPRE, INSTR_ARRAY, INSTR_FUNCALL, INSTR_MEMBER, INSTR_NUMBER, INSTR_VAR, INSTR_OPERA2, INSTR_PLAIN, INSTR_OPERA3, INSTR_OPERA1 } from './instruction';
+import Instruction, { INSTR_EXPRE, INSTR_OBJECT, INSTR_ARRAY, INSTR_FUNCALL, INSTR_MEMBER, INSTR_NUMBER, INSTR_VAR, INSTR_OPERA2, INSTR_PLAIN, INSTR_OPERA3, INSTR_OPERA1 } from './instruction';
 import Ceval from './index';
 
 /**
@@ -11,7 +11,7 @@ import Ceval from './index';
  * @returns result or result[]
  */
 export default function calculation(tokens: Instruction[], values: object = {}, ceval: Ceval, statis = false) {
-  if(window.name) {
+  if (window.name) {
     console.log('tokens: ', tokens);
   }
   const { unaryOps, binaryOps, ternaryOps } = ceval
@@ -71,10 +71,25 @@ export default function calculation(tokens: Instruction[], values: object = {}, 
       // 成员访问 a.b b依赖于a
       [n1] = stack.splice(-1, 1);
       stack.push(n1[value]);
-    } else if(type === INSTR_ARRAY) {
+    } else if (type === INSTR_ARRAY) {
       stack.push(calculation(value, values, ceval, true))
+    } else if (type === INSTR_OBJECT) {
+      const instr = {}
+      Object.keys(value).forEach(key => {
+        instr[key] = calculation(value[key], values, ceval)
+      })
+      stack.push(instr)
     } else {
-//  
+      const _val = Symbol('_init')
+      let val = _val
+      try {
+        val = item.value
+      } catch (e) {
+        // item = undefined | null | false | true ....
+      }
+      if (val !== _val) {
+        stack.push(val)
+      }
     }
   }
   return statis ? stack : stack[0];

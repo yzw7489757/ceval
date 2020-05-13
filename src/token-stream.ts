@@ -1,4 +1,4 @@
-import Token, { TOKEN_END, TOKEN_STRING, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR, TOKEN_SQUARE } from './token';
+import Token, { TOKEN_END, TOKEN_STRING, TOKEN_COMMA, TOKEN_CURLY, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR, TOKEN_SQUARE } from './token';
 import { TypeToken, TypeCeval } from './interface';
 import { whitespaceReg, commentReg, stringReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execNumberReg, number010bitReg } from './utils/regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
@@ -76,6 +76,9 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   next = (): TypeToken => {
+    if (!this.expression.length) {
+      return this.newToken(TOKEN_NAME, "")
+    }
     if (this.pos >= this.expression.length) {
       return this.newToken(TOKEN_END, 'END');
     }
@@ -86,12 +89,12 @@ export default class TokenStream {
       this.isNumber() ||
       this.isString() ||
       this.isBoolean() ||
-      this.isSquareBrackets() ||
+      this.isParenthesis() ||
+      this.isComma() ||
       this.isOperator() ||
       this.isSemicolon() ||
       this.isConst() ||
-      this.isName() ||
-      this.isParenthesis()
+      this.isName()
     ) {
       return this.current
     } else {
@@ -287,8 +290,7 @@ export default class TokenStream {
       return false
     }
 
-
-    this.pos += result.length
+    this.pos += result[1].length
     this.current = this.newToken(TOKEN_NAME, result[1])
     return true
   }
@@ -328,14 +330,14 @@ export default class TokenStream {
   };
 
   /**
-   * 圆括号
-   * @see ;
+   * 逗号,
+   * @see ,
    * @memberof TokenStream
    */
-  isParenthesis = () => {
+  isComma = () => {
     var first = this.getSomeCode();
-    if (first === '(' || first === ')') {
-      this.current = this.newToken(TOKEN_PAREN, first);
+    if (first === ',') {
+      this.current = this.newToken(TOKEN_COMMA, ',');
       this.pos++;
       return true;
     }
@@ -343,18 +345,23 @@ export default class TokenStream {
   };
 
   /**
-   * 圆括号
+   * 圆、方括号
    * @see ;
    * @memberof TokenStream
    */
-  isSquareBrackets = () => {
+  isParenthesis = () => {
     var first = this.getSomeCode();
-    if (first === '[' || first === ']') {
+    if (contains(['(', ')'], first)) {
+      this.current = this.newToken(TOKEN_PAREN, first);
+    } else if (contains(['[', ']'], first)) {
       this.current = this.newToken(TOKEN_SQUARE, first);
-      this.pos++;
-      return true;
+    } else if (contains(['{', '}'], first)) {
+      this.current = this.newToken(TOKEN_CURLY, first);
+    } else {
+      return false
     }
-    return false;
+    this.pos++;
+    return true;
   };
 
   /**
@@ -364,7 +371,7 @@ export default class TokenStream {
    */
   isOperator = (): boolean => {
     const str = this.getSomeCode(Infinity);
-    let result
+    let result: RegExpExecArray
     if (operatorReg.test(str)) {
       operatorReg.lastIndex = 0;
       result = operatorReg.exec(str)

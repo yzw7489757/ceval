@@ -29,6 +29,7 @@ export const operatorReg = new RegExp(`^(${supportOperator.map(r => `(\\${/\b\w+
 export const unaryMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => /\b\w+\b/.test(item)).join('|')})`);
 export const unarySymbolMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => !(/\b\w+\b/.test(item))).map(r => `\\s*\\${r}\\s*`).join('|')})`);
 
+export const quoteReg = /^\"(.+)\"$|^\'(.+)\'$/;
 export const execNumberReg = (reg: RegExp, expr: string, cb: <T>(v: T) => T = (v => v)): string | undefined => {
   reg.lastIndex = 0;
   const result = reg.exec(expr);
@@ -38,3 +39,7 @@ export const execNumberReg = (reg: RegExp, expr: string, cb: <T>(v: T) => T = (v
     return cb(result[1])
   }
 }
+
+export const isUnaryOpeator = ({ value }) => Object.prototype.hasOwnProperty.call(system.unaryOps, value)
+export const isBinaryOpeator = ({ value }) => Object.prototype.hasOwnProperty.call(system.binaryOps, value)
+export const isTernaryOpeator = ({ value }) => Object.prototype.hasOwnProperty.call(system.ternaryOps, value)
