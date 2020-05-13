@@ -61,6 +61,9 @@ const system = {
     cos: Math.cos,
     tan: Math.tan,
     pow: Math.pow,
+  },
+  syntaxOperator: {
+    ',': null
   }
 }
 
@@ -76,6 +79,8 @@ export type TypeUnary = typeof system.unaryOps;
 export type TypeBinary = typeof system.binaryOps;
 /** @desc 三元运算符 */
 export type TypeTernary = typeof system.ternaryOps;
+/** @desc 词法操作符 */
+export type TypeSyntax = typeof system.syntaxOperator;
 
 /** @desc 运算符映射表 */
 export const optionNameMap = mapVal({}, system, (maps, key, val) => maps[key] = val)

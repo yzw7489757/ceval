@@ -11,13 +11,13 @@ import { unarySymbolMapReg, unaryMapReg } from './utils/regExp';
  */
 export default class Parser {
 
-  current: Instruction = null;
+  current: Instruction | null = null;
 
-  savedCurrent: Instruction = null;
+  savedCurrent: Instruction | null = null;
 
-  nextToken: TypeToken = null;
+  nextToken: TypeToken | null = null;
 
-  savedNextToken: TypeToken = null;
+  savedNextToken: TypeToken | null = null;
 
   constructor(public parser: Ceval, public tokens: TypeTokenStream, exprInstr: Instruction[]) {
     this.next();
@@ -54,7 +54,7 @@ export default class Parser {
    * @argument next 允许next？
    * @memberof Parser
    */
-  accept = (type: string, value?, next = true) => {
+  accept = (type: string, value?, next = true): boolean => {
     if (this.nextToken && (this.nextToken.type === type) && this.matchToken(value)) {
       if (next) this.next()
       return true
@@ -62,39 +62,43 @@ export default class Parser {
     return false
   }
 
-  expect = (type: string, value?) => {
+  expect = (type: string, value?): never | void => {
     if (!this.accept(type, value)) {
       throw new Error('Unexpected resolution');
     }
   }
 
-  temporarySaved = () => {
+  temporarySaved = (): void => {
     this.savedCurrent = this.current;
     this.savedNextToken = this.nextToken;
 
     this.tokens.temporarySaved()
   }
 
-  restore = () => {
+  restore = (): void => {
     this.current = this.savedCurrent;
     this.nextToken = this.savedNextToken;
     this.tokens.restore()
   }
 
-  parseExpression = (instr: Instruction[]) => {
+  parseExpression = (instr: Instruction[]): void => {
     const exprInstr: Instruction[] = []
-    this.parseAssignmentExpression(exprInstr)
+    this.parseMultipleEvaluation(exprInstr)
 
     exprInstr.forEach(exp => (instr.push(exp)))
   }
 
-  // parseMultipleEvaluation = (exprInstr: Instruction[]): void => {
-  //   this.parseAssignmentExpression(exprInstr)
+  /**
+   * 解析连续求值 例如 数组字面量 [1, 2, [3, 4, 5]]  (1, 2, 3)
+   * @memberof Parser
+   */
+  parseMultipleEvaluation = (exprInstr: Instruction[]): void => {
+    this.parseAssignmentExpression(exprInstr)
 
-  //   while (this.accept(TOKEN_OPERATOR, ',')) {
-  //     // 
-  //   }
-  // }
+    while (this.accept(TOKEN_OPERATOR, ',')) {
+      this.parseExpression(exprInstr)
+    }
+  }
 
   /**
    * 解析变量赋值表达式 TOKEN_OPERATOR =
@@ -332,6 +336,15 @@ export default class Parser {
       // 圆括号，调用 或 表达式(a=1)
       this.parseExpression(exprInstr);
       this.expect(TOKEN_PAREN, ')');
+    } else if(this.accept(TOKEN_SQUARE, '[')) {
+      const instr = []
+      if(this.accept(TOKEN_SQUARE, ']')){ // []
+        exprInstr.push(new Instruction(INSTR_ARRAY, instr))
+        return 
+      }
+      this.parseExpression(instr)
+      this.expect(TOKEN_SQUARE, ']')
+      exprInstr.push(new Instruction(INSTR_ARRAY, instr))
     } else {
       throw new Error('unexpected ' + this.nextToken);
     }

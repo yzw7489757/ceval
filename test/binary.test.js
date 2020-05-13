@@ -373,10 +373,6 @@ test('binary =', () => {
 
 }, 0)
 
-test('binary []', () => {
-
-}, 0)
-
 test('binary ===', () => {
   expect(parse(`1 === 1`)).toBe(true)
   expect(parse(`0 === 5`)).toBe(false)

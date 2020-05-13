@@ -6,7 +6,8 @@ const supportOperator = Array.from(new Set(
   [].concat(
     Object.keys(system.unaryOps).filter(item => !/\b\w+\b/.test(item)),
     Object.keys(system.binaryOps),
-    Object.keys(system.ternaryOps)
+    Object.keys(system.ternaryOps),
+    Object.keys(system.syntaxOperator)
   )
     .filter(op => !contains(BLACK_LIST_OPERATORS, op))
     .sort((a, b) => b.length - a.length)

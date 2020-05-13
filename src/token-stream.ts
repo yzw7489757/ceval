@@ -1,4 +1,4 @@
-import Token, { TOKEN_END, TOKEN_STRING, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR } from './token';
+import Token, { TOKEN_END, TOKEN_STRING, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR, TOKEN_SQUARE } from './token';
 import { TypeToken, TypeCeval } from './interface';
 import { whitespaceReg, commentReg, stringReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execNumberReg, number010bitReg } from './utils/regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
@@ -86,6 +86,7 @@ export default class TokenStream {
       this.isNumber() ||
       this.isString() ||
       this.isBoolean() ||
+      this.isSquareBrackets() ||
       this.isOperator() ||
       this.isSemicolon() ||
       this.isConst() ||
@@ -335,6 +336,21 @@ export default class TokenStream {
     var first = this.getSomeCode();
     if (first === '(' || first === ')') {
       this.current = this.newToken(TOKEN_PAREN, first);
+      this.pos++;
+      return true;
+    }
+    return false;
+  };
+
+  /**
+   * 圆括号
+   * @see ;
+   * @memberof TokenStream
+   */
+  isSquareBrackets = () => {
+    var first = this.getSomeCode();
+    if (first === '[' || first === ']') {
+      this.current = this.newToken(TOKEN_SQUARE, first);
       this.pos++;
       return true;
     }
