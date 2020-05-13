@@ -2,7 +2,6 @@ import Instruction, { INSTR_EXPRE, INSTR_FUNCALL, INSTR_MEMBER, INSTR_NUMBER, IN
 import Ceval from './index';
 
 export default function calculation(tokens: Instruction[], values: object = {}, ceval: Ceval) {
-  console.log('tokens: ', tokens);
   const { unaryOps, binaryOps, ternaryOps } = ceval
   const stack = [];
   const { length } = tokens;

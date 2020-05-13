@@ -1,6 +1,6 @@
 import Token, { TOKEN_END, TOKEN_STRING, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR } from './token';
 import { TypeToken, TypeCeval } from './interface';
-import { whitespaceReg, commentReg, stringReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execNumberReg, number010bitReg } from './regExp';
+import { whitespaceReg, commentReg, stringReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execNumberReg, number010bitReg } from './utils/regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
 import { contains } from './utils/index';
 
@@ -343,14 +343,12 @@ export default class TokenStream {
 
   /**
    * 判断是否操作符 
-   * @see 操作符 + - * / || % ^ ? : . > < = >= <= | == === != !== 
+   * @see 操作符 + - * / || % ^ ? : . > < = >= <= | == === != !== in
    * @memberof TokenStream
    */
   isOperator = (): boolean => {
-    const str = this.getSomeCode(Infinity); // 操作符至多3位
+    const str = this.getSomeCode(Infinity);
     let result
-    console.log(str)
-    console.log('operatorReg.test(str): ', operatorReg);
     if (operatorReg.test(str)) {
       operatorReg.lastIndex = 0;
       result = operatorReg.exec(str)

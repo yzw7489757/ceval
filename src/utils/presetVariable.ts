@@ -1,5 +1,5 @@
-import { getTime } from './utils/index';
-import { name, version } from '../package.json';
+import { getTime } from './index';
+import { name, version } from '../../package.json';
 
 const [date, time] = getTime()
 

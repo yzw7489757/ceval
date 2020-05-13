@@ -1,9 +1,9 @@
 import Parser from './parser';
-import system, { TypeUnary, TypeBinary, TypeTernary, TypeConst, TypeFunction, optionNameMap } from './system';
+import systemMap, { TypeUnary, TypeBinary, TypeTernary, TypeConst, TypeFunction, optionNameMap } from './systemMap';
 import TokenStream from './token-stream';
 import Instruction from './instruction';
 import calculation from './calculation';
-import presetVariable from './presetVariable';
+import presetVariable from './utils/presetVariable';
 
 interface Options {
   /* @desc 允许使用运算符 */
@@ -33,7 +33,7 @@ export default class Ceval {
 
   constructor(public options: Options = {}) {
     Object.assign(defaultOptions, this.options)
-    Object.assign(this, system)
+    Object.assign(this, systemMap)
   }
 
   /**

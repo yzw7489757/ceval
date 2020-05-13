@@ -2,7 +2,7 @@ import Ceval from './index';
 import { TypeTokenStream, TypeToken } from './interface';
 import Instruction, { INSTR_EXPRE, INSTR_FUNCALL, INSTR_OPERA1, INSTR_MEMBER, INSTR_OPERA2, INSTR_OPERA3, INSTR_ARRAY, INSTR_NUMBER, INSTR_VAR } from './instruction';
 import { TOKEN_OPERATOR, TOKEN_NAME, TOKEN_SQUARE, TOKEN_PAREN, TOKEN_NUMBER, TOKEN_STRING, TOKEN_COMMA, TOKEN_SEMICOLON, TOKEN_END } from './token';
-import { unarySymbolMapReg, unaryMapReg } from './regExp';
+import { unarySymbolMapReg, unaryMapReg } from './utils/regExp';
 
 /**
  * 解析器
@@ -24,11 +24,11 @@ export default class Parser {
     this.parseExpression(exprInstr)
   }
 
-  static generatorParser = (parser: Ceval, tokens: TypeTokenStream, exprInstr: Instruction[]) => {
+  static generatorParser = (parser: Ceval, tokens: TypeTokenStream, exprInstr: Instruction[]): Parser => {
     return new Parser(parser, tokens, exprInstr)
   }
 
-  next = () => {
+  next = (): TypeToken => {
     this.current = this.nextToken;
     this.nextToken = this.tokens.next()
     return this.nextToken

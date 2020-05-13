@@ -3,11 +3,11 @@ import {
   // 功能性
   random, min, max, arrayMap as map,
   // 二元
-  add, sub, mul, divide, mod, concat, equal, notEqual, greaterThan, lessThan, greaterThanEqual, lessThanEqual, inOperator, setVar, arrayIndex, bitWiseOr, strictNotEqual,
+  add, sub, mul, divide, mod, withOr, withAlso, equal, notEqual, greaterThan, lessThan, greaterThanEqual, lessThanEqual, inTheArr, setVar, arrayIndex, bitWiseOr, strictNotEqual,
   // 三元
   condition,
   strictEqual
-} from './functions';
+} from './utils/functions';
 
 const system = {
   functions: {
@@ -31,7 +31,8 @@ const system = {
     '/': divide,
     '%': mod,
     '^': bitWiseOr,
-    '||': concat,
+    '||': withOr,
+    '&&': withAlso,
     '==': equal,
     '!=': notEqual,
     '!==': strictNotEqual,
@@ -42,7 +43,7 @@ const system = {
     '=': setVar,
     '[': arrayIndex,
     '===': strictEqual,
-    'in': inOperator,
+    'in': inTheArr,
     // 'instanceOf'
   },
   ternaryOps: {

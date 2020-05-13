@@ -1,14 +1,14 @@
-import system from './system';
-import { contains } from './utils/index';
+import system from '../systemMap';
+import { contains } from './index';
 
-const WHITE_LIST = []
+const BLACK_LIST_OPERATORS = []
 const supportOperator = Array.from(new Set(
   [].concat(
     Object.keys(system.unaryOps).filter(item => !/\b\w+\b/.test(item)),
     Object.keys(system.binaryOps),
     Object.keys(system.ternaryOps)
   )
-    .filter(op => !contains(WHITE_LIST, op))
+    .filter(op => !contains(BLACK_LIST_OPERATORS, op))
     .sort((a, b) => b.length - a.length)
 ))
 
@@ -16,11 +16,13 @@ export const whitespaceReg = /(\t|\n|\r|\s+)/;
 export const booleanReg = /^(false|true)/;
 export const commentReg = /^\/\*(.+)\*\//;
 export const stringReg = /^((\"(.+)\")|(\'(.+)\'))/;
+
 export const number2bitReg = /^(0b[0|1]{1,})$/;
 export const number8bitReg = /^(0[0-7]{1,})$/;
 export const number010bitReg = /^(0\d*[8-9]{1,}\d*(\.\d+)?)$/; // 0开头的十进制 019 038 078
 export const number10bitReg = /(^([1-9]\d*(\.\d+)|(\d*(\.\d+)?)))/; // 1-9 或者.开头的十进制
 export const number16bitReg = /^(0x[0-9a-fA-F]{1,})$/;
+
 export const variableReg = /^((_|$)?[0-9a-zA-Z|$|_]{1,})/;
 export const operatorReg = new RegExp(`^(${supportOperator.map(r => `(\\${/\b\w+\b/.test(r) ? r : r.split('').join('\\')})`).join('|')})`);
 export const unaryMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => /\b\w+\b/.test(item)).join('|')})`);
