@@ -9,7 +9,7 @@ import { contains } from './utils/index';
  * @class TokenStream
  */
 export default class TokenStream {
-  // 当前指针
+  // 当前指针下标
   pos = 0;
 
   // 当前解析character
@@ -155,7 +155,7 @@ export default class TokenStream {
   }
 
   /**
-   * 申明变量
+   * 申明变量 TODO:support
    * @memberof TokenStream
    */
   isVariable = (): boolean => {
@@ -388,6 +388,10 @@ export default class TokenStream {
     return false
   }
 
+  /**
+   * 获取当前character定位
+   * @memberof TokenStream
+   */
   getCoordinates = (): { line: number, column: number } => {
     let line = 0;
     let column = 0;
@@ -405,6 +409,10 @@ export default class TokenStream {
     };
   };
 
+  /**
+   * 解析出错
+   * @memberof TokenStream
+   */
   parseError = (msg: string, ErrorType: ErrorConstructor | SyntaxErrorConstructor | TypeErrorConstructor = Error) => {
     var coords = this.getCoordinates();
     throw new ErrorType('parse error [' + coords.line + ':' + coords.column + '] => ' + msg);

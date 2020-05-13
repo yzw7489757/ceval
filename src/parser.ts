@@ -10,13 +10,24 @@ import { unarySymbolMapReg, isUnaryOpeator } from './utils/regExp';
  * @class Parser
  */
 export default class Parser {
-
+  /**
+   * @desc 当前TOKEN指针
+   */
   current: Instruction | null = null;
 
+  /**
+   * @desc 暂存指针
+   */
   savedCurrent: Instruction | null = null;
 
+  /**
+   * @desc 下个TOKEN指针对象
+   */
   nextToken: TypeToken | null = null;
 
+  /**
+   * @desc 暂存next TOKEN
+   */
   savedNextToken: TypeToken | null = null;
 
   constructor(public parser: Ceval, public tokens: TypeTokenStream, exprInstr: Instruction[]) {
@@ -24,16 +35,27 @@ export default class Parser {
     this.parseExpression(exprInstr)
   }
 
+  /**
+   * 生成实例解析表达式，简化调用方式
+   * @memberof Parser
+   */
   static generatorParser = (parser: Ceval, tokens: TypeTokenStream, exprInstr: Instruction[]): Parser => {
     return new Parser(parser, tokens, exprInstr)
   }
 
+  /**
+   * Token指针向下位移
+   * @memberof Parser
+   */
   next = (): TypeToken => {
     this.current = this.nextToken;
-    this.nextToken = this.tokens.next()
-    return this.nextToken
+    return (this.nextToken = this.tokens.next())
   }
 
+  /**
+   * 条件是否命中Token真值
+   * @memberof Parser
+   */
   matchToken = (value: undefined | ((value: TypeToken) => boolean) | string | number): boolean => {
     if (value === undefined) {
       return true
@@ -49,9 +71,10 @@ export default class Parser {
   }
 
   /**
-   * @argument type 约定的类型
-   * @argument value 明确规定的字面值，比如 [ ] , =
-   * @argument next 允许next？
+   * 预判是否符合预期，符合&&next 即解析下个token
+   * @param {type} 约定的类型
+   * @param {value} 明确规定的字面值，比如 ] , =
+   * @param {next} 允许next？
    * @memberof Parser
    */
   accept = (type: string, value?, next = true): boolean => {
@@ -62,6 +85,12 @@ export default class Parser {
     return false
   }
 
+  /**
+   * accpet + 断言
+   * @param {type} 约定的类型
+   * @param {value} 明确规定的字面值，比如 ] , =
+   * @memberof Parser
+   */
   expect = (type: string, value?): never | void => {
     if (!this.accept(type, value)) {
       const { line, column } = this.tokens.getCoordinates()
@@ -71,7 +100,11 @@ export default class Parser {
       throw new Error('Unexpected Tag');
     }
   }
-
+    
+  /**
+   * 暂存指针，在某些情况下单一的nextToken已经不满足预判情况，例如 typeof(add) || add(1, 2) || 1 + add;
+   * @memberof Parser
+   */
   temporarySaved = (): void => {
     this.savedCurrent = this.current;
     this.savedNextToken = this.nextToken;
@@ -79,12 +112,21 @@ export default class Parser {
     this.tokens.temporarySaved()
   }
 
+  /**
+   * 恢复指针
+   * @memberof Parser
+   */
   restore = (): void => {
     this.current = this.savedCurrent;
     this.nextToken = this.savedNextToken;
     this.tokens.restore()
   }
-
+    
+  /**
+   * 解析表达式整个句柄
+   * @see 如果只是求参或解析字面量，请从Conditional开始，因为MultipleEvaluation可能会误会语义，e.g.{a:1,b:2}中的“1,b:2”
+   * @memberof Parser
+   */
   parseExpression = (instr: Instruction[]): void => {
     const exprInstr: Instruction[] = []
     this.parseMultipleEvaluation(exprInstr)
@@ -398,6 +440,10 @@ export default class Parser {
     }
   }
 
+  /**
+   * 增加提示
+   * @memberof Parser
+   */
   printLog = (msg: string, tip: string,  c: Console["log" | "error" | "warn"] = console.log) => {
     c(`${msg} %c${tip}`, `margin: 0 .5em;text-decoration-line: underline;text-decoration-color: red;text-decoration-style: wavy;line-height: 2em;color: red;`)
   }
