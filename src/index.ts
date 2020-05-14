@@ -18,8 +18,10 @@ export default class Ceval {
 
   functions: TypeFunction;
 
+  private currentValues: Record<string, any> = {};
+
   constructor(public options: Readonly<CevalOptions> = {}) {
-    Object.assign(this, systemMap)
+    Object.assign(this, systemMap);
     merge(this.options, new CevalOptions())
   }
 
@@ -32,7 +34,11 @@ export default class Ceval {
     return Object.prototype.hasOwnProperty.call(optionNameMap, ops) ? optionNameMap[ops] : null
   }
 
-  parseString = (expression: string, values = {}) => {
+  /**
+   * 解析字符串，对外暴露方法
+   * @memberof Ceval
+   */
+  parseString = (expression: string, values: Record<string, any> = {}) => {
     const instr: Instruction[] = [];
 
     Parser.generatorParser(this, new TokenStream(this, expression), instr)
@@ -40,10 +46,24 @@ export default class Ceval {
     return this.injectValueToCalc(instr, values)
   }
 
-  injectValueToCalc = (tokens: Instruction[], values: object = {}): any => {
+  /**
+   * 获取当前数据池 预置+外置+内声明
+   * @returns 数据池
+   * @memberof Ceval
+   */
+  getCurrentValues = (): Record<string, any> => this.currentValues;
+
+  /**
+   * 传入指令集开始计算
+   * @param {tokens} Instruction[] 指令集
+   * @param {Record<string, any>} [values={}] 数据池
+   * @memberof Ceval
+   */
+  injectValueToCalc = (tokens: Instruction[], values: Record<string, any> = {}): any => {
     // @TODO 检查敏感字
     // @TODO 检查关键字
-    const result = calculation(tokens, Object.assign(presetVariable, values), this)
+    this.currentValues = Object.assign(presetVariable, values)
+    const result = calculation(tokens, this.currentValues, this)
     return result === undefined ? this.options.defaultReturnValues : result
   }
 

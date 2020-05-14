@@ -6,10 +6,12 @@ export const INSTR_OPERA1 = 'INSTR_OP1';
 export const INSTR_OPERA2 = 'INSTR_OP2';
 /** @desc 三元运算符 */
 export const INSTR_OPERA3 = 'INSTR_OP3';
-/** @desc 变量类型 */
+/** @desc 变量类型 const let var */
 export const INSTR_VAR = 'INSTR_VAR';
 /** @desc 变量名称, 区别是内声明 TODO: var obj = {} */
 export const INSTR_VARNAME = 'INSTR_VARNAME';
+/** @desc 变量名称, 取值, 没有经过声明的名称，例如 undefined, null, 以及数据池中的数据 */
+export const INSTR_NAME = 'INSTR_NAME';
 /** @desc 函数调用 */
 export const INSTR_FUNCALL = 'INSTR_FUNCALL';
 /** @desc 对象成员访问 */

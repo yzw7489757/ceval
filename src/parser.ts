@@ -1,6 +1,6 @@
 import Ceval from './index';
 import { TypeTokenStream, TypeToken } from './interface';
-import Instruction, { INSTR_EXPRE, INSTR_FUNCALL, INSTR_OBJECT, INSTR_OPERA1, INSTR_MEMBER, INSTR_OPERA2, INSTR_OPERA3, INSTR_ARRAY, INSTR_NUMBER, INSTR_VAR } from './instruction';
+import Instruction, { INSTR_EXPRE, INSTR_PLAIN, INSTR_VARNAME, INSTR_NAME, INSTR_FUNCALL, INSTR_OBJECT, INSTR_OPERA1, INSTR_MEMBER, INSTR_OPERA2, INSTR_OPERA3, INSTR_ARRAY, INSTR_NUMBER, INSTR_VAR } from './instruction';
 import { TOKEN_OPERATOR, TOKEN_NAME, TOKEN_SQUARE, TOKEN_PAREN, TOKEN_NUMBER, TOKEN_STRING, TOKEN_COMMA, TOKEN_SEMICOLON, TOKEN_END, TOKEN_CURLY, TOKEN_VAR } from './token';
 import { unarySymbolMapReg, isUnaryOpeator } from './utils/regExp';
 
@@ -94,13 +94,13 @@ export default class Parser {
   expect = (type: string, value?): never | void => {
     if (!this.accept(type, value)) {
       const { line, column } = this.tokens.getCoordinates()
-      this.printLog(`> line:${line} column:${column-1} "${this.current.value}"\nThe next tag should be "${value}", But the reality is`,`${this.nextToken.type === TOKEN_END ? 'empty content' : `"${this.nextToken.value}"`}`
+      this.printLog(`> line:${line} column:${column - 1} "${this.current.value}"\nThe next tag should be "${value}", But the reality is`, `${this.nextToken.type === TOKEN_END ? 'empty content' : `"${this.nextToken.value}"`}`
         , console.error
       )
       throw new Error('Unexpected Tag');
     }
   }
-    
+
   /**
    * 暂存指针，在某些情况下单一的nextToken已经不满足预判情况，例如 typeof(add) || add(1, 2) || 1 + add;
    * @memberof Parser
@@ -121,7 +121,7 @@ export default class Parser {
     this.nextToken = this.savedNextToken;
     this.tokens.restore()
   }
-    
+
   /**
    * 解析表达式整个句柄
    * @see 如果只是求参或解析字面量，请从Conditional开始，因为MultipleEvaluation可能会误会语义，e.g.{a:1,b:2}中的“1,b:2”
@@ -139,21 +139,45 @@ export default class Parser {
    * @memberof Parser
    */
   parseMultipleEvaluation = (exprInstr: Instruction[]): void => {
-    this.parseAssignmentExpression(exprInstr)
-
+    this.parseVariableAssignmentExpression(exprInstr)
     while (this.accept(TOKEN_COMMA, ',')) {
-      this.parseExpression(exprInstr)
+      this.parseConditionalExpression(exprInstr)
     }
   }
 
   /**
-   * 解析变量赋值表达式 TOKEN_OPERATOR =
+   * 解析变量前置赋值关键字 TOKEN_VAR  
+   * @memberof Parser
+   */
+  parseVariableAssignmentExpression = (exprInstr: Instruction[]): void => {
+    if (!this.accept(TOKEN_VAR, undefined, false)) {
+      this.parseConditionalExpression(exprInstr)
+    } else {
+      while (this.accept(TOKEN_VAR, ['const', 'var', 'let'])) {
+        const current = this.current
+        this.parseAssignmentExpression(exprInstr)
+        exprInstr.push(new Instruction(INSTR_VAR, current.value))
+        this.expect(TOKEN_SEMICOLON, ';')
+      }
+      if (this.nextToken.type !== TOKEN_END) {
+        this.parseVariableAssignmentExpression(exprInstr)
+      }
+    }
+  }
+
+  /**
+   * 解析变量赋值表达式 TOKEN_OPERATOR name =
    * @memberof Parser
    */
   parseAssignmentExpression = (exprInstr: Instruction[]): void => {
-    this.parseConditionalExpression(exprInstr)
-    while (this.accept(TOKEN_OPERATOR, '=')) {
-      // this.parseExpression()
+    while (this.accept(TOKEN_NAME)) {
+      const currentVariable = this.current
+      while (this.accept(TOKEN_OPERATOR, '=')) {
+        const instr: Instruction[] = []
+        this.parseExpression(instr)
+        exprInstr.push(new Instruction(INSTR_EXPRE, instr))
+        exprInstr.push(new Instruction(INSTR_VARNAME, currentVariable.value))
+      }
     }
   }
 
@@ -382,15 +406,17 @@ export default class Parser {
    * @memberof Parser
    */
   parseField = (exprInstr: Instruction[]): void => {
-    if (this.accept(TOKEN_NAME) || this.accept(TOKEN_OPERATOR, isUnaryOpeator)) {
+    if (this.accept(TOKEN_OPERATOR, isUnaryOpeator)) {
       // 属于变量名称(单词)或者当前token.type 属于前缀运算 cos tan - +
-      exprInstr.push(new Instruction(INSTR_VAR, this.current.value));
+      exprInstr.push(new Instruction(INSTR_OPERA1, this.current.value));
+    } else if (this.accept(TOKEN_NAME)) {
+      exprInstr.push(new Instruction(INSTR_NAME, this.current.value));
     } else if (this.accept(TOKEN_NUMBER)) {
       // 数字类型
       exprInstr.push(new Instruction(INSTR_NUMBER, this.current.value));
     } else if (this.accept(TOKEN_STRING)) {
       // 字符串类型 \"name\"
-      exprInstr.push(new Instruction(INSTR_NUMBER, this.current.value));
+      exprInstr.push(new Instruction(INSTR_PLAIN, this.current.value));
     } else if (this.accept(TOKEN_PAREN, '(')) {
       // 圆括号，调用 或 表达式(a=1)
       this.parseExpression(exprInstr);
@@ -444,7 +470,7 @@ export default class Parser {
    * 增加提示
    * @memberof Parser
    */
-  printLog = (msg: string, tip: string,  c: Console["log" | "error" | "warn"] = console.log) => {
+  printLog = (msg: string, tip: string, c: Console["log" | "error" | "warn"] = console.log) => {
     c(`${msg} %c${tip}`, `margin: 0 .5em;text-decoration-line: underline;text-decoration-color: red;text-decoration-style: wavy;line-height: 2em;color: red;`)
   }
 }

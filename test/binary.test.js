@@ -388,12 +388,6 @@ test('binary in', () => {
   // expect(parse(`\'e\' in ${obj}.d`)).toBe(false)
 }, 0)
 
-test('binary =', () => {
-  // TODO: support assignment literal declaration
-
-  // expect(parse(`var obj = { a: '1', b: 2, c: 3, d: { e: 4, f: 5}}`))
-  // expect(parse(`var obj = b = { a: '1', b: 2, c: 3, d: { e: 4, f: 5}}`))
-}, 0)
 
 test('binary ===', () => {
   expect(parse(`1 === 1`)).toBe(true)

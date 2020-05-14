@@ -16,7 +16,7 @@ const supportOperator = Array.from(new Set(
 export const whitespaceReg = /(\t|\n|\r|\s+)/;
 export const booleanReg = /^(false|true)/;
 export const commentReg = /^\/\*(.+)\*\//;
-export const stringReg = /^((\"(.+)\")|(\'(.+)\'))/;
+export const stringReg = /^\"(.*)\"|^\'(.*)\'/;
 
 export const number2bitReg = /^(0b[0|1]{1,})$/;
 export const number8bitReg = /^(0[0-7]{1,})$/;

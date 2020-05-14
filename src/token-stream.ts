@@ -59,7 +59,7 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   getFirstWord = (): string => {
-    const result = this.expression.match(/\b\w*\b/)
+    const result = this.expression.substr(this.pos).match(/\b\w*\b/)
     return result ? result[0] : ''
   }
 
@@ -94,6 +94,7 @@ export default class TokenStream {
       this.isOperator() ||
       this.isSemicolon() ||
       this.isConst() ||
+      this.isVariable() ||
       this.isName()
     ) {
       return this.current
@@ -164,8 +165,9 @@ export default class TokenStream {
       this.pos += word.length;
       this.current = this.newToken(TOKEN_VAR, word)
       const nextToken = this.checkNextAccessGrammar()
+
       if (nextToken.type !== TOKEN_NAME) {
-        throw new Error(`${word} ${nextToken.value} : This syntax Not as expected, should be ${TOKEN_NAME}, but is ${nextToken.type}`)
+        throw new Error(`"${word}" ${nextToken.value} : This syntax Not as expected, should be "${TOKEN_NAME}", but is "${nextToken}"`)
       }
       return true
     }
@@ -243,7 +245,7 @@ export default class TokenStream {
 
   /**
    * 字符串
-   * @see 说明 需要考虑到 2进制0b10100 === 8进制024 === 10进制20 === 16进制0x14 === 10e0 === 20.000
+   * @see '' \'\' \"\" \"\'\'\"
    * @memberof TokenStream
    */
   isString = (): boolean => {
@@ -251,9 +253,13 @@ export default class TokenStream {
 
     if (first === '\"' || first === '\'') {
       const matchString = stringReg.exec(this.getSomeCode(Infinity));
-      if (matchString && matchString[1]) {
-        this.current = this.newToken(TOKEN_STRING, matchString[1], this.pos)
-        this.pos += matchString[1].length;
+      let strContent: string | undefined
+      if (matchString) {
+        strContent = matchString[1] !== undefined ? matchString[1] : matchString[2]
+      }
+      if (strContent !== undefined) {
+        this.current = this.newToken(TOKEN_STRING, strContent, this.pos)
+        this.pos += (strContent.length + 2); // "" 是没有长度的，会导致Token指针一直处于 "" 
         return true
       }
     }

@@ -29,7 +29,7 @@ export function getTime(offset = 0): string[] {
   if(parseInt(clock.match(/\d+/)[0], 10) < 10){
     clock = `0${clock}`
   }
-  const date = time.split(' ')[0].replace('/', '-')
+  const date = time.split(' ')[0].replace(/\//g, '-')
   return [date, clock]
 }
 

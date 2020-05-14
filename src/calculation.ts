@@ -1,4 +1,4 @@
-import Instruction, { INSTR_EXPRE, INSTR_OBJECT, INSTR_ARRAY, INSTR_FUNCALL, INSTR_MEMBER, INSTR_NUMBER, INSTR_VAR, INSTR_OPERA2, INSTR_PLAIN, INSTR_OPERA3, INSTR_OPERA1 } from './instruction';
+import Instruction, { INSTR_EXPRE, INSTR_VARNAME, INSTR_NAME, INSTR_OBJECT, INSTR_ARRAY, INSTR_FUNCALL, INSTR_MEMBER, INSTR_NUMBER, INSTR_VAR, INSTR_OPERA2, INSTR_PLAIN, INSTR_OPERA3, INSTR_OPERA1 } from './instruction';
 import Ceval from './index';
 
 /**
@@ -27,16 +27,19 @@ export default function calculation(tokens: Instruction[], values: object = {}, 
 
     if (!type) {
       stack.push(item)
+      continue
     }
 
     if (type === INSTR_NUMBER || type === INSTR_PLAIN) {
       stack.push(value)
-    } else if (type === INSTR_VAR) {
+    } else if (type === INSTR_NAME) {
       if (Object.prototype.hasOwnProperty.call(values, value)) {
         // customVal
         stack.push(values[value])
       } else if (Object.prototype.hasOwnProperty.call(ceval.consts, value)) {
         stack.push(ceval.consts[value])
+      } else {
+        throw new Error(`${value} is not defined in values or consts`)
       }
     } else if (type === INSTR_OPERA1 && stack.length > 0) {
       // 一元运算，需要一个操作数
@@ -72,15 +75,47 @@ export default function calculation(tokens: Instruction[], values: object = {}, 
       [n1] = stack.splice(-1, 1);
       stack.push(n1[value]);
     } else if (type === INSTR_ARRAY) {
+      // 数组字面量
       stack.push(calculation(value, values, ceval, true))
     } else if (type === INSTR_OBJECT) {
+      // 对象字面量
       const instr = {}
       Object.keys(value).forEach(key => {
         instr[key] = calculation(value[key], values, ceval)
       })
       stack.push(instr)
+    } else if (type === INSTR_VAR) {
+      // 赋值表达式
+      // const _scope = {} TODO: 作用域
+      // 临时方案，储存在values中
+      [n1, n2] = stack.splice(-2, 2)
+      let alreadyStatement = false
+      if(
+        Object.prototype.hasOwnProperty.call(ceval.consts, n2) ||
+        Object.prototype.hasOwnProperty.call(values, n2)
+      ){
+        alreadyStatement = true
+      }
+      switch(value){
+        case 'let':
+        case 'const': {
+          // let const的行为待定义
+          if(alreadyStatement) {
+            console.warn(`${n2} already statement in consts or values`)
+          }
+          break
+        }
+        case 'var': {
+          values[n2] = n1;
+          break
+        }
+        default: {
+          console.warn('Unexpected claim identifier')
+          break;
+        }
+      }
     } else {
-      const _val = Symbol('_init')
+      const _val = Symbol('_init') // 值可能就是undefined，做区分
       let val = _val
       try {
         val = item.value
@@ -93,5 +128,4 @@ export default function calculation(tokens: Instruction[], values: object = {}, 
     }
   }
   return statis ? stack : stack[0];
-
 }
