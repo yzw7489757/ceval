@@ -71,9 +71,14 @@ export default function calculation(tokens: Instruction[], values: object = {}, 
       stack.push(calculation(item.value as unknown as Instruction[], values, ceval, statis))
       // 表达式
     } else if (type === INSTR_MEMBER && stack.length > 0) {
-      // 成员访问 a.b b依赖于a
-      [n1] = stack.splice(-1, 1);
-      stack.push(n1[value]);
+      // 成员访问
+      if(!value) { // a["b"]
+        [n1, n2] = stack.splice(-2, 2);
+        stack.push(n1[n2]);
+        continue
+      }
+      n1 = stack.pop(); // a.b
+      stack.push(n1[value])
     } else if (type === INSTR_ARRAY) {
       // 数组字面量
       stack.push(calculation(value, values, ceval, true))

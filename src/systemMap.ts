@@ -63,7 +63,8 @@ const system = {
     pow: Math.pow,
   },
   syntaxOperator: {
-    ':': null
+    ':': null,
+    '.': null
   }
 }
 

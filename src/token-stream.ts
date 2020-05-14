@@ -1,8 +1,8 @@
 import Token, { TOKEN_END, TOKEN_STRING, TOKEN_COMMA, TOKEN_CURLY, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR, TOKEN_SQUARE } from './token';
 import { TypeToken, TypeCeval } from './interface';
-import { whitespaceReg, commentReg, stringReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execNumberReg, number010bitReg } from './utils/regExp';
+import { whitespaceReg, commentReg, stringReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execNumberReg, number010bitReg, stringGreedyReg } from './utils/regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
-import { contains } from './utils/index';
+import { contains, isPalindrome, filterUndefine } from './utils/index';
 
 /**
  * 语法解析
@@ -185,7 +185,7 @@ export default class TokenStream {
     let bit: number
     const expr = this.getSomeCode(this.expression.length - this.pos)
 
-    if (/\d|\./.test(first) === false) return false
+    if ((/\d|\./.test(first) === false) || (first === '.' && /\.\d/.test(this.getSomeCode(2)) === false)) return false
 
     const [n] = expr.match(/^(0(x|b)+[0-9a-zA-Z]{1,})|(^0?\d*(\.\d+)?)/); // 019 可能会被8进制拦截掉01， 所以必须要做^$
 
@@ -250,16 +250,23 @@ export default class TokenStream {
    */
   isString = (): boolean => {
     const first = this.getSomeCode()
-
+    const expr = this.getSomeCode(Infinity)
+    let matchString: RegExpExecArray | undefined
+    let strContent: string | undefined
     if (first === '\"' || first === '\'') {
-      const matchString = stringReg.exec(this.getSomeCode(Infinity));
-      let strContent: string | undefined
-      if (matchString) {
-        strContent = matchString[1] !== undefined ? matchString[1] : matchString[2]
+        // 一种情况是需要贪婪匹配 \'\'a\'\', 判断是否需要贪婪匹配
+      matchString = stringGreedyReg.exec(expr)
+      strContent = filterUndefine(matchString[1], matchString[2])
+      if (!isPalindrome(strContent)) {
+        // 不属于回文字符串则需要重新做惰性匹配
+        // 另一种则需要惰性 "'a', 'b'" => "a"
+        matchString = stringReg.exec(expr);
+        strContent = filterUndefine(matchString[1], matchString[2])
       }
+
       if (strContent !== undefined) {
         this.current = this.newToken(TOKEN_STRING, strContent, this.pos)
-        this.pos += (strContent.length + 2); // "" 是没有长度的，会导致Token指针一直处于 "" 
+        this.pos += (strContent.length + first.length * 2); // "" 是没有长度的，会导致Token指针一直处于 "" 
         return true
       }
     }
@@ -284,13 +291,13 @@ export default class TokenStream {
       return false
     }
 
-    if (contains<string>(jsWord, result[1])) {
+    if (jsWord[result[1]] === false) {
       // 检测到保留字
       this.parseError(`parser an reserved word: ${result[1]}`)
       return false
     }
 
-    if (contains<string>(jsAttr, result[1])) {
+    if (jsAttr[result[1]] === false) {
       // 检测到window属性 TODO: 应该命中 window.xxx
       this.parseError(`parser an window native attributes or methods: ${result[1]}`)
       return false

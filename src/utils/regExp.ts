@@ -15,8 +15,9 @@ const supportOperator = Array.from(new Set(
 
 export const whitespaceReg = /(\t|\n|\r|\s+)/;
 export const booleanReg = /^(false|true)/;
-export const commentReg = /^\/\*(.+)\*\//;
-export const stringReg = /^\"(.*)\"|^\'(.*)\'/;
+export const commentReg = /^\/\*(.*)\*\//;
+export const stringReg = /^\'(.*?)\'|^\"(.*?)\"/;
+export const stringGreedyReg = /^\'(.*)\'|^\"(.*)\"/;
 
 export const number2bitReg = /^(0b[0|1]{1,})$/;
 export const number8bitReg = /^(0[0-7]{1,})$/;
@@ -29,7 +30,7 @@ export const operatorReg = new RegExp(`^(${supportOperator.map(r => `(\\${/\b\w+
 export const unaryMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => /\b\w+\b/.test(item)).join('|')})`);
 export const unarySymbolMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => !(/\b\w+\b/.test(item))).map(r => `\\s*\\${r}\\s*`).join('|')})`);
 
-export const quoteReg = /^\"(.+)\"$|^\'(.+)\'$/;
+export const quoteReg = /^\"(.*)\"$|^\'(.*)\'$/;
 export const execNumberReg = (reg: RegExp, expr: string, cb: <T>(v: T) => T = (v => v)): string | undefined => {
   reg.lastIndex = 0;
   const result = reg.exec(expr);

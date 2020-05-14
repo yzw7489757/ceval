@@ -3,6 +3,7 @@ import { TypeTokenStream, TypeToken } from './interface';
 import Instruction, { INSTR_EXPRE, INSTR_PLAIN, INSTR_VARNAME, INSTR_NAME, INSTR_FUNCALL, INSTR_OBJECT, INSTR_OPERA1, INSTR_MEMBER, INSTR_OPERA2, INSTR_OPERA3, INSTR_ARRAY, INSTR_NUMBER, INSTR_VAR } from './instruction';
 import { TOKEN_OPERATOR, TOKEN_NAME, TOKEN_SQUARE, TOKEN_PAREN, TOKEN_NUMBER, TOKEN_STRING, TOKEN_COMMA, TOKEN_SEMICOLON, TOKEN_END, TOKEN_CURLY, TOKEN_VAR } from './token';
 import { unarySymbolMapReg, isUnaryOpeator } from './utils/regExp';
+import { contains } from './utils/index';
 
 /**
  * 解析器
@@ -348,7 +349,7 @@ export default class Parser {
         this.parseField(exprInstr);
       }
     } else {
-      this.parseField(exprInstr)
+      this.parseMemberAccessExpression(exprInstr)
     }
   }
 
@@ -389,14 +390,16 @@ export default class Parser {
    */
   parseMemberAccessExpression = (exprInstr: Instruction[]): void => {
     this.parseField(exprInstr);
-    while (this.accept(TOKEN_OPERATOR, '.') || this.accept(TOKEN_SQUARE, '[')) {
+    while (
+      this.accept(TOKEN_OPERATOR, '.') || 
+      (contains<string>([TOKEN_SQUARE, TOKEN_NAME],this.current.type) && this.accept(TOKEN_SQUARE, '['))) {
       if (this.current.value === '.') {
         this.expect(TOKEN_NAME); // a.name ✔️  a.1×
         exprInstr.push(new Instruction(INSTR_MEMBER, this.current.value))
       } else if (this.current.value === '[') {
         this.parseExpression(exprInstr);
         this.expect(TOKEN_SQUARE, ']')
-        exprInstr.push(new Instruction(INSTR_OPERA2))
+        exprInstr.push(new Instruction(INSTR_MEMBER))
       }
     }
   }

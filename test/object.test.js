@@ -14,4 +14,12 @@ test('Object literal declaration {}', () => {
   expect(parse(`{ a: 1, b: 2, c: { d: undefined, e: { f: false, g: null }}}`)).toEqual({ a: 1, b: 2, c: { d: undefined, e: { f: false, g: null }}})
   expect(parse(`{ a: 1, b: 2, c: { d: undefined, e: { f: false, g: { h: null }}}}`)).toEqual({ a: 1, b: 2, c: { d: undefined, e: { f: false, g: { h: null }}}})
   
+  expect(parse(`var a = { b: 2 };a.b`)).toEqual(2);
+  expect(parse(`var a = { b: 2 };a["b"]`)).toEqual(2);
+
+  expect(parse(`var a = { b: { c: ['a','b','c','d']} };'c' in a.b`)).toEqual(true);
+  expect(parse(`var a = { b: { c: ['a','b','c','d']} };\'c\' in a.b`)).toEqual(true);
+  expect(parse(`var a = { b: { c: ['a','b','c','d']} };\'\'c\'\' in a.b`)).toEqual(true);
+  expect(parse(`var a = { b: { c: ['a','b','c','d']} };'d' in a.b.c`)).toEqual(true);
+  expect(parse(`var a = { b: { c: ['a','b','c','d']} };'e' in a.b.c`)).toEqual(false);
 }, 0)
