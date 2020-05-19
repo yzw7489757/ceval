@@ -57,12 +57,12 @@ test('binary =', () => {
   expect(parse(`
     function abs(a,b,c) { 
       var a = 5;
-      let b = 1; /* warn */
+      /* let b = 1; warn */
       c = 2;
-      const d = 4; /* dont't warn */
+      const d = 4; /* not warn */
       return(a+b+c);
     };
-    abs(3,4,8)`, value)).toEqual(6);
+    abs(3,4,8)`, value)).toEqual(9);
 
   
 
