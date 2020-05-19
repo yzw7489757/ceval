@@ -57,6 +57,7 @@ const system = {
     '++': (v): number => v += 1,
     '--': (v): number => v -= 1,
     'typeof': (v): string => typeof v,
+    'return': v => v,
     sin: Math.sin,
     cos: Math.cos,
     tan: Math.tan,
@@ -64,7 +65,7 @@ const system = {
   },
   syntaxOperator: {
     ':': null,
-    '.': null
+    '.': null,
   }
 }
 

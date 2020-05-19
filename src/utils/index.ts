@@ -1,4 +1,5 @@
 import { quoteReg } from './regExp';
+import Instruction from '../instruction';
 
 const toString = Object.prototype.toString
 
@@ -51,21 +52,24 @@ export function mapVal<T extends object>(data: T, object: object, cb: (data: T, 
 }
 
 /**
- * merge two objects, the former is dominant
+ * 前者为主，仅合并不存在属性
  * @template T object
  * @param {T} target
  * @param {T} source
  */
 export function merge<T>(target: T, source: T) {
   Object.keys(source).forEach(key => {
-    const v = source[key]
+    const val = source[key]
     if (Object.prototype.hasOwnProperty.call(target, key)) return
-    if (v && typeof v === 'object') {
-      merge(target[key] = {}, source[key])
+    if (Array.isArray(val)) {
+      merge(target[key] = [], val)
+    }else if (isObject(val)) {
+      merge(target[key] = {}, val)
     } else {
-      target[key] = source[key]
+      target[key] = val
     }
   })
+  return target
 }
 
 /**
@@ -96,14 +100,40 @@ export function isPalindrome(str: string) {
 /**
  * 返回首个有效数据， 非undefined null false true
  * @param {*} args
- * @returns
  */
-export function filterUndefine (...args) {
+export function filterUndefine(...args) {
   let one
   args.some(item => {
-    if(contains([undefined, null, true, false], item)) return false
+    if (contains([undefined, null, true, false], item)) return false
     one = item
     return true;
   })
   return one
+}
+
+
+export function hasAttribute(obj: object, name: string) {
+  return Object.prototype.hasOwnProperty.call(obj, name)
+}
+
+/**
+ * Array to Object e.g. ['a', 'b'] => { a: undefined, b: undefined }
+ * @param {string[]} arr 
+ */
+export function mapToObject(arr: string[] | Instruction<any>[], defaultValue: undefined | ((key: string) => any) = undefined) {
+  if (typeof arr[0] === 'string' && arr.length !== [...new Set(arr as any)].length) {
+    // 参数重复
+    throw new Error(`Duplicate parameter: ${arr.join(',')}`)
+  }
+  const obj = Object.create(null)
+  arr.forEach((item) => {
+    let key
+    if (item instanceof Instruction) {
+      key = item.value
+    } else {
+      key = item
+    }
+    obj[key] = (typeof defaultValue === 'function' ? defaultValue(key) : defaultValue)
+  })
+  return obj
 }

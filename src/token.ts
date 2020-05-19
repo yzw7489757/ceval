@@ -18,6 +18,8 @@ export const TOKEN_COMMA = 'TOKEN_COMMA';
 export const TOKEN_VAR = 'TOKEN_VAR';
 /** @desc 变量名称 */
 export const TOKEN_NAME = 'TOKEN_NAME';
+/** @desc 函数定义 */
+export const TOKEN_FUNC = 'TOKEN_FUNC';
 /** @desc 结束标记; */
 export const TOKEN_SEMICOLON = 'TOKEN_SEMICOLON';
 

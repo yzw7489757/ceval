@@ -12,7 +12,7 @@ export type TypeToken = InstanceType<typeof Token>
 
 export type TypeTokenStream = InstanceType<typeof TokenStream>
 
-export type TypeInstruction = InstanceType<typeof Instruction>
+export type TypeInstruction = Instruction<any>
 
 export type KeyOfValType<T extends object> = T[keyof T];
 

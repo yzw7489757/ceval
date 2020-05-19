@@ -1,4 +1,4 @@
-import Token, { TOKEN_END, TOKEN_STRING, TOKEN_COMMA, TOKEN_CURLY, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR, TOKEN_SQUARE } from './token';
+import Token, { TOKEN_END, TOKEN_STRING, TOKEN_COMMA, TOKEN_FUNC, TOKEN_CURLY, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR, TOKEN_SQUARE } from './token';
 import { TypeToken, TypeCeval } from './interface';
 import { whitespaceReg, commentReg, stringReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execNumberReg, number010bitReg, stringGreedyReg } from './utils/regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
@@ -95,6 +95,7 @@ export default class TokenStream {
       this.isSemicolon() ||
       this.isConst() ||
       this.isVariable() ||
+      this.isFunctionDefined() ||
       this.isName()
     ) {
       return this.current
@@ -274,6 +275,22 @@ export default class TokenStream {
     return false
   }
 
+  isFunctionDefined = (): boolean => {
+    const word = this.getFirstWord();
+    if(word === 'function') {
+      // TODO: 初期只支持 第一种, 同时支持 function fn() {} || const a = () => {} || const b = function(){}
+      this.current = this.newToken(TOKEN_FUNC, undefined);
+      this.pos+=word.length
+      const nextToken = this.checkNextAccessGrammar(); 
+      if(nextToken.type !== TOKEN_NAME) {
+        this.parseError('function definition should have function name')
+        return false
+      }
+      return true;
+    }
+    return false
+  }
+  
   /**
    * 变量，可能是名称
    * @see 遵循变量申明规范 可以以 $_ 开头，其他可以是 $_数字字母 ，排除保留字
