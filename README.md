@@ -2,7 +2,7 @@
 
 实现借鉴了 `expr-eval` 底层实现，重构为更适合表达式运算的 `Ceval`;
 
-![alt=流程图](./docs/flow.jpg)
+![alt=流程图](https://intranetproxy.alipay.com/skylark/lark/0/2020/jpeg/275580/1589874733619-57a7772a-1d43-4888-949a-bcea081b8e8e.jpeg)
 ## introduce
 
 ``` ts
