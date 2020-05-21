@@ -1,10 +1,16 @@
 {
-  "name": "ceval",
-  "version": "0.1.0",
-  "description": "js parser",
-  "main": "lib/index.js",
+  "name": "@ali/ceval",
+  "version": "0.1.2",
+  "description": "calculation expression",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "keywords": [
+    "eval",
+    "eval expression",
+    "eval-expression",
+    "calculation expression"
+  ],
   "files": [
-    "build",
     "lib"
   ],
   "precommit.silent": true,
@@ -18,16 +24,15 @@
     "https": "HTTPS=true npm start",
     "build:umd": "webpack --config script/webpack.umd.js --hide-modules --progress --colors",
     "build:typings": "tsc -p tsconfig.d.json",
-    "build": "rm -rf lib/ && tnpm i && npm run test && npm run build:umd && cp lib/*.js ./",
+    "build:rollup": "rollup -c",
+    "build": "rm -rf lib/ && tnpm i && npm run test && npm run build:rollup && cp lib/*.js ./",
     "tpublish": "rm -rf node_modules && npm run build && npm run build:typings && tnpm publish",
-    "lint": "eslint --quiet ./src",
+    "lint": "eslint --quiet ./src --no-error-on-unmatched-pattern",
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "dependencies": {
-    "lodash": "^4.17.5"
-  },
   "devDependencies": {
+    "@ali/ceval": "^0.1.2",
     "@ali/mid-local-demo": "^0.2.1",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-async-generator-functions": "^7.0.0",
@@ -40,13 +45,15 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.0.0",
     "@babel/runtime": "^7.5.5",
+    "@rollup/plugin-json": "^4.0.3",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.5",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
+    "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.0",
     "css-loader": "^1.0.0",
-    "eslint": "^6.0.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.0",
     "eslint-config-prettier": "^4.2.0",
     "eslint-loader": "^3.0.0",
@@ -63,8 +70,14 @@
     "react": "^16.13.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
+    "rollup": "^2.10.5",
+    "rollup-plugin-filesize": "^9.0.0",
+    "rollup-plugin-sourcemaps": "^0.6.2",
+    "rollup-plugin-terser": "^5.3.0",
+    "rollup-plugin-typescript": "^1.0.1",
     "style-loader": "^1.0.0",
-    "typescript": "3.7.3",
+    "tslib": "^2.0.0",
+    "typescript": "^3.7.3",
     "webpack": "^4.16.3",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5",
@@ -73,6 +86,6 @@
   "publishConfig": {
     "registry": "http://registry.npm.alibaba-inc.com"
   },
-  "author": "",
+  "author": "wb-yzw695400",
   "license": "ISC"
 }

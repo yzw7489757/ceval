@@ -11,6 +11,7 @@
     "declaration": true,
     "noImplicitThis": true,
     "emitDeclarationOnly": true,
+    "resolveJsonModule": true,
     "declarationDir": "./lib"
   },
   "include": [

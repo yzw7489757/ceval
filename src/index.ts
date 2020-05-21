@@ -1,11 +1,11 @@
 import Parser from './parser';
 import systemMap, { TypeUnary, TypeBinary, TypeTernary, TypeConst, TypeFunction, optionNameMap } from './systemMap';
 import TokenStream from './token-stream';
-import Instruction from './instruction';
 import calculation from './calculation';
 import presetVariable from './utils/presetVariable';
 import { merge } from './utils/index';
 import { CevalOptions } from './interface';
+import { TypeInstruction } from './local_demo/instruction';
 
 export default class Ceval {
   unaryOps: TypeUnary;
@@ -39,7 +39,7 @@ export default class Ceval {
    * @memberof Ceval
    */
   parseString = (expression: string, values: Record<string, any> = {}) => {
-    const instr: Instruction[] = [];
+    const instr: TypeInstruction[] = [];
 
     Parser.generatorParser(this, new TokenStream(this, expression), instr)
 
@@ -59,7 +59,7 @@ export default class Ceval {
    * @param {Record<string, any>} [values={}] 数据池
    * @memberof Ceval
    */
-  injectValueToCalc = (tokens: Instruction[], values: Record<string, any> = {}): any => {
+  injectValueToCalc = (tokens: TypeInstruction[], values: Record<string, any> = {}): any => {
     // @TODO 检查敏感字
     // @TODO 检查关键字
     this.currentValues = Object.assign(presetVariable, values)

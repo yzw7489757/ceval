@@ -11,6 +11,5 @@ npm-debug.log*
 
 /lib
 /build
-/*.js
 /*.js.map
 /src/local_demo
