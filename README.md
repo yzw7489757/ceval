@@ -1,9 +1,25 @@
 ## Ceval
 
-实现借鉴了 `expr-eval` 底层实现，重构为更适合表达式运算的 `Ceval`;
+零依赖，借鉴了 `expr-eval` 底层实现，重构为更适合表达式运算的 `@ali/ceval`; 
+
+┌───────────────────────────────┐
+│                               │
+│   Destination: lib/index.js   │
+│   Bundle Size:  20.6 KB       │
+│   Minified Size:  20.58 KB    │
+│   Gzipped Size:  6.35 KB      │
+│                               │
+└───────────────────────────────┘
+
+## usage
+
+``` shell
+tnpm i @ali/ceval -S
+```
+
+## introduce
 
 ![alt=流程图](https://intranetproxy.alipay.com/skylark/lark/0/2020/jpeg/275580/1589874733619-57a7772a-1d43-4888-949a-bcea081b8e8e.jpeg)
-## introduce
 
 ### Options
 ``` ts
@@ -118,7 +134,11 @@ var b = { b: true, c: undefined, d:{ e: a, f: '1', g: {}}};
 `)
 ```
 
+### Other
+
 更多examples请移步测试用例。
+
+更多功能扩展中，欢迎提出 feature 和 参与。
 
 ## development
 
@@ -129,7 +149,11 @@ npm start
 
 ### build
 ``` shell
-npm run build
+# webapck build umd module, 无压缩
+npm run build:umd
+
+# rollup build umd module, 压缩版本
+npm run build:rollup
 ```
 
 ### publish

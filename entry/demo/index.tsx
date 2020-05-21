@@ -1,5 +1,6 @@
 import React from 'react'
-import Parser from '../../src/index';
+import Parser from '@ali/ceval';
+// import Parser from '../../src/index';
 
 export default () => {
   const parser = new Parser();
