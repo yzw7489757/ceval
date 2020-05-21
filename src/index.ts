@@ -4,8 +4,7 @@ import TokenStream from './token-stream';
 import calculation from './calculation';
 import presetVariable from './utils/presetVariable';
 import { merge } from './utils/index';
-import { CevalOptions } from './interface';
-import { TypeInstruction } from './local_demo/instruction';
+import { CevalOptions, TypeInstruction } from './interface';
 
 export default class Ceval {
   unaryOps: TypeUnary;

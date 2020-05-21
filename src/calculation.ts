@@ -1,7 +1,6 @@
 import Instruction, { INSTR_EXPRE, INSTR_FUNCDEF, INSTR_EXECUTBODY, INSTR_VARNAME, INSTR_NAME, INSTR_OBJECT, INSTR_ARRAY, INSTR_FUNCALL, INSTR_MEMBER, INSTR_NUMBER, INSTR_VAR, INSTR_OPERA2, INSTR_PLAIN, INSTR_OPERA3, INSTR_OPERA1 } from './instruction';
 import Ceval from './index';
 import { hasAttribute, mapToObject, merge } from './utils/index';
-import { condition } from './local_demo/functions';
 
 /**
  * 运算
