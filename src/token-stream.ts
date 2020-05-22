@@ -22,7 +22,7 @@ export default class TokenStream {
   savedCurrent: null | TypeToken = null;
 
   // eslint-disable-next-line
-  constructor(public parser: TypeCeval, public expression: string) { }
+  constructor(public ceval: TypeCeval, public expression: string) { }
 
   /**
    * @desc 适用语法校验检查
@@ -225,12 +225,16 @@ export default class TokenStream {
         this.parseError('number bitbase parser error', SyntaxError)
         return false
       }
+      if (number !== undefined && !this.ceval.options.endableBitNumber) { // 给出准确的warning 
+        throw new Error(`options "endableBitNumber": You have disabled bitbase number parsing, Not allowed ${number}`)
+      }
     } else if (number10bitReg.test(expr)) { // 十进制
       // 100 || 100.1 || 0.1 || .100 || .0  ✅ 
       // parseFloat是支持 0100.1 的。
       number = execNumberReg(number10bitReg, expr)
       bit = number === undefined ? undefined : 10
     } else {
+      
       return false
     }
 
@@ -331,7 +335,7 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isConst = (): boolean => {
-    const keys = Object.keys(this.parser.consts)
+    const keys = Object.keys(this.ceval.consts)
 
     const result = new RegExp(`^(${keys.join('|')})`).exec(this.getSomeCode(Infinity))
 
@@ -410,12 +414,15 @@ export default class TokenStream {
       result = unaryMapReg.exec(str)
     }
 
-    if (result && result[1]) {
-      this.pos += result[1].length
-      this.current = this.newToken(TOKEN_OPERATOR, result[1])
-      return true
+    if (!result) return false
+
+    if(this.ceval.options.endableOperators === false) {
+      throw new Error(`options "endableOperators": You disabled the operator, Therefore, "${result[1]}" it can not be used`)
     }
-    return false
+
+    this.pos += result[1].length
+    this.current = this.newToken(TOKEN_OPERATOR, result[1])
+    return true
   }
 
   /**

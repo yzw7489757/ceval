@@ -18,6 +18,7 @@ export const booleanReg = /^(false|true)/;
 export const commentReg = /^\/\*(.*)\*\//;
 export const stringReg = /^\'(.*?)\'|^\"(.*?)\"/;
 export const stringGreedyReg = /^\'(.*)\'|^\"(.*)\"/;
+// export const regExpReg = /^ExecReg\((.*)\)/;
 
 export const number2bitReg = /^(0b[0|1]{1,})$/;
 export const number8bitReg = /^(0[0-7]{1,})$/;

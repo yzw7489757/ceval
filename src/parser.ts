@@ -31,7 +31,7 @@ export default class Parser {
    */
   savedNextToken: TypeToken | null = null;
 
-  constructor(public parser: Ceval, public tokens: TypeTokenStream, exprInstr: TypeInstruction[]) {
+  constructor(public ceval: Ceval, public tokens: TypeTokenStream, exprInstr: TypeInstruction[]) {
     this.next();
     
     this.inspectParseEnd(exprInstr)
@@ -384,6 +384,9 @@ export default class Parser {
     while (
       this.accept(TOKEN_OPERATOR, '.') ||
       (contains<string>([TOKEN_SQUARE, TOKEN_NAME], this.current.type) && this.accept(TOKEN_SQUARE, '['))) {
+      if (!this.ceval.options.allowMemberAccess) {
+        throw new Error(`options "allowMemberAccess": You have disabled member access and cannot use syntax such as "a.b" "a['b']"`)
+      }
       if (this.current.value === '.') {
         this.expect(TOKEN_NAME); // a.name ✔️  a.1×
         exprInstr.push(new Instruction(INSTR_MEMBER, this.current.value))
@@ -397,7 +400,7 @@ export default class Parser {
 
 
   /**
-   * 解析字面值、字段值 number||string||operator(typeof cos tan)||[1,2,3]|| {a:1,b:{}} || (expression)
+   * 解析字面值、字段值 number||string||operator(typeof cos tan)||[1,2,3]|| {a:1,b:{}} || (expression) || function abs() {}
    */
   parseField = (exprInstr: TypeInstruction[]): void => {
     if (this.accept(TOKEN_OPERATOR, isUnaryOpeator)) {
