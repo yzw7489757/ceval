@@ -1,6 +1,6 @@
 {
   "name": "@ali/ceval",
-  "version": "0.1.7",
+  "version": "0.1.6",
   "description": "calculation expression",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
