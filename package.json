@@ -1,6 +1,6 @@
 {
   "name": "@ali/ceval",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "description": "calculation expression",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -28,6 +28,7 @@
     "build": "rm -rf lib/ && tnpm i && npm run test && npm run build:rollup && cp lib/*.js ./",
     "tpublish": "rm -rf node_modules && npm run build && npm run build:typings && tnpm publish",
     "lint": "eslint --quiet ./src --no-error-on-unmatched-pattern",
+    "release": "standard-version",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -75,6 +76,7 @@
     "rollup-plugin-sourcemaps": "^0.6.2",
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-typescript": "^1.0.1",
+    "standard-version": "^8.0.0",
     "style-loader": "^1.0.0",
     "tslib": "^2.0.0",
     "typescript": "^3.7.3",
