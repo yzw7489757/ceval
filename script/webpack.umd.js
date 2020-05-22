@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-const base = require('./webpack.base').default;
+const base = require('./webpack.base');
 
 const { library } = require('./library');
 
