@@ -225,7 +225,6 @@ export default class TokenStream {
         this.parseError('number bitbase parser error', SyntaxError)
         return false
       }
-      console.log('this.ceval.options: ', this.ceval.options);
       if (number !== undefined && !this.ceval.options.endableBitNumber) { // 给出准确的warning 
         throw new Error(`options "endableBitNumber": You have disabled bitbase number parsing, Not allowed ${number}`)
       }
