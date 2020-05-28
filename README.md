@@ -1,6 +1,6 @@
 ## Ceval
 
-零依赖，借鉴了 `expr-eval` 底层实现，重构为更适合表达式运算的 `@ali/ceval`; 
+零依赖，借鉴了 `expr-eval` 底层实现，重构为更适合表达式运算的 `ceval`; 
 
 ``` ts
 ┌───────────────────────────────┐
@@ -16,12 +16,12 @@
 ## usage
 
 ``` shell
-tnpm i @ali/ceval -S
+tnpm i ceval -S
 ```
 
 ## introduce
 
-![alt=流程图](https://intranetproxy.alipay.com/skylark/lark/0/2020/jpeg/275580/1589874733619-57a7772a-1d43-4888-949a-bcea081b8e8e.jpeg)
+![alt=流程图](https://user-images.githubusercontent.com/28922129/83138027-c5541680-a11c-11ea-9ef4-aa2ddfa3884b.png)
 
 ### Options
 ``` ts
