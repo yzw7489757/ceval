@@ -25,13 +25,12 @@ export function contains<T extends any>(arr: T[], value: T): boolean {
  * @returns {string[]} [date, time]
  */
 export function getTime(offset = 0): string[] {
-  const time = new Date(Date.now() + offset).toLocaleString()
-  console.log(time)
-  let clock: string = time.match(/\d+\:\d+:\d+$/)[0];
-  if (parseInt(clock.match(/\d+/)[0], 10) < 10) {
-    clock = `0${clock}`
-  }
-  const date = time.split(' ')[0].replace(/\//g, '-')
+  const o = new Date(Date.now() + offset);
+  const date = `${o.getFullYear()}-${o.getMonth() + 1}-${o.getDate()}`
+  const clock = `${o.getHours()}:${o.getMinutes()}:${o.getSeconds()}`.replace(/\d+/g, (t) => {
+    return parseInt(t, 10) < 10 ? `0${t}`: t
+  })
+  
   return [date, clock]
 }
 
