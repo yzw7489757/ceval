@@ -3,7 +3,6 @@ const WebpackNotifier = require('webpack-notifier');
 
 const {name} = require('../package.json');
 const base = require('./webpack.base');
-const { library } = require('./library');
 
 const IN_HTTPS = !!process.env.HTTPS;
 
@@ -19,6 +18,7 @@ const devBaseConfig = {
     port: 8400,
     host: '0.0.0.0',
     stats: 'minimal',
+    historyApiFallback: true
   },
 
   devtool: 'cheap-module-eval-source-map',
@@ -26,10 +26,10 @@ const devBaseConfig = {
   externals: {
     ...base.externals,
     [name]: {
-      root: library,
+      root: name,
       commonjs2: name,
       commonjs: name,
-      amd: library,
+      amd: name,
     },
   },
 
@@ -51,7 +51,7 @@ module.exports = [{
   },
 
   output: {
-    library,
+    library: name,
     libraryTarget: 'umd',
     filename: '[name].js',
     path: resolve(__dirname, '../lib')

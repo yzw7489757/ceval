@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const { resolve } = require('path')
 
 const { name, version, cssModules } = require('../package.json')
-const { library } = require('./library');
 
 const base = {
   resolve: {
@@ -10,7 +9,7 @@ const base = {
   },
 
   output: {
-    library,
+    library: name,
     libraryTarget: 'umd',
     filename: '[name].js',
     path: resolve(__dirname, '../lib')
@@ -110,14 +109,6 @@ const base = {
     'moment': 'moment',
     'moment/locale/zh-cn' : 'moment.locale',
   },
-}
-
-if (cssModules) {
-  base.module.rules[1].use[1].options = {
-    sourceMap: true,
-    modules: true,
-    localIdentName: '[local]___[hash:base64:5]',
-  }
 }
 
 module.exports = base;

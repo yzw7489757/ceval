@@ -16,7 +16,7 @@
 ## usage
 
 ``` shell
-tnpm i ceval -S
+npm i ceval -S
 ```
 
 ## introduce
@@ -160,6 +160,6 @@ npm run build:rollup
 
 ### publish
 ```shell
-tnpm tpublish
+npm tpublish
 ```
 

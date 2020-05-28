@@ -20,12 +20,12 @@
     "test"
   ],
   "scripts": {
-    "start": "webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page",
+    "start": "webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'",
     "https": "HTTPS=true npm start",
     "build:umd": "webpack --config script/webpack.umd.js --hide-modules --progress --colors",
     "build:typings": "tsc -p tsconfig.d.json",
     "build:rollup": "rollup -c",
-    "build": "rm -rf lib/ && tnpm i && npm run test && npm run build:rollup && cp lib/*.js ./",
+    "build": "rm -rf lib/ && npm i && npm run test && npm run build:rollup && cp lib/*.js ./",
     "publish": "rm -rf node_modules && npm run build && npm run build:typings && npm publish",
     "lint": "eslint --quiet ./src --no-error-on-unmatched-pattern",
     "release": "standard-version",
@@ -33,6 +33,7 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "@ant-design/icons": "^4.1.0",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-async-generator-functions": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
@@ -45,8 +46,10 @@
     "@babel/preset-typescript": "^7.0.0",
     "@babel/runtime": "^7.5.5",
     "@rollup/plugin-json": "^4.0.3",
+    "@types/antd": "^1.0.0",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.5",
+    "@types/react-router-dom": "^5.1.5",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "babel-cli": "^6.26.0",
@@ -67,8 +70,6 @@
     "pre-commit": "^1.2.2",
     "prettier": "~1.17.0",
     "react": "^16.13.0",
-    "react-dom": "^16.12.0",
-    "react-router-dom": "^5.1.2",
     "rollup": "^2.10.5",
     "rollup-plugin-filesize": "^9.0.0",
     "rollup-plugin-sourcemaps": "^0.6.2",
@@ -84,7 +85,7 @@
     "webpack-notifier": "^1.8.0"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.com"
+    "registry": "https://npm.pkg.github.com/"
   },
   "author": "yzw7489757",
   "license": "ISC"

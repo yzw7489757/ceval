@@ -29,8 +29,8 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   checkNextAccessGrammar = (): TypeToken => {
-    const pos = this.pos;
-    const current = this.current
+    const {pos} = this;
+    const {current} = this
 
     const next = this.next();
 
@@ -225,6 +225,7 @@ export default class TokenStream {
         this.parseError('number bitbase parser error', SyntaxError)
         return false
       }
+      console.log('this.ceval.options: ', this.ceval.options);
       if (number !== undefined && !this.ceval.options.endableBitNumber) { // 给出准确的warning 
         throw new Error(`options "endableBitNumber": You have disabled bitbase number parsing, Not allowed ${number}`)
       }
