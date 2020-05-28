@@ -1,6 +1,6 @@
 {
   "name": "ceval",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "calculation expression",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -25,7 +25,7 @@
     "build:umd": "webpack --config script/webpack.umd.js --hide-modules --progress --colors",
     "build:typings": "tsc -p tsconfig.d.json",
     "build:rollup": "rollup -c",
-    "build": "rm -rf lib/ && npm i && npm run test && npm run build:rollup && cp lib/*.js ./",
+    "build": "rm -rf lib/ && npm i && npm run test && npm run build:rollup",
     "publish": "rm -rf node_modules && npm run build && npm run build:typings && npm publish",
     "lint": "eslint --quiet ./src --no-error-on-unmatched-pattern",
     "release": "standard-version",
@@ -84,9 +84,17 @@
     "webpack-dev-server": "^3.1.5",
     "webpack-notifier": "^1.8.0"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:yzw7489757/ceval.git"
   },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "bugs": {
+    "url": "https://github.com/yzw7489757/ceval/issues"
+  },
+  "homepage": "https://github.com/yzw7489757/ceval#readme",
   "author": "yzw7489757",
   "license": "ISC"
 }

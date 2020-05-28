@@ -12,4 +12,5 @@ npm-debug.log*
 /lib
 /build
 /*.js.map
-/src/local_demo
+/package-lock.json
+/index.js

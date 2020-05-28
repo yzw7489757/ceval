@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 import React from 'react'
 import { Input, message, Card } from 'antd'
 import Parser from '../../src/index';
 
-const { TextArea, Search } = Input;
+const { Search } = Input;
 
 export default (): JSX.Element => {
   const parser = new Parser({

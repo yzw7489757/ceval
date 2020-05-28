@@ -160,6 +160,6 @@ npm run build:rollup
 
 ### publish
 ```shell
-npm tpublish
+npm publish
 ```
 
