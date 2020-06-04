@@ -2,6 +2,9 @@
 
 零依赖，借鉴了 `expr-eval` 底层实现，重构为更适合表达式运算的 `ceval`; 
 
+No dependence, the achieve basics `expr-cval`, Refactoring to ceval is more suitable for calculating expressions; 
+
+
 ``` ts
 ┌───────────────────────────────┐
 │                               │
@@ -44,6 +47,14 @@ const analysis = new Parser({
    * @type {boolean}
    */
   allowMemberAccess?: boolean = true;
+
+  /**
+   * @desc 默认允许放大计算，以处理四则运算的结果 e.g 0.1+0.2 !== 0.3  || 1.0-0.9 !== 0.1
+   * 在超出边界的情况下（ta > Number.MAX_SAFE_INTEGER || ta < Number.MIN_SAFE_INTEGER）会不做处理，还原四则运算
+   * @requires false 
+   * @type {boolean}
+   */
+  allowHandleNumberPrecision?: boolean = true;
 
   /**
    * @desc 当没有返回值或为undefined时触发默认返回值
@@ -139,6 +150,8 @@ var b = { b: true, c: undefined, d:{ e: a, f: '1', g: {}}};
 ### Other
 
 更多examples请移步测试用例。
+
+TODO: [Test39](https://github.com/tc39/test262/tree/master/test/language/types) 部分测试用例
 
 更多功能扩展中，欢迎提出 feature 和 参与。
 

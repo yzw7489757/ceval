@@ -66,4 +66,13 @@ export default class Ceval {
     return result === undefined ? this.options.defaultReturnValues : result
   }
 
+  /**
+   * Update Option
+   * @param {Options} CevalOptions 配置
+   * @memberof Ceval
+   */
+  updateOptions = (Options: Partial<CevalOptions>): void => {
+    Object.assign(this.options, Options)
+  }
+
 } 

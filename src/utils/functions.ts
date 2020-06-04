@@ -1,19 +1,49 @@
 import { contains, isObject, eliminateQuote } from './index';
+import { CevalOptions } from '../interface';
 
-export function add(a, b) {
-  return Number(a) + Number(b);
+function getDigitLength(num: number){
+  return (num.toString().split('.')[1] || '').length;
 }
 
-export function sub(a, b) {
-  return a - b;
+function checkBounds(number: number) {
+  return number > Number.MAX_SAFE_INTEGER || number < Number.MIN_SAFE_INTEGER
 }
 
-export function mul(a, b) {
-  return a * b;
+function getBaseNum(a: number, b: number): number {
+  const baseNum = Math.pow(10, Math.max(getDigitLength(a), getDigitLength(b)));
+  if(checkBounds(a * baseNum) || checkBounds(b * baseNum)) { // 超出边界的情况不予处理
+    return 0
+  }
+  return baseNum
 }
 
-export function divide(a, b) {
-  return a / b;
+const unwantedHandlePercision = (a, b) => {
+  // 整数不需要处理 || 非Number也不需要
+  return (Number.isInteger(a) && Number.isInteger(b)) || (typeof a !== 'number' || typeof b !== 'number')
+}
+
+export function add(a: number, b: number, options: CevalOptions): number {
+  if(options.allowHandleNumberPrecision === false || unwantedHandlePercision(a,b)) return a + b
+  const baseNum = getBaseNum(a,b);
+  return baseNum === 0 ? a + b : (Math.round(a * baseNum) + Math.round(b * baseNum)) / baseNum 
+}
+
+export function sub(a: number, b: number, options: CevalOptions): number {
+  if(options.allowHandleNumberPrecision === false || unwantedHandlePercision(a,b)) return a - b
+  const baseNum = getBaseNum(a,b)
+  return baseNum === 0 ? a - b : (Math.round(a * baseNum) - Math.round(b * baseNum)) / baseNum;
+}
+
+export function mul(a: number, b: number, options: CevalOptions): number {
+  if(options.allowHandleNumberPrecision === false || unwantedHandlePercision(a,b)) return a * b
+  const baseNum = getBaseNum(a,b)
+  return baseNum === 0 ? a * b : (Math.round(a * baseNum) * Math.round(b * baseNum)) / Math.pow(baseNum, 2);
+}
+
+export function divide(a: number, b: number, options: CevalOptions): number {
+  if( options.allowHandleNumberPrecision === false || unwantedHandlePercision(a,b)) return a / b
+  const baseNum = getBaseNum(a,b)
+  return baseNum === 0 ? a / b : (Math.round(a * baseNum) / Math.round(b * baseNum));
 }
 
 export function mod(a, b) {
@@ -63,7 +93,7 @@ export function bitWiseOr(a, b) {
   return a ^ b
 }
 
-export function setVar(name, value, variables) {
+export function setVar(name: string | number, value: any, variables: object | Array<any> ) {
   if (variables) variables[name] = value;
   return value;
 }
@@ -114,4 +144,11 @@ export function arrayMap(f: (val: any, index?: number) => any, a: any[]) {
 
 export function random(a) {
   return Math.random() * (a || 1);
+}
+
+function decimalAdd(num1, num2) {
+  const num1Digits = (num1.toString().split('.')[1] || '').length;
+  const num2Digits = (num2.toString().split('.')[1] || '').length;
+  const baseNum = Math.pow(10, Math.max(num1Digits, num2Digits));
+  return (num1 * baseNum + num2 * baseNum) / baseNum;
 }

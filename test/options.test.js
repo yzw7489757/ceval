@@ -54,3 +54,58 @@ test('options allowMemberAccess = false', () => {
 
   expect(() => parse('a[1]', { a: ['1','2','3']})).toThrow(Error)
 }, 0)
+
+test('options allowMemberAccess = false', () => {
+  const instance = new Parser({
+    allowHandleNumberPrecision: true // default
+  })
+
+  const parse = instance.parseString;
+
+  expect(parse(`0.1+0.2`)).toBe(0.3);
+  expect(parse(`0.2+0.4`)).toBe(0.6);
+  expect(parse(`0.7+0.1`)).toBe(0.8);
+  expect(parse(`2.22+0.1`)).toBe(2.32);
+
+  expect(parse(`0.3-0.2`)).toBe(0.1);
+  expect(parse(`1.0-0.9`)).toBe(0.1);
+  expect(parse(`1.5-1.2`)).toBe(0.3);
+
+  expect(parse(`1.2+1.3-2.4`)).toBe(0.1);
+
+  expect(parse(`19.9 * 100`)).toBe(1990)
+  expect(parse(`1306377.64 * 100`)).toBe(130637764)
+  expect(parse(`1306377.64 * 10 * 10`)).toBe(130637764)
+  expect(parse(`0.7 * 180`)).toBe(126)
+  expect(parse(`9.7 * 100`)).toBe(970)
+  expect(parse(`39.7 * 100`)).toBe(3970)
+
+  expect(parse(`0.3/0.1`)).toBe(3);
+  expect(parse(`0.69/10`)).toBe(0.069);
+
+  instance.updateOptions({
+    allowHandleNumberPrecision: false
+  })
+
+  expect(parse(`0.1+0.2`)).not.toBe(0.3);
+  expect(parse(`0.2+0.4`)).not.toBe(0.6);
+  expect(parse(`0.7+0.1`)).not.toBe(0.8);
+  expect(parse(`2.22+0.1`)).not.toBe(2.32);
+
+  expect(parse(`0.3-0.2`)).not.toBe(0.1);
+  expect(parse(`1.0-0.9`)).not.toBe(0.1);
+  expect(parse(`1.5-1.2`)).not.toBe(0.3);
+
+  expect(parse(`1.2+1.3-2.4`)).not.toBe(0.1);
+
+  expect(parse(`19.9 * 100`)).not.toBe(1990)
+  expect(parse(`1306377.64 * 100`)).not.toBe(130637764)
+  expect(parse(`1306377.64 * 10 * 10`)).not.toBe(130637764)
+  expect(parse(`0.7 * 180`)).not.toBe(126)
+  expect(parse(`9.7 * 100`)).not.toBe(970)
+  expect(parse(`39.7 * 100`)).not.toBe(3970)
+
+  expect(parse(`0.3/0.1`)).not.toBe(3);
+  expect(parse(`0.69/10`)).not.toBe(0.069);
+
+}, 0)

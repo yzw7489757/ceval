@@ -55,6 +55,7 @@
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.0",
     "css-loader": "^1.0.0",
+    "dev-dashboard": "^2.0.6",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.0.0",
     "eslint-config-prettier": "^4.2.0",

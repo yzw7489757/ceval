@@ -42,6 +42,14 @@ export class CevalOptions {
   allowMemberAccess?: boolean = true;
 
   /**
+   * @desc 允许默认放大计算，以处理四则运算的结果 e.g 0.1+0.2 !== 0.3  || 1.0-0.9 !== 0.1
+   * 在超出边界的情况下（ta > Number.MAX_SAFE_INTEGER || ta < Number.MIN_SAFE_INTEGER）会不做处理，还原四则运算
+   * @requires false 
+   * @type {boolean}
+   */
+  allowHandleNumberPrecision?: boolean = true;
+
+  /**
    * @desc 当没有返回值或为undefined时触发默认返回值
    * @requires false
    * @todo done

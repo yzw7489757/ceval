@@ -72,13 +72,9 @@ export default function calculation(tokens: Instruction<any>[], values: object =
           stack.push(n1 ? calculation([n2], values, ceval, statis, scope) : false); // true && true && false
         } else if (value === '=') {
           // 如果当前作用域含有该属性，作用域优先
-          if (hasAttribute(scope, n1)) {
-            fn(n1, n2, scope)
-          } else {
-            fn(n1, n2, values)
-          }
+          fn(n1, n2, hasAttribute(scope, n1) ? scope : values)
         } else {
-          stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), hasAttribute(scope, n1) ? scope : values));
+          stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), ceval.options));
         }
         break
       }

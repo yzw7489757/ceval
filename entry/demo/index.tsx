@@ -7,11 +7,11 @@ const { Search } = Input;
 
 export default (): JSX.Element => {
   const parser = new Parser({
-    endableBitNumber: true
+    endableBitNumber: true,
+    // allowHandleNumberPrecision: true
   });
   const [result, setResult] = React.useState(null)
   const time = React.useRef<number>(0)
-
   const execExpression = React.useCallback((str) => {
     try{
       const newTime = performance.now()
