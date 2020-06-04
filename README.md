@@ -9,9 +9,9 @@ No dependence, the achieve basics `expr-cval`, Refactoring to ceval is more suit
 ┌───────────────────────────────┐
 │                               │
 │   Destination: lib/index.js   │
-│   Bundle Size:  20.6 KB       │
-│   Minified Size:  20.58 KB    │
-│   Gzipped Size:  6.35 KB      │
+│   Bundle Size:  21.92 KB      │
+│   Minified Size:  21.89 KB    │
+│   Gzipped Size:  6.76 KB      │
 │                               │
 └───────────────────────────────┘
 ```

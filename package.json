@@ -1,6 +1,6 @@
 {
   "name": "ceval",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "calculation expression",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -25,8 +25,7 @@
     "build:umd": "webpack --config script/webpack.umd.js --hide-modules --progress --colors",
     "build:typings": "tsc -p tsconfig.d.json",
     "build:rollup": "rollup -c",
-    "build": "rm -rf lib/ && npm i && npm run test && npm run build:rollup",
-    "publish": "rm -rf node_modules && npm run build && npm run build:typings && npm publish",
+    "build": "rm -rf lib/ && npm run test && npm run build:typings &&npm run build:rollup",
     "lint": "eslint --quiet ./src --no-error-on-unmatched-pattern",
     "release": "standard-version",
     "test": "jest",
