@@ -71412,7 +71412,8 @@ function TokenStream(ceval, expression) {
 
     _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number10bitReg"].lastIndex = 0;
 
-    if (first === '0' && n.length > 1 && !/0\.\d*/.test(n)) {
+    if (first === '0' && n.length > 1 && !/^0\.\d/.test(n)) {
+      // 0.x 不是进制数
       if (Object(_utils_index__WEBPACK_IMPORTED_MODULE_3__["contains"])(['b', 'x'], _this.getSomeCode(1, 1)) && _this.getSomeCode(1, n.length) === '.') {
         // 0b0101.1 0xaf.1 ❌
         // 099.1 属于十进制 ✅

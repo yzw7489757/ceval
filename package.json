@@ -22,13 +22,19 @@
   "scripts": {
     "start": "webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'",
     "https": "HTTPS=true npm start",
+
     "build:umd": "webpack --config script/webpack.umd.js --hide-modules --progress --colors",
     "build:typings": "tsc -p tsconfig.d.json",
     "build:docs": "webpack --config script/webpack.doc.js --hide-modules --progress --colors",
     "build:rollup": "rollup -c",
     "build": "rm -rf lib/ && npm run test && npm run build:typings &&npm run build:rollup",
+
+    "release": "standard-version --release-as",
+    "publish:major": "npm run release -- major && npm publish",
+    "publish:minor": "npm run release -- minor && npm publish",
+    "publish:patch": "npm run release -- patch && npm publish",
+
     "lint": "eslint --quiet ./src --no-error-on-unmatched-pattern",
-    "release": "standard-version",
     "test": "jest",
     "test:watch": "jest --watch"
   },
