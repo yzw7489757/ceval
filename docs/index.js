@@ -1,4 +1,4 @@
-/*! ceval@1.0.2 */
+/*! ceval@1.0.4 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("react"), require("react-dom"), require("antd"));
@@ -30243,7 +30243,7 @@ exports.push([module.i, "* {\n  box-sizing: border-box;\n  margin: 0;\n  padding
 /* 4 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.2\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test && npm run build:typings &&npm run build:rollup\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"release\":\"standard-version\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.6\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"ISC\"}");
+module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.4\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test && npm run build:typings &&npm run build:rollup\",\"release\":\"standard-version --release-as\",\"publish:major\":\"npm run release -- major && npm publish\",\"publish:minor\":\"npm run release -- minor && npm publish\",\"publish:patch\":\"npm run release -- patch && npm publish\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/lodash\":\"^4.14.155\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.6\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"MIT\"}");
 
 /***/ }),
 /* 5 */
@@ -66428,10 +66428,12 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var Search = antd__WEBPACK_IMPORTED_MODULE_1__["Input"].Search;
 var options = new _src_interface__WEBPACK_IMPORTED_MODULE_3__["CevalOptions"]();
 /* harmony default export */ __webpack_exports__["default"] = (function () {
-  var parser = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(new _src_index__WEBPACK_IMPORTED_MODULE_2__["default"]());
+  var parser = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(new _src_index__WEBPACK_IMPORTED_MODULE_2__["default"]({
+    allowOperatorsCovered: true
+  }));
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(function () {
-    return parser.current.options.defaultReturnValues;
+    return parser.current.getOptions().defaultReturnValues;
   }),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       result = _React$useState2[0],
@@ -66446,7 +66448,49 @@ var options = new _src_interface__WEBPACK_IMPORTED_MODULE_3__["CevalOptions"]();
   var execExpression = react__WEBPACK_IMPORTED_MODULE_0___default.a.useCallback(function (str) {
     try {
       var newTime = performance.now();
-      setResult(parser.current.parseString(str));
+      setResult(parser.current.parseString(str, {
+        // unary 
+        // !warn 1+1 || +1 Will be hit, should judge argument length
+        '+': function _() {
+          if (arguments.length === 1) {
+            return +(arguments.length <= 0 ? undefined : arguments[0]) + 1;
+          } else {
+            return (arguments.length <= 0 ? undefined : arguments[0]) + (arguments.length <= 1 ? undefined : arguments[1]) + 1;
+          }
+        },
+        // !warn 1-1 & -1 Will be hit, should judge argument length
+        '-': function _() {
+          if (arguments.length === 1) {
+            return -(arguments.length <= 0 ? undefined : arguments[0]) - 1;
+          } else {
+            return (arguments.length <= 0 ? undefined : arguments[0]) - (arguments.length <= 1 ? undefined : arguments[1]) - 1;
+          }
+        },
+        "typeof": function _typeof(t) {
+          return Object.prototype.toString.call(t);
+        },
+        '++': function _(v) {
+          return v += 2;
+        },
+        'return': function _return(v) {
+          return typeof v === 'string' ? "str => ".concat(v) : v;
+        },
+        // binary 
+        '==': function _(a, b) {
+          return a === b;
+        },
+        '||': function _(a, b) {
+          return a && b;
+        },
+        '&&': function _(a, b) {
+          console.log(a, b);
+          return a || b;
+        },
+        // ternary
+        '?': function _(a, b, c) {
+          return a + b + c;
+        }
+      }));
       values.current = parser.current.getCurrentValues();
       setTime(performance.now() - newTime);
     } catch (err) {
@@ -66555,7 +66599,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var Ceval = function Ceval() {
+var Ceval =
+/**
+ * 操作符映射表，可做在presetValues覆盖运算
+ */
+function Ceval() {
   var _this = this;
 
   var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -66574,10 +66622,12 @@ var Ceval = function Ceval() {
 
   _defineProperty(this, "functions", void 0);
 
+  _defineProperty(this, "operatorMap", _systemMap__WEBPACK_IMPORTED_MODULE_2__["operatorMap"]);
+
   _defineProperty(this, "currentValues", lodash_cloneDeep__WEBPACK_IMPORTED_MODULE_0___default()(_utils_presetVariable__WEBPACK_IMPORTED_MODULE_5__["default"]));
 
   _defineProperty(this, "getSupportOperationMap", function (ops) {
-    return Object.prototype.hasOwnProperty.call(_systemMap__WEBPACK_IMPORTED_MODULE_2__["optionNameMap"], ops) ? _systemMap__WEBPACK_IMPORTED_MODULE_2__["optionNameMap"][ops] : null;
+    return Object.prototype.hasOwnProperty.call(_systemMap__WEBPACK_IMPORTED_MODULE_2__["operatorMap"], ops) ? _systemMap__WEBPACK_IMPORTED_MODULE_2__["operatorMap"][ops] : null;
   });
 
   _defineProperty(this, "parseString", function (expression) {
@@ -66588,7 +66638,7 @@ var Ceval = function Ceval() {
   });
 
   _defineProperty(this, "getCurrentValues", function () {
-    return _this.currentValues;
+    return lodash_cloneDeep__WEBPACK_IMPORTED_MODULE_0___default()(_this.currentValues);
   });
 
   _defineProperty(this, "injectValueToCalc", function (tokens) {
@@ -66610,11 +66660,15 @@ var Ceval = function Ceval() {
     Object.assign(_this.options, Options);
   });
 
+  _defineProperty(this, "getOptions", function () {
+    return lodash_cloneDeep__WEBPACK_IMPORTED_MODULE_0___default()(_this.options);
+  });
+
   Object.assign(this, _systemMap__WEBPACK_IMPORTED_MODULE_2__["default"]);
   Object(_utils_index__WEBPACK_IMPORTED_MODULE_6__["merge"])(this.options, new _interface__WEBPACK_IMPORTED_MODULE_7__["CevalOptions"]());
 }
 /**
- * 查询支持的操作符方法名称
+ * 查询支持的操作符方法名称, 可做覆盖
  * @param ops 操作符
  * @memberof Ceval
  */
@@ -70341,7 +70395,7 @@ function Parser(ceval, tokens, _exprInstr) {
     _this.parseField(exprInstr);
 
     while (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_OPERATOR"], '.') || Object(_utils_index__WEBPACK_IMPORTED_MODULE_3__["contains"])([_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SQUARE"], _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"]], _this.current.type) && _this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SQUARE"], '[')) {
-      if (!_this.ceval.options.allowMemberAccess) {
+      if (!_this.ceval.getOptions().allowMemberAccess) {
         throw new Error("options \"allowMemberAccess\": You have disabled member access and cannot use syntax such as \"a.b\" \"a['b']\"");
       }
 
@@ -70701,7 +70755,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "operatorReg", function() { return operatorReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unaryMapReg", function() { return unaryMapReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unarySymbolMapReg", function() { return unarySymbolMapReg; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "quoteReg", function() { return quoteReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "execNumberReg", function() { return execNumberReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isUnaryOpeator", function() { return isUnaryOpeator; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isBinaryOpeator", function() { return isBinaryOpeator; });
@@ -70743,7 +70796,6 @@ var unarySymbolMapReg = new RegExp("^(".concat(Object.keys(_systemMap__WEBPACK_I
 }).map(function (r) {
   return "\\s*\\".concat(r, "\\s*");
 }).join('|'), ")"));
-var quoteReg = /^\"(.*)\"$|^\'(.*)\'$/;
 var execNumberReg = function execNumberReg(reg, expr) {
   var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function (v) {
     return v;
@@ -70776,7 +70828,7 @@ var isTernaryOpeator = function isTernaryOpeator(_ref3) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "optionNameMap", function() { return optionNameMap; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "operatorMap", function() { return operatorMap; });
 /* harmony import */ var _utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1724);
 /* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1725);
 function _typeof2(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
@@ -70861,9 +70913,19 @@ var system = {
 /* harmony default export */ __webpack_exports__["default"] = (system);
 /** @desc 功能函数 */
 
+// 有些运算符不能被修改。
+var excludeOperator = ['=', '['];
 /** @desc 运算符映射表 */
-var optionNameMap = Object(_utils_index__WEBPACK_IMPORTED_MODULE_0__["mapVal"])({}, system, function (maps, key, val) {
-  return maps[key] = val;
+
+var operatorMap = Object(_utils_index__WEBPACK_IMPORTED_MODULE_0__["mapVal"])(Object.create(null), {
+  functions: system.functions,
+  consts: system.consts,
+  unaryOps: system.unaryOps,
+  ternaryOps: system.ternaryOps
+}, function (maps, key, val) {
+  if (!excludeOperator.includes(key)) {
+    maps[key] = val;
+  }
 });
 
 /***/ }),
@@ -70882,8 +70944,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filterUndefine", function() { return filterUndefine; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasAttribute", function() { return hasAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapToObject", function() { return mapToObject; });
-/* harmony import */ var _regExp__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1722);
-/* harmony import */ var _instruction__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1720);
+/* harmony import */ var _instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1720);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -70895,7 +70956,6 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.it
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 
 
 var toString = Object.prototype.toString;
@@ -70933,7 +70993,7 @@ function getTime() {
 }
 /**
  * 递归foreach
- * @export
+ * @export mapVal
  * @template T
  * @param {T} data
  * @param {Record<string, Record<string, any>>} object
@@ -70976,8 +71036,9 @@ function merge(target, source) {
  */
 
 function eliminateQuote(str) {
-  if (!_regExp__WEBPACK_IMPORTED_MODULE_0__["quoteReg"].test(str)) return str;
-  var result = _regExp__WEBPACK_IMPORTED_MODULE_0__["quoteReg"].exec(str);
+  var quoteReg = /^\"(.*)\"$|^\'(.*)\'$/;
+  if (!quoteReg.test(str)) return str;
+  var result = quoteReg.exec(str);
   var s = result[1] !== undefined ? result[1] : result[2];
   return eliminateQuote(s);
 }
@@ -71036,7 +71097,7 @@ function mapToObject(arr) {
   arr.forEach(function (item) {
     var key;
 
-    if (item instanceof _instruction__WEBPACK_IMPORTED_MODULE_1__["default"]) {
+    if (item instanceof _instruction__WEBPACK_IMPORTED_MODULE_0__["default"]) {
       key = item.value;
     } else {
       key = item;
@@ -71450,7 +71511,7 @@ function TokenStream(ceval, expression) {
         return false;
       }
 
-      if (number !== undefined && !_this.ceval.options.endableBitNumber) {
+      if (number !== undefined && !_this.ceval.getOptions().endableBitNumber) {
         // 给出准确的warning 
         throw new Error("options \"endableBitNumber\": You have disabled bitbase number parsing, Not allowed ".concat(number));
       }
@@ -71629,7 +71690,7 @@ function TokenStream(ceval, expression) {
 
     if (!result) return false;
 
-    if (_this.ceval.options.endableOperators === false) {
+    if (_this.ceval.getOptions().endableOperators === false) {
       throw new Error("options \"endableOperators\": You disabled the operator, Therefore, \"".concat(result[1], "\" it can not be used"));
     }
 
@@ -71923,6 +71984,7 @@ function calculation(tokens) {
     console.groupEnd();
   }
 
+  var options = ceval.getOptions();
   var unaryOps = ceval.unaryOps,
       binaryOps = ceval.binaryOps,
       ternaryOps = ceval.ternaryOps;
@@ -71980,7 +72042,7 @@ function calculation(tokens) {
           var _stack$splice2 = _slicedToArray(_stack$splice, 1);
 
           n1 = _stack$splice2[0];
-          fn = unaryOps[value];
+          fn = specifyAttr(value, [values, unaryOps], options.allowOperatorsCovered);
           stack.push(fn(n1));
           break;
         }
@@ -71996,16 +72058,16 @@ function calculation(tokens) {
 
           n1 = _stack$splice4[0];
           n2 = _stack$splice4[1];
-          fn = binaryOps[value];
+          fn = specifyAttr(value, [values, binaryOps], options.allowOperatorsCovered); // fn = binaryOps[value] as Function;
 
           if (value === '&&') {
             // 1&&0&&3可能是连续的
-            stack.push(n1 ? calculation([n2], values, ceval, statis, scope) : false); // true && true && false
+            stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), false)); // true && true && false
           } else if (value === '=') {
             // 如果当前作用域含有该属性，作用域优先
             fn(n1, n2, Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(scope, n1) ? scope : values);
           } else {
-            stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), ceval.options));
+            stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), options));
           }
 
           break;
@@ -72023,7 +72085,7 @@ function calculation(tokens) {
           n1 = _stack$splice6[0];
           n2 = _stack$splice6[1];
           n3 = _stack$splice6[2];
-          fn = ternaryOps[value];
+          fn = specifyAttr(value, [values, ternaryOps], options.allowOperatorsCovered);
           stack.push(fn(n1, n2, n3));
           break;
         }
@@ -72191,6 +72253,25 @@ function calculation(tokens) {
   return statis ? stack : stack[0];
 }
 
+function specifyAttr(value, _ref2) {
+  var _ref3 = _slicedToArray(_ref2, 2),
+      customValues = _ref3[0],
+      defaultValues = _ref3[1];
+
+  var shouldCustom = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  var fn;
+
+  if (shouldCustom && Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(customValues, value)) {
+    fn = customValues[value];
+  } else {
+    fn = defaultValues[value];
+  }
+
+  return fn;
+}
+
+;
+
 var CustomFunc = function CustomFunc(func, values, _scope, ceval) {
   var _this = this;
 
@@ -72276,6 +72357,8 @@ var CevalOptions = function CevalOptions() {
   _defineProperty(this, "allowMemberAccess", true);
 
   _defineProperty(this, "allowHandleNumberPrecision", true);
+
+  _defineProperty(this, "allowOperatorsCovered", false);
 
   _defineProperty(this, "defaultReturnValues", '');
 } // done

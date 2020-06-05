@@ -26,7 +26,7 @@
     "build:typings": "tsc -p tsconfig.d.json",
     "build:docs": "webpack --config script/webpack.doc.js --hide-modules --progress --colors",
     "build:rollup": "rollup -c",
-    "build": "rm -rf lib/ && npm run test && npm run build:typings &&npm run build:rollup",
+    "build": "rm -rf lib/ && npm run test && npm run build:docs && npm run build:typings &&npm run build:rollup",
     "release": "standard-version --release-as",
     "publish:major": "npm run release -- major && npm publish",
     "publish:minor": "npm run release -- minor && npm publish",

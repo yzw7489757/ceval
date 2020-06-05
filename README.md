@@ -8,8 +8,12 @@
 ![](https://img.shields.io/github/issues/yzw7489757/ceval)
 ![CI](https://github.com/yzw7489757/ceval/workflows/CI/badge.svg?branch=master)
 ![Node.js CI](https://github.com/yzw7489757/ceval/workflows/Node.js%20CI/badge.svg)
+![](https://img.shields.io/github/size/yzw7489757/ceval/lib/index.js)
+![](https://img.shields.io/travis/yzw7489757/ceval?label=Travis%20Build)
 
 [online demo](https://yzw7489757.github.io/ceval/);
+
+<!-- https://s1.ax1x.com/2020/06/05/tsAW3q.jpg -->
 
 零依赖，借鉴了 `expr-eval` 底层实现，重构为更适合表达式运算的 `ceval`; 
 
@@ -91,8 +95,8 @@ Parser Instance API
 |:----|----|:----:|:----:|
 | operatorMap | Operators mapping table, which can be used in preset values overlay operation | Record<string, Function>|
 | getSupportOperationMap | The name of the operator method supported by the query can be overridden | (ops: string) => null | Function;| 
-| parseString| Parsing strings, exposing methods to the outside world | (expression: string, values?: Record<string, any>) => any;|
-| getCurrentValues| Get current datapool preset + external + internal declaration| () => Record<string, any>|
+| parseString | Parsing strings, exposing methods to the outside world | (expression: string, values?: Record<string, any>) => any;|
+| getCurrentValues | Get current datapool preset + external + internal declaration | () => Record<string, any> |
 | updatePresetValues| Update PresetValues |(values: Record<string, any>) => void|
 | updateOptions| Update Option | (Options: Partial<CevalOptions>) => void|
 | getOptions| get Options | () => Readonly<CevalOptions>|
@@ -205,6 +209,9 @@ npm run build:umd
 
 # rollup build umd module, 压缩版本
 npm run build:rollup
+
+# webpack build docs
+npm run build:docs
 ```
 
 ### publish
