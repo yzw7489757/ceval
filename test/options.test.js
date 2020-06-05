@@ -55,7 +55,83 @@ test('options allowMemberAccess = false', () => {
   expect(() => parse('a[1]', { a: ['1','2','3']})).toThrow(Error)
 }, 0)
 
-test('options allowMemberAccess = false', () => {
+test('options allowOperatorsCovered = false', () => {
+  const parse = new Parser({
+    allowOperatorsCovered: true
+  })
+  const { parseString } = parse
+  parse.updatePresetValues({
+    // unary 
+    // !warn 1+1 || +1 Will be hit, should judge argument length
+    '+': (...args) => {
+      if(args.length === 1) {
+        return +args[0] + 1
+      }else{
+        return args[0] + args[1] + 1
+      }
+    },
+    // !warn 1-1 & -1 Will be hit, should judge argument length
+    '-': (...args) => {
+      if(args.length === 1) {
+        return -args[0] - 1;
+      }else{
+        return args[0] - args[1] - 1
+      }
+    },
+    
+    "typeof": (t) => {
+      return Object.prototype.toString.call(t)
+    },
+    '++': (v) => v += 2,
+    'return': v => typeof v === 'string' ? `str => ${v}` : v,
+    
+    // binary 
+    '==': (a,b) => a === b,
+    '||' : (a,b) => a && b,
+    '&&' : (a,b) => a || b,
+
+    // ternary
+    '?': (a,b,c) => a + b + c 
+  })
+
+  expect(parseString(`0.1+0.2`)).toBe(1.3);
+  expect(parseString(`+0.1`)).toBe(1.1);
+
+  expect(parseString(`0.1-0.2`)).toBe(-1.1);
+  expect(parseString(`-0.1`)).toBe(-1.1);
+
+  expect(parseString(`typeof([])`)).toBe(Object.prototype.toString.call([]));
+  expect(parseString(`++1`)).toBe(3);
+
+  expect(parseString(`1 == true`)).toBe(false);
+  expect(parseString(`false || true`)).toBe(false);
+  expect(parseString(`false && true`)).toBe(true);
+
+  expect(parseString(`1?2:3`)).toBe(6);
+  
+
+  parse.updateOptions({
+    allowOperatorsCovered: false
+  })
+
+  expect(parseString(`0.1+0.2`)).toBe(.3);
+  expect(parseString(`+0.1`)).toBe(.1);
+
+  expect(parseString(`0.1-0.2`)).toBe(-.1);
+  expect(parseString(`-0.1`)).toBe(-.1);
+
+  expect(parseString(`typeof([])`)).toBe(typeof []);
+  expect(parseString(`++1`)).toBe(2);
+  
+  expect(parseString(`1 == true`)).toBe(true);
+  expect(parseString(`false || true`)).toBe(true);
+  expect(parseString(`false && true`)).toBe(false);
+
+  expect(parseString(`1?2:3`)).toBe(2);
+
+}, 0)
+
+test('options allowHandleNumberPrecision = false', () => {
   const instance = new Parser({
     allowHandleNumberPrecision: true // default
   })

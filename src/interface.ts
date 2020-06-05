@@ -50,6 +50,15 @@ export class CevalOptions {
   allowHandleNumberPrecision?: boolean = true;
 
   /**
+   * @desc 默认不允许操作符被 presetValue 覆盖
+   * @see 某些情况下开发者想制定更加精确的计算,例如BigInt,那么就在根据operatorMap声明presetValue={'+':Function}
+   * @requires false
+   * @type {boolean}
+   * @memberof CevalOptions
+   */
+  allowOperatorsCovered?: boolean = false;
+  
+  /**
    * @desc 当没有返回值或为undefined时触发默认返回值
    * @requires false
    * @todo done

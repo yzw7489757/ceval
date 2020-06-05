@@ -384,7 +384,7 @@ export default class Parser {
     while (
       this.accept(TOKEN_OPERATOR, '.') ||
       (contains<string>([TOKEN_SQUARE, TOKEN_NAME], this.current.type) && this.accept(TOKEN_SQUARE, '['))) {
-      if (!this.ceval.options.allowMemberAccess) {
+      if (!this.ceval.getOptions().allowMemberAccess) {
         throw new Error(`options "allowMemberAccess": You have disabled member access and cannot use syntax such as "a.b" "a['b']"`)
       }
       if (this.current.value === '.') {

@@ -84,5 +84,18 @@ export type TypeTernary = typeof system.ternaryOps;
 /** @desc 词法操作符 */
 export type TypeSyntax = typeof system.syntaxOperator;
 
+// 有些运算符不能被修改。
+
+const excludeOperator = ['=', '['];
+
 /** @desc 运算符映射表 */
-export const optionNameMap = mapVal({}, system, (maps, key, val) => maps[key] = val)
+export const operatorMap = mapVal(Object.create(null), {
+  functions: system.functions,
+  consts: system.consts,
+  unaryOps: system.unaryOps,
+  ternaryOps: system.ternaryOps,
+}, (maps, key, val) => {
+  if(!excludeOperator.includes(key)) {
+    maps[key] = val
+  }
+})

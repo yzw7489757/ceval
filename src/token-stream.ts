@@ -225,7 +225,7 @@ export default class TokenStream {
         this.parseError('number bitbase parser error', SyntaxError)
         return false
       }
-      if (number !== undefined && !this.ceval.options.endableBitNumber) { // 给出准确的warning 
+      if (number !== undefined && !this.ceval.getOptions().endableBitNumber) { // 给出准确的warning 
         throw new Error(`options "endableBitNumber": You have disabled bitbase number parsing, Not allowed ${number}`)
       }
     } else if (number10bitReg.test(expr)) { // 十进制
@@ -416,7 +416,7 @@ export default class TokenStream {
 
     if (!result) return false
 
-    if(this.ceval.options.endableOperators === false) {
+    if(this.ceval.getOptions().endableOperators === false) {
       throw new Error(`options "endableOperators": You disabled the operator, Therefore, "${result[1]}" it can not be used`)
     }
 

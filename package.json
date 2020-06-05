@@ -22,18 +22,15 @@
   "scripts": {
     "start": "webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'",
     "https": "HTTPS=true npm start",
-
     "build:umd": "webpack --config script/webpack.umd.js --hide-modules --progress --colors",
     "build:typings": "tsc -p tsconfig.d.json",
     "build:docs": "webpack --config script/webpack.doc.js --hide-modules --progress --colors",
     "build:rollup": "rollup -c",
     "build": "rm -rf lib/ && npm run test && npm run build:typings &&npm run build:rollup",
-
     "release": "standard-version --release-as",
     "publish:major": "npm run release -- major && npm publish",
     "publish:minor": "npm run release -- minor && npm publish",
     "publish:patch": "npm run release -- patch && npm publish",
-
     "lint": "eslint --quiet ./src --no-error-on-unmatched-pattern",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -53,6 +50,7 @@
     "@babel/runtime": "^7.5.5",
     "@rollup/plugin-json": "^4.0.3",
     "@types/antd": "^1.0.0",
+    "@types/lodash": "^4.14.155",
     "@types/react": "^16.9.2",
     "@types/react-dom": "^16.9.5",
     "@types/react-router-dom": "^5.1.5",
@@ -104,5 +102,5 @@
   },
   "homepage": "https://github.com/yzw7489757/ceval#readme",
   "author": "yzw7489757",
-  "license": "ISC"
+  "license": "MIT"
 }

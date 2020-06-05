@@ -1,7 +1,7 @@
-import { quoteReg } from './regExp';
 import Instruction from '../instruction';
 
-const {toString} = Object.prototype
+const { toString } = Object.prototype;
+
 
 export function isObject(obj: object): obj is object {
   return toString.call(obj) === '[object Object]'
@@ -37,7 +37,7 @@ export function getTime(offset = 0): string[] {
 
 /**
  * 递归foreach
- * @export
+ * @export mapVal
  * @template T
  * @param {T} data
  * @param {Record<string, Record<string, any>>} object
@@ -78,6 +78,7 @@ export function merge<T>(target: T, source: T) {
  * @returns {string} 没有对称引号的字符串
  */
 export function eliminateQuote(str: string): string {
+  const quoteReg = /^\"(.*)\"$|^\'(.*)\'$/;
   if (!quoteReg.test(str)) return str
   const result = quoteReg.exec(str)
   const s = result[1] !== undefined ? result[1] : result[2]

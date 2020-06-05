@@ -1,6 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep'
 import Parser from './parser';
-import systemMap, { TypeUnary, TypeBinary, TypeTernary, TypeConst, TypeFunction, optionNameMap } from './systemMap';
+import systemMap, { TypeUnary, TypeBinary, TypeTernary, TypeConst, TypeFunction, operatorMap } from './systemMap';
 import TokenStream from './token-stream';
 import calculation from './calculation';
 import presetVariable from './utils/presetVariable';
@@ -18,20 +18,25 @@ export default class Ceval {
 
   functions: TypeFunction;
 
+  /**
+   * 操作符映射表，可做在presetValues覆盖运算
+   */
+  operatorMap = operatorMap;
+
   private currentValues: Record<string, any> = cloneDeep(presetVariable);
 
-  constructor(public options: Readonly<CevalOptions> = {}) {
+  constructor(private options: Readonly<CevalOptions> = {}) {
     Object.assign(this, systemMap);
     merge(this.options, new CevalOptions())
   }
 
   /**
-   * 查询支持的操作符方法名称
+   * 查询支持的操作符方法名称, 可做覆盖
    * @param ops 操作符
    * @memberof Ceval
    */
   getSupportOperationMap = (ops: string): null | Function => {
-    return Object.prototype.hasOwnProperty.call(optionNameMap, ops) ? optionNameMap[ops] : null
+    return Object.prototype.hasOwnProperty.call(operatorMap, ops) ? operatorMap[ops] : null
   }
 
   /**
@@ -51,7 +56,7 @@ export default class Ceval {
    * @returns 数据池
    * @memberof Ceval
    */
-  getCurrentValues = (): Record<string, any> => this.currentValues;
+  getCurrentValues = (): Record<string, any> => cloneDeep(this.currentValues);
 
   /**
    * 传入指令集开始计算
@@ -59,7 +64,7 @@ export default class Ceval {
    * @param {Record<string, any>} [values={}] 数据池
    * @memberof Ceval
    */
-  injectValueToCalc = (tokens: TypeInstruction[], values: Record<string, any> = {}): any => {
+  private injectValueToCalc = (tokens: TypeInstruction[], values: Record<string, any> = {}): any => {
     // @TODO 检查敏感字
     // @TODO 检查关键字
     this.updatePresetValues(values);
@@ -83,6 +88,14 @@ export default class Ceval {
    */
   updateOptions = (Options: Partial<CevalOptions>): void => {
     Object.assign(this.options, Options)
+  }
+
+  /**
+   * get Options
+   * @memberof Ceval
+   */
+  getOptions = () => {
+    return cloneDeep(this.options);
   }
 
 } 

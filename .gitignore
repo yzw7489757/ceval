@@ -9,7 +9,6 @@
 .DS_Store
 npm-debug.log*
 
-/lib
 /build
 /*.js.map
 /package-lock.json

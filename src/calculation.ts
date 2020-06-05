@@ -12,7 +12,7 @@ import { hasAttribute, mapToObject, merge } from './utils/index';
  * @param {object} [scope={}]       作用域
  * @returns result or result[]
  */
-export default function calculation(tokens: Instruction<any>[], values: object = Object.create(null), ceval: Ceval, statis = false, scope = Object.create(null)) {
+export default function calculation(tokens: Instruction<any>[], values = Object.create(null), ceval: Ceval, statis = false, scope = Object.create(null)) {
   if (window.name) {
    console.group('calclation Dev')
     console.log('tokens: ', tokens);
@@ -20,6 +20,7 @@ export default function calculation(tokens: Instruction<any>[], values: object =
     console.log('scope', scope)
    console.groupEnd()
   }
+  const options = ceval.getOptions();
   const { unaryOps, binaryOps, ternaryOps } = ceval
   const stack = [];
   const { length } = tokens;
@@ -60,28 +61,29 @@ export default function calculation(tokens: Instruction<any>[], values: object =
         if(stack.length === 0) break;
         // 一元运算，需要一个操作数
         [n1] = stack.splice(-1, 1);
-        fn = unaryOps[value] as Function;
+        fn = specifyAttr<Function>(value, [values, unaryOps], options.allowOperatorsCovered)
         stack.push(fn(n1));
         break
       }
       case INSTR_OPERA2: { // 二元运算，需要有两个操作数
         if(stack.length < 2) break;
         [n1, n2] = stack.splice(-2, 2)
-        fn = binaryOps[value] as Function;
+        fn = specifyAttr<Function>(value, [values, binaryOps], options.allowOperatorsCovered)
+        // fn = binaryOps[value] as Function;
         if (value === '&&') { // 1&&0&&3可能是连续的
-          stack.push(n1 ? calculation([n2], values, ceval, statis, scope) : false); // true && true && false
+          stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), false)); // true && true && false
         } else if (value === '=') {
           // 如果当前作用域含有该属性，作用域优先
           fn(n1, n2, hasAttribute(scope, n1) ? scope : values)
         } else {
-          stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), ceval.options));
+          stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), options));
         }
         break
       }
       case INSTR_OPERA3: { // 三元运算，需要有三个操作数
         if(stack.length < 3) break;
         [n1, n2, n3] = stack.splice(-3, 3)
-        fn = ternaryOps[value] as Function;
+        fn = specifyAttr<Function>(value, [values, ternaryOps], options.allowOperatorsCovered)
         stack.push(fn(n1, n2, n3));
         break
       }
@@ -180,6 +182,16 @@ export default function calculation(tokens: Instruction<any>[], values: object =
   }
   return statis ? stack : stack[0];
 }
+
+function specifyAttr<T>(value: string, [customValues, defaultValues], shouldCustom = false): T {
+  let fn: T
+  if(shouldCustom && hasAttribute(customValues, value)) {
+    fn = customValues[value] as T;
+  } else {
+    fn = defaultValues[value] as T;
+  }
+  return fn
+};
 
 class CustomFunc {
   args: string[];

@@ -1,5 +1,15 @@
 ## Ceval
 
+![](https://img.shields.io/npm/dt/ceval?style=flat-square)
+![](https://img.shields.io/npm/dm/ceval?style=flat-square)
+![](https://img.shields.io/npm/dw/ceval?style=flat-square)
+![](https://img.shields.io/npm/l/ceval)
+![](https://img.shields.io/npm/v/ceval)
+![](https://img.shields.io/github/issues/yzw7489757/ceval)
+
+
+[online demo](https://yzw7489757.github.io/ceval/);
+
 零依赖，借鉴了 `expr-eval` 底层实现，重构为更适合表达式运算的 `ceval`; 
 
 No dependence, the achieve basics `expr-cval`, Refactoring to ceval is more suitable for calculating expressions; 
@@ -57,14 +67,38 @@ const analysis = new Parser({
   allowHandleNumberPrecision?: boolean = true;
 
   /**
+   * @desc 默认不允许操作符被 presetValue 覆盖
+   * @see 某些情况下开发者想制定更加精确的计算,例如BigInt,那么就在根据operatorMap声明presetValue={'+':Function}
+   * @requires false
+   * @type {boolean}
+   * @memberof CevalOptions
+   */
+  allowOperatorsCovered?: boolean;
+
+  /**
    * @desc 当没有返回值或为undefined时触发默认返回值
    * @type {any}
    */
   defaultReturnValues?: any = '' // done
 })
-
 ```
-## 基本
+
+## API
+Parser Instance API
+
+| api | desc | type |
+|:----|----|:----:|:----:|
+| operatorMap | Operators mapping table, which can be used in preset values overlay operation | Record<string, Function>|
+| getSupportOperationMap | The name of the operator method supported by the query can be overridden | (ops: string) => null | Function;| 
+| parseString| Parsing strings, exposing methods to the outside world | (expression: string, values?: Record<string, any>) => any;|
+| getCurrentValues| Get current datapool preset + external + internal declaration| () => Record<string, any>|
+| updatePresetValues| Update PresetValues |(values: Record<string, any>) => void|
+| updateOptions| Update Option | (Options: Partial<CevalOptions>) => void|
+| getOptions| get Options | () => Readonly<CevalOptions>|
+
+about Options example [test case](https://github.com/yzw7489757/ceval/blob/master/test/options.test.js);
+
+## basic
 
 ``` ts
 const { parseString } = analysis
@@ -112,14 +146,15 @@ parseString(`3%2`);                       // 1
 
 ### Function
 ``` ts
-// var 申明语句不会影响到scope, 而是 inject 到 values 
+// var 申明语句不会影响到 scope, 而是 inject 到 values 
 // let 和 const 都赋值到当前 scope 上, 当前scope如果存在则warn
+
 parseString(`
   function abs(a,b,c) { 
-    var a = 5;
-    let b = 1; /* warn */
+    var a = 5; /* => inject to presetValues */
+    let b = 1; /* => inject to current scope */
     c = 2;
-    const d = 4; /* not warn */
+    const d = 4; /* If the current scope contains the variable D, It will trigger warning, but the operation will still be completed, is overlay */
     return(a+b+c);
   };
   abs(3,4,8);
