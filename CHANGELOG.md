@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/yzw7489757/ceval/compare/v1.0.3...v1.0.4) (2020-06-05)
+
+
+### Features
+
+* **single function:** support custom opeartor function ([b97246b](https://github.com/yzw7489757/ceval/commit/b97246bfdcf08b61b6c5690697f49ebbef327392))
+
 ### 1.0.3 (2020-06-05)
 
 
