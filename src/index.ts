@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash/cloneDeep'
 import Parser from './parser';
 import systemMap, { TypeUnary, TypeBinary, TypeTernary, TypeConst, TypeFunction, optionNameMap } from './systemMap';
 import TokenStream from './token-stream';
@@ -17,7 +18,7 @@ export default class Ceval {
 
   functions: TypeFunction;
 
-  private currentValues: Record<string, any> = {};
+  private currentValues: Record<string, any> = cloneDeep(presetVariable);
 
   constructor(public options: Readonly<CevalOptions> = {}) {
     Object.assign(this, systemMap);
@@ -39,7 +40,7 @@ export default class Ceval {
    */
   parseString = (expression: string, values: Record<string, any> = {}) => {
     const instr: TypeInstruction[] = [];
-
+    
     Parser.generatorParser(this, new TokenStream(this, expression), instr)
 
     return this.injectValueToCalc(instr, values)
@@ -61,9 +62,18 @@ export default class Ceval {
   injectValueToCalc = (tokens: TypeInstruction[], values: Record<string, any> = {}): any => {
     // @TODO 检查敏感字
     // @TODO 检查关键字
-    this.currentValues = Object.assign(presetVariable, values)
+    this.updatePresetValues(values);
     const result = calculation(tokens, this.currentValues, this)
     return result === undefined ? this.options.defaultReturnValues : result
+  }
+
+  /**
+   * Update PresetValues
+   * @param {values} Record<string, any> 配置
+   * @memberof Ceval
+   */
+  updatePresetValues = (values: Record<string, any>): void => {
+    Object.assign(this.currentValues, values)
   }
 
   /**

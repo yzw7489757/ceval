@@ -22,7 +22,7 @@ export const stringGreedyReg = /^\'(.*)\'|^\"(.*)\"/;
 
 export const number2bitReg = /^(0b[0|1]{1,})$/;
 export const number8bitReg = /^(0[0-7]{1,})$/;
-export const number010bitReg = /^(0\d*[8-9]{1,}\d*(\.\d+)?|(0\.\d*))$/; // 0开头的十进制 019 038 078
+export const number010bitReg = /^(0\d*[8-9]{1,}\d*(\.\d+)?)$/; // 0开头的十进制 019 038 078
 export const number10bitReg = /(^([1-9]\d*(\.\d+)|(\d*(\.\d+)?)))/; // 1-9 或者.开头的十进制
 export const number16bitReg = /^(0x[0-9a-fA-F]{1,})$/;
 

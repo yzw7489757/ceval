@@ -77,7 +77,7 @@ export default class TokenStream {
    */
   next = (): TypeToken => {
     if (!this.expression.length) {
-      return this.newToken(TOKEN_NAME, "")
+      return this.newToken(TOKEN_NAME, "undefined")
     }
     if (this.pos >= this.expression.length) {
       return this.newToken(TOKEN_END, 'END');
@@ -191,7 +191,7 @@ export default class TokenStream {
     const [n] = expr.match(/^(0(x|b)+[0-9a-zA-Z]{1,})|(^0?\d*(\.\d+)?)/); // 019 可能会被8进制拦截掉01， 所以必须要做^$
 
     number10bitReg.lastIndex = 0;
-    if (first === '0' && n.length > 1 && /0\.\d*/) {
+    if (first === '0' && n.length > 1 && !(/^0\.\d/.test(n))) { // 0.x 不是进制数
       if (contains<string>(['b', 'x'], this.getSomeCode(1, 1)) && this.getSomeCode(1, n.length) === '.') {
         // 0b0101.1 0xaf.1 ❌
         // 099.1 属于十进制 ✅
@@ -218,7 +218,7 @@ export default class TokenStream {
       } else if (number010bitReg.test(n)) {
         // 0开头十进制 
         // @see 079 || 080  ✅
-        // @warn 03.1 || 00.1 || 00.  ❌
+        // @warn 03.1 || 00.1 || 00.  ❌ 
         number = execNumberReg(number010bitReg, n)
         bit = number === undefined ? undefined : 10
       } else {
