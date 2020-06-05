@@ -21,42 +21,7 @@ export default (): JSX.Element => {
   const execExpression = React.useCallback((str) => {
     try {
       const newTime = performance.now()
-      setResult(parser.current.parseString(str, {
-        // unary 
-        // !warn 1+1 || +1 Will be hit, should judge argument length
-        '+': (...args) => {
-          if(args.length === 1) {
-            return +args[0] + 1
-          }else{
-            return args[0] + args[1] + 1
-          }
-        },
-        // !warn 1-1 & -1 Will be hit, should judge argument length
-        '-': (...args) => {
-          if(args.length === 1) {
-            return -args[0] - 1;
-          }else{
-            return args[0] - args[1] - 1
-          }
-        },
-        
-        "typeof": (t) => {
-          return Object.prototype.toString.call(t)
-        },
-        '++': (v) => v += 2,
-        'return': v => typeof v === 'string' ? `str => ${v}` : v,
-        
-        // binary 
-        '==': (a,b) => a === b,
-        '||' : (a,b) => a && b,
-        '&&' : (a,b) => {
-          console.log(a,b)
-          return a || b
-        },
-    
-        // ternary
-        '?': (a,b,c) => a + b + c 
-      }))
+      setResult(parser.current.parseString(str))
       values.current = parser.current.getCurrentValues();
       setTime(performance.now() - newTime);
     } catch (err) {

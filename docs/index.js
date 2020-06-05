@@ -30243,7 +30243,7 @@ exports.push([module.i, "* {\n  box-sizing: border-box;\n  margin: 0;\n  padding
 /* 4 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.4\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test && npm run build:typings &&npm run build:rollup\",\"release\":\"standard-version --release-as\",\"publish:major\":\"npm run release -- major && npm publish\",\"publish:minor\":\"npm run release -- minor && npm publish\",\"publish:patch\":\"npm run release -- patch && npm publish\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/lodash\":\"^4.14.155\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.6\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"MIT\"}");
+module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.4\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test && npm run build:docs && npm run build:typings &&npm run build:rollup\",\"release\":\"standard-version --release-as\",\"publish:major\":\"npm run release -- major && npm publish\",\"publish:minor\":\"npm run release -- minor && npm publish\",\"publish:patch\":\"npm run release -- patch && npm publish\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/lodash\":\"^4.14.155\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.6\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"MIT\"}");
 
 /***/ }),
 /* 5 */
@@ -66448,49 +66448,7 @@ var options = new _src_interface__WEBPACK_IMPORTED_MODULE_3__["CevalOptions"]();
   var execExpression = react__WEBPACK_IMPORTED_MODULE_0___default.a.useCallback(function (str) {
     try {
       var newTime = performance.now();
-      setResult(parser.current.parseString(str, {
-        // unary 
-        // !warn 1+1 || +1 Will be hit, should judge argument length
-        '+': function _() {
-          if (arguments.length === 1) {
-            return +(arguments.length <= 0 ? undefined : arguments[0]) + 1;
-          } else {
-            return (arguments.length <= 0 ? undefined : arguments[0]) + (arguments.length <= 1 ? undefined : arguments[1]) + 1;
-          }
-        },
-        // !warn 1-1 & -1 Will be hit, should judge argument length
-        '-': function _() {
-          if (arguments.length === 1) {
-            return -(arguments.length <= 0 ? undefined : arguments[0]) - 1;
-          } else {
-            return (arguments.length <= 0 ? undefined : arguments[0]) - (arguments.length <= 1 ? undefined : arguments[1]) - 1;
-          }
-        },
-        "typeof": function _typeof(t) {
-          return Object.prototype.toString.call(t);
-        },
-        '++': function _(v) {
-          return v += 2;
-        },
-        'return': function _return(v) {
-          return typeof v === 'string' ? "str => ".concat(v) : v;
-        },
-        // binary 
-        '==': function _(a, b) {
-          return a === b;
-        },
-        '||': function _(a, b) {
-          return a && b;
-        },
-        '&&': function _(a, b) {
-          console.log(a, b);
-          return a || b;
-        },
-        // ternary
-        '?': function _(a, b, c) {
-          return a + b + c;
-        }
-      }));
+      setResult(parser.current.parseString(str));
       values.current = parser.current.getCurrentValues();
       setTime(performance.now() - newTime);
     } catch (err) {
