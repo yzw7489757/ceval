@@ -6,7 +6,8 @@
 ![](https://img.shields.io/npm/l/ceval)
 ![](https://img.shields.io/npm/v/ceval)
 ![](https://img.shields.io/github/issues/yzw7489757/ceval)
-
+![CI](https://github.com/yzw7489757/ceval/workflows/CI/badge.svg?branch=master)
+![Node.js CI](https://github.com/yzw7489757/ceval/workflows/Node.js%20CI/badge.svg)
 
 [online demo](https://yzw7489757.github.io/ceval/);
 
