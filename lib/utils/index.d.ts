@@ -55,3 +55,4 @@ export declare function hasAttribute(obj: object, name: string): any;
  * @param {string[]} arr
  */
 export declare function mapToObject(arr: string[] | Instruction<any>[], defaultValue?: undefined | ((key: string) => any)): any;
+export declare function someCondition(...args: any[]): void;

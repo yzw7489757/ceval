@@ -138,3 +138,13 @@ export function mapToObject(arr: string[] | Instruction<any>[], defaultValue: un
   })
   return obj
 }
+
+export function someCondition(...args) {
+  const errMsg = args.pop();
+  while(true) {
+    const condition = args.pop()
+    if(!condition) {
+      throw Error(errMsg)
+    }
+  }
+}

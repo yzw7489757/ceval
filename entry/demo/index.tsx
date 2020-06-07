@@ -3,17 +3,49 @@ import React from 'react'
 import { Input, message, Card, Form, Switch } from 'antd'
 import Parser from '../../src/index';
 import { CevalOptions } from '../../src/interface';
-import { isObject } from '../../src/utils/index';
 
 const { Search } = Input;
 
 const options = new CevalOptions()
 
+function toString (fn: Function, replcer = '&nbsp;') {
+  return fn.toString().replace(/\t|\n/g,'<br>').replace(/\s/g, replcer)
+}
+
+const transfer = (key, value) => {
+  switch(typeof value) {
+    case 'function': {
+      return toString(value, '&nbsp;&nbsp;')
+    }
+    case 'undefined': {
+      return 'undefined'
+    }
+    case 'symbol': {
+      return value.toString();
+    }
+    default: {
+      return value
+    }
+  }
+}
+
+const presetVal = {
+  target:{
+    array: [1,2,3,4],
+    fn: function fn() {
+      return this.array
+    }
+  }
+}
 export default (): JSX.Element => {
-  const parser = React.useRef(new Parser({
-    allowOperatorsCovered: true
-  }));
-  
+  const parser = React.useRef((() => {
+    const instance = new Parser({
+      allowOperatorsCovered: true
+    })
+    instance.updatePresetValues(presetVal)
+    return instance
+  })());
+
   const [result, setResult] = React.useState(() => parser.current.getOptions().defaultReturnValues)
   const [time, setTime] = React.useState(0)
   const values = React.useRef(parser.current.getCurrentValues())
@@ -21,7 +53,7 @@ export default (): JSX.Element => {
   const execExpression = React.useCallback((str) => {
     try {
       const newTime = performance.now()
-      setResult(parser.current.parseString(str))
+      setResult(() => parser.current.parseString(str))
       values.current = parser.current.getCurrentValues();
       setTime(performance.now() - newTime);
     } catch (err) {
@@ -36,21 +68,6 @@ export default (): JSX.Element => {
     })
   }, [])
 
-
-  const triggerToUpdatePresetValues = React.useCallback((e: React.FocusEvent<HTMLTextAreaElement>) => {
-    try {
-      const presetValue = JSON.parse(e.target.value);
-      if (isObject(presetValue)) {
-        parser.current.updatePresetValues(presetValue)
-        values.current = parser.current.getCurrentValues();
-      } else {
-        throw new Error('parse value must be an object')
-      }
-    } catch (err) {
-      message.error(err.message)
-    }
-  }, [])
-
   return (
     <div className="cardWrap">
       <Card title="Result" extra={`time consuming:${time}`} className="cardItem">
@@ -61,7 +78,15 @@ export default (): JSX.Element => {
           onSearch={execExpression}
         />
         <br /> &nbsp;
-        <pre>{JSON.stringify(result, null, 4)}</pre>
+        <pre>
+          <div dangerouslySetInnerHTML={{__html: typeof result === 'function'? toString(result, '&nbsp;') : JSON.stringify(result, transfer, 4) }}></div>
+        </pre>
+
+        <h3>CurrentValues</h3>
+          
+        <pre>
+        <div dangerouslySetInnerHTML={{ __html: JSON.stringify(values.current, transfer, 4) }} /> 
+        </pre>
       </Card>
 
       <Card title="Options" className="cardItem">
@@ -83,18 +108,6 @@ export default (): JSX.Element => {
             })
           }
         </Form>
-      </Card>
-
-      <Card title="Values" className="cardItem">
-        <pre>
-          {
-            JSON.stringify(values.current, null, 4)
-          }
-        </pre>
-      </Card>
-
-      <Card title="Values" className="cardItem">
-        <Input.TextArea rows={12} defaultValue={JSON.stringify(values.current, null, 4)} onBlur={triggerToUpdatePresetValues} />
       </Card>
     </div>
   )

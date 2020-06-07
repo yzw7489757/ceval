@@ -433,6 +433,8 @@ export default class Parser {
       exprInstr.push(new Instruction(INSTR_VAR, identifier.value))
     } else if (this.accept(TOKEN_FUNC, undefined, false)) {
       this.parseFunctionDefinedDeclaration(exprInstr);
+    } else if (this.accept(TOKEN_SEMICOLON)) {
+      // 
     } else {
       throw new Error('unexpected ' + this.nextToken);
     }
@@ -470,7 +472,6 @@ export default class Parser {
         if (this.accept(TOKEN_CURLY, '{', false)) {
           this.parseObjectLiteralDeclaration(instr[key])
         } else {
-          debugger
           this.parseConditionalExpression(instr[key]);
         }
         this.accept(TOKEN_COMMA, ',');
