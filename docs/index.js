@@ -1,4 +1,4 @@
-/*! ceval@1.0.4 */
+/*! ceval@1.0.5 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("react"), require("react-dom"), require("antd"));
@@ -30243,7 +30243,7 @@ exports.push([module.i, "* {\n  box-sizing: border-box;\n  margin: 0;\n  padding
 /* 4 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.4\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test && npm run build:docs && npm run build:typings &&npm run build:rollup\",\"release\":\"standard-version --release-as\",\"publish:major\":\"npm run release -- major && npm publish\",\"publish:minor\":\"npm run release -- minor && npm publish\",\"publish:patch\":\"npm run release -- patch && npm publish\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/lodash\":\"^4.14.155\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.6\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"MIT\"}");
+module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.5\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test && npm run build:docs && npm run build:typings &&npm run build:rollup\",\"release\":\"standard-version --release-as\",\"publish:major\":\"npm run build && npm run release -- major && npm publish\",\"publish:minor\":\"npm run build && npm run release -- minor && npm publish\",\"publish:patch\":\"npm run build && npm run release -- patch && npm publish\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/lodash\":\"^4.14.155\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.6\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"MIT\"}");
 
 /***/ }),
 /* 5 */
@@ -66404,7 +66404,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var antd__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(antd__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1608);
 /* harmony import */ var _src_interface__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1730);
-/* harmony import */ var _src_utils_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1724);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
@@ -66419,18 +66418,61 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-/* eslint-disable no-console */
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+/* eslint-disable no-console */
 
 
 
 
 var Search = antd__WEBPACK_IMPORTED_MODULE_1__["Input"].Search;
 var options = new _src_interface__WEBPACK_IMPORTED_MODULE_3__["CevalOptions"]();
+
+function toString(fn) {
+  var replcer = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '&nbsp;';
+  return fn.toString().replace(/\t|\n/g, '<br>').replace(/\s/g, replcer);
+}
+
+var transfer = function transfer(key, value) {
+  switch (_typeof(value)) {
+    case 'function':
+      {
+        return toString(value, '&nbsp;&nbsp;');
+      }
+
+    case 'undefined':
+      {
+        return 'undefined';
+      }
+
+    case 'symbol':
+      {
+        return value.toString();
+      }
+
+    default:
+      {
+        return value;
+      }
+  }
+};
+
+var presetVal = {
+  target: {
+    array: [1, 2, 3, 4],
+    fn: function fn() {
+      return this.array;
+    }
+  }
+};
 /* harmony default export */ __webpack_exports__["default"] = (function () {
-  var parser = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(new _src_index__WEBPACK_IMPORTED_MODULE_2__["default"]({
-    allowOperatorsCovered: true
-  }));
+  var parser = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(function () {
+    var instance = new _src_index__WEBPACK_IMPORTED_MODULE_2__["default"]({
+      allowOperatorsCovered: true
+    });
+    instance.updatePresetValues(presetVal);
+    return instance;
+  }());
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(function () {
     return parser.current.getOptions().defaultReturnValues;
@@ -66448,7 +66490,9 @@ var options = new _src_interface__WEBPACK_IMPORTED_MODULE_3__["CevalOptions"]();
   var execExpression = react__WEBPACK_IMPORTED_MODULE_0___default.a.useCallback(function (str) {
     try {
       var newTime = performance.now();
-      setResult(parser.current.parseString(str));
+      setResult(function () {
+        return parser.current.parseString(str);
+      });
       values.current = parser.current.getCurrentValues();
       setTime(performance.now() - newTime);
     } catch (err) {
@@ -66458,20 +66502,6 @@ var options = new _src_interface__WEBPACK_IMPORTED_MODULE_3__["CevalOptions"]();
   }, []);
   var triggerToToogleOption = react__WEBPACK_IMPORTED_MODULE_0___default.a.useCallback(function (optName, value) {
     parser.current.updateOptions(_defineProperty({}, optName, value));
-  }, []);
-  var triggerToUpdatePresetValues = react__WEBPACK_IMPORTED_MODULE_0___default.a.useCallback(function (e) {
-    try {
-      var presetValue = JSON.parse(e.target.value);
-
-      if (Object(_src_utils_index__WEBPACK_IMPORTED_MODULE_4__["isObject"])(presetValue)) {
-        parser.current.updatePresetValues(presetValue);
-        values.current = parser.current.getCurrentValues();
-      } else {
-        throw new Error('parse value must be an object');
-      }
-    } catch (err) {
-      antd__WEBPACK_IMPORTED_MODULE_1__["message"].error(err.message);
-    }
   }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "cardWrap"
@@ -66484,7 +66514,15 @@ var options = new _src_interface__WEBPACK_IMPORTED_MODULE_3__["CevalOptions"]();
     enterButton: "calc",
     size: "large",
     onSearch: execExpression
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), " \xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(result, null, 4))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), " \xA0", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    dangerouslySetInnerHTML: {
+      __html: typeof result === 'function' ? toString(result, '&nbsp;') : JSON.stringify(result, transfer, 4)
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "CurrentValues"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    dangerouslySetInnerHTML: {
+      __html: JSON.stringify(values.current, transfer, 4)
+    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
     title: "Options",
     className: "cardItem"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(antd__WEBPACK_IMPORTED_MODULE_1__["Form"], null, Object.keys(options).map(function (opt) {
@@ -66509,17 +66547,7 @@ var options = new _src_interface__WEBPACK_IMPORTED_MODULE_3__["CevalOptions"]();
         return triggerToToogleOption(opt, status);
       }
     }));
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
-    title: "Values",
-    className: "cardItem"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("pre", null, JSON.stringify(values.current, null, 4))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(antd__WEBPACK_IMPORTED_MODULE_1__["Card"], {
-    title: "Values",
-    className: "cardItem"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(antd__WEBPACK_IMPORTED_MODULE_1__["Input"].TextArea, {
-    rows: 12,
-    defaultValue: JSON.stringify(values.current, null, 4),
-    onBlur: triggerToUpdatePresetValues
-  })));
+  }))));
 });
 
 /***/ }),
@@ -70405,6 +70433,7 @@ function Parser(ceval, tokens, _exprInstr) {
       exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_VAR"], identifier.value));
     } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_FUNC"], undefined, false)) {
       _this.parseFunctionDefinedDeclaration(exprInstr);
+    } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"])) {// 
     } else {
       throw new Error('unexpected ' + _this.nextToken);
     }
@@ -70447,8 +70476,6 @@ function Parser(ceval, tokens, _exprInstr) {
         if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_CURLY"], '{', false)) {
           _this.parseObjectLiteralDeclaration(instr[key]);
         } else {
-          debugger;
-
           _this.parseConditionalExpression(instr[key]);
         }
 
@@ -70902,6 +70929,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "filterUndefine", function() { return filterUndefine; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasAttribute", function() { return hasAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapToObject", function() { return mapToObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "someCondition", function() { return someCondition; });
 /* harmony import */ var _instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1720);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
@@ -71064,6 +71092,19 @@ function mapToObject(arr) {
     obj[key] = typeof defaultValue === 'function' ? defaultValue(key) : defaultValue;
   });
   return obj;
+}
+function someCondition() {
+  for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    args[_key2] = arguments[_key2];
+  }
+
+  var errMsg = args.pop();
+
+  if (!args.find(function (d) {
+    return !!d;
+  })) {
+    throw new Error(errMsg);
+  }
 }
 
 /***/ }),
@@ -72022,7 +72063,8 @@ function calculation(tokens) {
             // 1&&0&&3可能是连续的
             stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), false)); // true && true && false
           } else if (value === '=') {
-            // 如果当前作用域含有该属性，作用域优先
+            Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["someCondition"])(Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(scope, n1), Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(values, n1), "".concat(n1, " is not define in values or current scope, if you are declaring a new variable, please add var, const or let Operator")); // 如果当前作用域含有该属性，作用域优先
+
             fn(n1, n2, Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(scope, n1) ? scope : values);
           } else {
             stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), options));
