@@ -1,6 +1,6 @@
 import Instruction, { INSTR_EXPRE, INSTR_FUNCDEF, INSTR_EXECUTBODY, INSTR_VARNAME, INSTR_NAME, INSTR_OBJECT, INSTR_ARRAY, INSTR_FUNCALL, INSTR_MEMBER, INSTR_NUMBER, INSTR_VAR, INSTR_OPERA2, INSTR_PLAIN, INSTR_OPERA3, INSTR_OPERA1 } from './instruction';
 import Ceval from './index';
-import { hasAttribute, mapToObject, merge } from './utils/index';
+import { hasAttribute, mapToObject, merge, someCondition } from './utils/index';
 
 /**
  * 运算
@@ -73,6 +73,7 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
         if (value === '&&') { // 1&&0&&3可能是连续的
           stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), false)); // true && true && false
         } else if (value === '=') {
+          someCondition(hasAttribute(scope, n1), hasAttribute(values, n1), `${n1} is not define in values or current scope, if you are declaring a new variable, please add var, const or let Operator`)
           // 如果当前作用域含有该属性，作用域优先
           fn(n1, n2, hasAttribute(scope, n1) ? scope : values)
         } else {
