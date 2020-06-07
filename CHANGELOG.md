@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/yzw7489757/ceval/compare/v1.0.4...v1.0.5) (2020-06-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **single function:** `var a = 1` and `a = 1` ,it shouldn't be the same effect, The former is a declarat
+
+ISSUES CLOSED:  ion, while the latter is only a modification
+
+### Bug Fixes
+
+* **single function:** `var a = 1` and `a = 1` ,it shouldn't be the same effect ([e0ad9a9](https://github.com/yzw7489757/ceval/commit/e0ad9a98b468f26d33c3e3114bdc0a20cabd15a5))
+* **single function:** fix :Error reported at the end of semicolon ,update docs ([b41b7b7](https://github.com/yzw7489757/ceval/commit/b41b7b781817bc3e8f4312f0fbcb699b3eed31bc))
+
 ### [1.0.4](https://github.com/yzw7489757/ceval/compare/v1.0.3...v1.0.4) (2020-06-05)
 
 
