@@ -141,10 +141,8 @@ export function mapToObject(arr: string[] | Instruction<any>[], defaultValue: un
 
 export function someCondition(...args) {
   const errMsg = args.pop();
-  while(true) {
-    const condition = args.pop()
-    if(!condition) {
-      throw Error(errMsg)
-    }
+  
+  if(!args.find( d => !!d)) {
+    throw new Error(errMsg)
   }
 }

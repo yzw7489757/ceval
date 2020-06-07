@@ -1,6 +1,6 @@
 import Instruction, { INSTR_EXPRE, INSTR_FUNCDEF, INSTR_EXECUTBODY, INSTR_VARNAME, INSTR_NAME, INSTR_OBJECT, INSTR_ARRAY, INSTR_FUNCALL, INSTR_MEMBER, INSTR_NUMBER, INSTR_VAR, INSTR_OPERA2, INSTR_PLAIN, INSTR_OPERA3, INSTR_OPERA1 } from './instruction';
 import Ceval from './index';
-import { hasAttribute, mapToObject, merge } from './utils/index';
+import { hasAttribute, mapToObject, merge, isObject, someCondition } from './utils/index';
 
 /**
  * 运算
@@ -25,7 +25,7 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
   const stack = [];
   const { length } = tokens;
   let n1, n2, n3;
-  let fn: undefined | Function | Instruction<CustomFunc>
+  let fn: undefined | Function | Instruction<CustomFunc> | InsertFunc
   for (let i = 0; i < length; i++) {
     const item = tokens[i];
     const { type, value } = item || {};
@@ -74,6 +74,9 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
           stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), false)); // true && true && false
         } else if (value === '=') {
           // 如果当前作用域含有该属性，作用域优先
+          console.log('scope: ', scope, n1);
+          console.log('values: ', values, n1);
+          someCondition(hasAttribute(scope, n1), hasAttribute(values, n1), `${n1} is not define in values or current scope, if you are declaring a new variable, please add var, const or let Operator`)
           fn(n1, n2, hasAttribute(scope, n1) ? scope : values)
         } else {
           stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), options));
@@ -99,7 +102,11 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
           break
         }
         n1 = stack.pop(); // a.b
-        stack.push(n1[value])
+        let val = n1[value]
+        if(typeof val === 'function') {
+          val = new InsertFunc(val, [n1], [scope, values]); // 更新this指向
+        }
+        stack.push(val)
         break
       }
       case INSTR_ARRAY: { // 数组字面量
@@ -115,7 +122,10 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
         break
       }
       case INSTR_VAR: { // 赋值语句
-        [n1, n2] = stack.splice(-2, 2)
+        [n1, n2] = stack.splice(-2, 2);
+        if(n2 instanceof InsertFunc) {
+          n2.triggerPoint(null) // 赋值语句 不会存在 var a.b = xxx 的情况，所以它的this是null
+        }
         switch (value) {
           case 'let':
           case 'const': {
@@ -142,9 +152,12 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
         const args = stack.splice(-value, value);
         fn = stack.pop();
         // if(args.length !== value) {} // TODO: 参数不够的情况 warning
-        if (typeof fn === 'function') {
+        if (fn instanceof InsertFunc) {
+          // 使用子成员调用，e.g: obj.fn() 因为会使用this
+          stack.push(fn.invoke(...args))
+        } else if (typeof fn === 'function') {
           // 外置函数，即在consts内声明的
-          stack.push(fn.apply(null, args))
+          stack.push(fn.apply(fn, args))
           continue
         } else if(fn.value instanceof CustomFunc) { // 内置函数
           fn.value.updateScope(args)
@@ -192,6 +205,23 @@ function specifyAttr<T>(value: string, [customValues, defaultValues], shouldCust
   }
   return fn
 };
+
+class InsertFunc {
+  private _point: Record<string, any>[];
+
+  constructor(public funcBody, _thisPoint: Record<string, any> = [], scope) {
+    this._point = Array.isArray(_thisPoint) ? _thisPoint : [_thisPoint];
+  }
+
+  triggerPoint = (point: Record<string, any>) => {
+    this._point.unshift(point)
+  }
+
+  invoke = (...args) => {
+    console.log(this._point)
+    return this.funcBody.apply(this._point.length ? this._point[0] : null, args)
+  }
+}
 
 class CustomFunc {
   args: string[];
