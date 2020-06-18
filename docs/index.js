@@ -1,4 +1,4 @@
-/*! ceval@1.0.5 */
+/*! ceval@1.0.6 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("react"), require("react-dom"), require("antd"));
@@ -118,12 +118,11 @@ var _package_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpac
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-  Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(dev_dashboard__WEBPACK_IMPORTED_MODULE_2__["Material"], {
-    routes: _ui_json__WEBPACK_IMPORTED_MODULE_4__["default"],
-    title: _package_json__WEBPACK_IMPORTED_MODULE_3__["name"]
-  }), document.getElementById('root'));
-});
+Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(dev_dashboard__WEBPACK_IMPORTED_MODULE_2__["Material"], {
+  routes: _ui_json__WEBPACK_IMPORTED_MODULE_4__["default"],
+  basePath: _package_json__WEBPACK_IMPORTED_MODULE_3__["name"],
+  title: _package_json__WEBPACK_IMPORTED_MODULE_3__["name"]
+}), document.getElementById('root'));
 
 /***/ }),
 /* 1 */
@@ -141,7 +140,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__2__;
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/*! dev-dashboard@2.0.6 */
+/*! dev-dashboard@2.0.7 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(true)
 		module.exports = factory(__webpack_require__(1), __webpack_require__(2));
@@ -296,9 +295,13 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 
 
-var hist = Object(history__WEBPACK_IMPORTED_MODULE_2__["createBrowserHistory"])();
 
 var MaterialSingle = function MaterialSingle(props) {
+  var hist = react__WEBPACK_IMPORTED_MODULE_0___default.a.useMemo(function () {
+    return Object(history__WEBPACK_IMPORTED_MODULE_2__["createBrowserHistory"])({
+      basename: "/".concat(props.basePath || '')
+    });
+  }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Router"], {
     history: hist
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
@@ -4539,11 +4542,13 @@ var Dashboard = function Dashboard(_ref) {
       routes = _ref$routes === void 0 ? [] : _ref$routes,
       logo = _ref.logo,
       title = _ref.title,
-      rest = _objectWithoutProperties(_ref, ["classes", "routes", "logo", "title"]);
+      _ref$showFooter = _ref.showFooter,
+      showFooter = _ref$showFooter === void 0 ? false : _ref$showFooter,
+      rest = _objectWithoutProperties(_ref, ["classes", "routes", "logo", "title", "showFooter"]);
 
   var mainPanel = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef();
 
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(getLocalStroage('image') || "https://s1.ax1x.com/2020/06/02/tt2fKO.jpg"),
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(getLocalStroage('image') || "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-1.jpg"),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       image = _React$useState2[0],
       setImage = _React$useState2[1];
@@ -4611,7 +4616,7 @@ var Dashboard = function Dashboard(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_components_Sidebar_Sidebar_js__WEBPACK_IMPORTED_MODULE_8__["default"], _extends({
     routes: routes,
     logoText: title || "Development",
-    logo: logo || "https://s1.ax1x.com/2020/06/02/ttRlz6.png",
+    logo: logo || "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/logo.png",
     image: image,
     handleDrawerToggle: handleDrawerToggle,
     open: mobileOpen,
@@ -4632,7 +4637,7 @@ var Dashboard = function Dashboard(_ref) {
       component: prop.component,
       key: key
     });
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_components_Footer_Footer_js__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_components_FixedPlugin_FixedPlugin_js__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  })))), showFooter && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_components_Footer_Footer_js__WEBPACK_IMPORTED_MODULE_7__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(material_components_FixedPlugin_FixedPlugin_js__WEBPACK_IMPORTED_MODULE_9__["default"], {
     handleImageClick: handleImageClick,
     handleColorClick: handleColorClick,
     bgColor: color,
@@ -29878,10 +29883,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var imagine1 = "https://s1.ax1x.com/2020/06/02/tt24qe.jpg";
-var imagine2 = "https://s1.ax1x.com/2020/06/02/tt2oad.jpg";
-var imagine3 = "https://s1.ax1x.com/2020/06/02/tt2hrD.jpg";
-var imagine4 = "https://s1.ax1x.com/2020/06/02/tt2fKO.jpg";
+var imagine1 = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-1.jpg";
+var imagine2 = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-2.jpg";
+var imagine3 = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-3.jpg";
+var imagine4 = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-4.jpg";
 
 function useDraggable(el) {
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
@@ -29927,7 +29932,6 @@ function useDraggable(el) {
           dx: newDx,
           dy: newDy
         });
-        console.log(newDx, newDy);
       };
 
       document.addEventListener('mousemove', handleMouseMove);
@@ -30142,17 +30146,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 
-var _img = "https://s1.ax1x.com/2020/06/02/ttRlz6.png";
+var _img = "https://staticfile-1254003462.cos.ap-chengdu.myqcloud.com/sidebar-1.jpg";
 
 var Simple = function Simple(props) {
   var title = props.title,
       _props$logo = props.logo,
       logo = _props$logo === void 0 ? _img : _props$logo,
       _props$routes = props.routes,
-      routes = _props$routes === void 0 ? [] : _props$routes;
+      routes = _props$routes === void 0 ? [] : _props$routes,
+      _props$basePath = props.basePath,
+      basePath = _props$basePath === void 0 ? '' : _props$basePath;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "simple simple-layout"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], {
+    basename: "/".concat(basePath)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "simple-sidebar"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["NavLink"], {
     to: "/",
@@ -30243,7 +30251,7 @@ exports.push([module.i, "* {\n  box-sizing: border-box;\n  margin: 0;\n  padding
 /* 4 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.5\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"webpack-dev-server --config script/webpack.dev.js --hot --inline --open-page '?dev'\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test && npm run build:docs && npm run build:typings &&npm run build:rollup\",\"release\":\"standard-version --release-as\",\"publish:major\":\"npm run build && npm run release -- major && npm publish\",\"publish:minor\":\"npm run build && npm run release -- minor && npm publish\",\"publish:patch\":\"npm run build && npm run release -- patch && npm publish\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/lodash\":\"^4.14.155\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.6\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"MIT\"}");
+module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.6\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"cross-env NODE_ENV=development webpack-dev-server --config script/webpack.dev.js --hot --inline\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test &&npm run build:docs && npm run build:typings && npm run build:rollup\",\"release\":\"standard-version --release-as\",\"publish:major\":\"npm run build && npm run release -- major && npm publish\",\"publish:minor\":\"npm run build && npm run release -- minor && npm publish\",\"publish:patch\":\"npm run build && npm run release -- patch && npm publish\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/lodash\":\"^4.14.155\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"cross-env\":\"^7.0.2\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.7\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"MIT\"}");
 
 /***/ }),
 /* 5 */
@@ -66465,6 +66473,7 @@ var presetVal = {
     }
   }
 };
+new _src_index__WEBPACK_IMPORTED_MODULE_2__["default"]().parseString("function abs(a,b,c) { \n  a = 5;\n  {};\n  return(a+b);\n}");
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var parser = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(function () {
     var instance = new _src_index__WEBPACK_IMPORTED_MODULE_2__["default"]({
@@ -66473,6 +66482,7 @@ var presetVal = {
     instance.updatePresetValues(presetVal);
     return instance;
   }());
+  console.log(parser.current.getCurrentValues());
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(function () {
     return parser.current.getOptions().defaultReturnValues;
@@ -70102,6 +70112,8 @@ function Parser(ceval, tokens, _exprInstr) {
       _this.printLog("> line:".concat(line, " column:").concat(column - 1, " \"").concat(_this.current.value, "\"\nThe next tag should be \"").concat(value, "\", But the reality is"), "".concat(_this.nextToken.type === _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_END"] ? 'empty content' : "\"".concat(_this.nextToken.value, "\"")), console.error);
 
       throw new Error('Unexpected Tag');
+    } else {
+      return true;
     }
   });
 
@@ -70522,6 +70534,10 @@ function Parser(ceval, tokens, _exprInstr) {
         _this.parseExpression(instr);
       } while (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"], ';'));
 
+      if (_this.current.type !== _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"]) {
+        throw new SyntaxError("Function parse error: Function body each line must end with semicolon ';'");
+      }
+
       _this.expect(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_CURLY"], '}');
 
       _this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"], ';');
@@ -70758,7 +70774,7 @@ var supportOperator = Array.from(new Set([].concat(Object.keys(_systemMap__WEBPA
 })));
 var whitespaceReg = /(\t|\n|\r|\s+)/;
 var booleanReg = /^(false|true)/;
-var commentReg = /^\/\*(.*)\*\//;
+var commentReg = /^\/\*(.*?)\*\//;
 var stringReg = /^\'(.*?)\'|^\"(.*?)\"/;
 var stringGreedyReg = /^\'(.*)\'|^\"(.*)\"/; // export const regExpReg = /^ExecReg\((.*)\)/;
 
@@ -71706,8 +71722,9 @@ function TokenStream(ceval, expression) {
     do {
       line++;
       column = _this.pos - index;
-      index = _this.expression.substr(index + 1).indexOf('\n');
-    } while (index >= 0 && index < _this.pos);
+      index += 1;
+      index += _this.expression.substr(index).indexOf('\n'); // 从每一行第一位开始寻找下一个换行符
+    } while (index >= 0 && index < _this.pos && line < _this.pos);
 
     return {
       line: line,

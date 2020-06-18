@@ -53,7 +53,7 @@ export default class Parser {
      * @param {type} 约定的类型
      * @param {value} 明确规定的字面值，比如 ] , =
      */
-    expect: (type: string, value?: any) => never | void;
+    expect: (type: string, value?: any) => never | boolean;
     /**
      * 暂存指针，在某些情况下单一的nextToken已经不满足预判情况，例如 typeof(add) || add(1, 2) || 1 + add;
      */

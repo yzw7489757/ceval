@@ -5,6 +5,4 @@ import { name } from '../package.json';
 import menuDataList from './ui-json';
 import './index.less';
 
-document.addEventListener('DOMContentLoaded', () => {
-  render(<Material routes={menuDataList} title={name} />,  document.getElementById('root'))
-})
+render(<Material routes={menuDataList} basePath={name} title={name} />,  document.getElementById('root'))

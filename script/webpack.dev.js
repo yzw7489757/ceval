@@ -18,6 +18,8 @@ const devBaseConfig = {
     port: 8400,
     host: '0.0.0.0',
     stats: 'minimal',
+    open: true,
+    openPage: '?dev',
     historyApiFallback: true
   },
 

@@ -1,4 +1,3 @@
-
 /* eslint-disable no-undef */
 import Parser from '../src/index'
 
@@ -27,6 +26,13 @@ test('binary =', () => {
       return(a);
     };
     abs(3,4,8)`, value)).toEqual(5);
+
+  expect(() => parse(`
+  function abs(a,b,c) { 
+    a = 5;
+    return(a) /* Must End Of Semicolon*/
+  };
+  abs(3,4,8)`, value)).toThrow(SyntaxError);
 
   expect(parse(`
     function abs(a,b,c) { 
@@ -63,7 +69,4 @@ test('binary =', () => {
       return(a+b+c);
     };
     abs(3,4,8)`, value)).toEqual(9);
-
-  
-
 }, 0)

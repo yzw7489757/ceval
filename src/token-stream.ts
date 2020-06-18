@@ -433,13 +433,13 @@ export default class TokenStream {
     let line = 0;
     let column = 0;
     let index = -1;
-
+    
     do {
       line++;
       column = this.pos - index;
-      index = this.expression.substr(index + 1).indexOf('\n');
-    } while (index >= 0 && index < this.pos)
-
+      index += 1
+      index += this.expression.substr(index).indexOf('\n'); // 从每一行第一位开始寻找下一个换行符
+    } while (index >= 0 && index < this.pos && line < this.pos)
     return {
       line,
       column

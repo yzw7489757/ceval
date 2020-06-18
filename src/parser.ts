@@ -97,13 +97,15 @@ export default class Parser {
    * @param {type} 约定的类型
    * @param {value} 明确规定的字面值，比如 ] , =
    */
-  expect = (type: string, value?): never | void => {
+  expect = (type: string, value?): never | boolean => {
     if (!this.accept(type, value)) {
       const { line, column } = this.tokens.getCoordinates()
       this.printLog(`> line:${line} column:${column - 1} "${this.current.value}"\nThe next tag should be "${value}", But the reality is`, `${this.nextToken.type === TOKEN_END ? 'empty content' : `"${this.nextToken.value}"`}`
         , console.error
       )
       throw new Error('Unexpected Tag');
+    } else {
+      return true
     }
   }
 
@@ -512,6 +514,9 @@ export default class Parser {
       do {
         this.parseExpression(instr)
       } while (this.accept(TOKEN_SEMICOLON, ';'))
+      if(this.current.type !== TOKEN_SEMICOLON) {
+        throw new SyntaxError(`Function parse error: Function body each line must end with semicolon ';'`)
+      }
       this.expect(TOKEN_CURLY, '}')
       this.accept(TOKEN_SEMICOLON, ';')
       exprInstr.push(new Instruction(INSTR_EXPRE, instr))

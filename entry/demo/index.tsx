@@ -37,6 +37,11 @@ const presetVal = {
     }
   }
 }
+new Parser().parseString(`function abs(a,b,c) { 
+  a = 5;
+  {};
+  return(a+b);
+}`)
 export default (): JSX.Element => {
   const parser = React.useRef((() => {
     const instance = new Parser({
@@ -46,6 +51,8 @@ export default (): JSX.Element => {
     return instance
   })());
 
+
+  console.log(parser.current.getCurrentValues())
   const [result, setResult] = React.useState(() => parser.current.getOptions().defaultReturnValues)
   const [time, setTime] = React.useState(0)
   const values = React.useRef(parser.current.getCurrentValues())
