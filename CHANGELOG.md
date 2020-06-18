@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.7](https://github.com/yzw7489757/ceval/compare/v1.0.6...v1.0.7) (2020-06-18)
+
+
+### Bug Fixes
+
+* **single function:** comment reg and function body loop ([9acba89](https://github.com/yzw7489757/ceval/commit/9acba89bd4125344d2c97892440ee20a0cd5a020))
+
 ### [1.0.6](https://github.com/yzw7489757/ceval/compare/v1.0.5...v1.0.6) (2020-06-07)
 
 ### [1.0.5](https://github.com/yzw7489757/ceval/compare/v1.0.4...v1.0.5) (2020-06-07)
