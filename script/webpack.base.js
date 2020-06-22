@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const { resolve } = require('path')
 
-const { name, version, cssModules } = require('../package.json')
+const { name, version } = require('../package.json')
 
 const base = {
   resolve: {

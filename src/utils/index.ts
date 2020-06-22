@@ -3,19 +3,24 @@ import Instruction from '../instruction';
 const { toString } = Object.prototype;
 
 
-export function isObject(obj: object): obj is object {
+export function isObject(obj): obj is object {
   return toString.call(obj) === '[object Object]'
 }
 
 /**
  * @export
  * @template T
- * @param {T[]} arr
- * @param {T} value
+ * @param {array|object|string} source 
+ * @param {string} value
  * @returns {boolean}
  */
-export function contains<T extends any>(arr: T[], value: T): boolean {
-  return arr.some(v => v === value)
+export function contains(source: any[] | Record<any, any> | string, value: string): boolean {
+  if(isObject(source)) {
+    return Object.prototype.hasOwnProperty.call(source, value)
+  } else if (Array.isArray(source)) {
+    return source.some(v => v === value)
+  }
+  return source.indexOf(value) > -1
 }
 
 /**

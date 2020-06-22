@@ -73,7 +73,7 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
         if (value === '&&') { // 1&&0&&3可能是连续的
           stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), false)); // true && true && false
         } else if (value === '=') {
-          someCondition(hasAttribute(scope, n1), hasAttribute(values, n1), `${n1} is not define in values or current scope, if you are declaring a new variable, please add var, const or let Operator`)
+          someCondition(hasAttribute(scope, n1), hasAttribute(values, n1), `${n1} is not define in values or current scope, if you are declaring a new variable, please add var, const or let operator`)
           // 如果当前作用域含有该属性，作用域优先
           fn(n1, n2, hasAttribute(scope, n1) ? scope : values)
         } else {

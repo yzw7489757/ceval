@@ -50,7 +50,7 @@ test('unary typeof', () => {
   expect(parse('typeof(true)')).toEqual('boolean')
   expect(parse('typeof(false)')).toEqual('boolean')
   expect(parse('typeof(undefined)')).toEqual('undefined')
-  expect(parse('typeof(null)')).toEqual('object')
+  expect(parse('typeof(null)')).toEqual('null')
 }, 0)
 
 

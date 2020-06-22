@@ -1,7 +1,7 @@
 import { mapVal } from './utils/index';
 import {
   // 功能性
-  random, min, max, arrayMap as map,
+  random, min, max, arrayMap as map,_typeof,
   // 二元
   add, sub, mul, divide, mod, withOr, withAlso, equal, notEqual, greaterThan, lessThan, greaterThanEqual, lessThanEqual, inTheTarget, setVar, arrayIndex, bitWiseOr, strictNotEqual,
   // 三元
@@ -56,7 +56,7 @@ const system = {
     '~': (v): number => ~v,
     '++': (v): number => v += 1,
     '--': (v): number => v -= 1,
-    'typeof': (v): string => typeof v,
+    'typeof': (v): string => _typeof(v),
     'return': v => v,
     sin: Math.sin,
     cos: Math.cos,

@@ -25,18 +25,13 @@ export default class TokenStream {
   constructor(public ceval: TypeCeval, public expression: string) { }
 
   /**
-   * @desc 适用语法校验检查
+   * @desc 获取nextToken，适用语法前置校验
    * @memberof TokenStream
    */
   checkNextAccessGrammar = (): TypeToken => {
-    const {pos} = this;
-    const {current} = this
-
+    this.temporarySaved();
     const next = this.next();
-
-    this.current = current;
-    this.pos = pos
-
+    this.restore();
     return next
   }
 
@@ -162,13 +157,15 @@ export default class TokenStream {
    */
   isVariable = (): boolean => {
     const word = this.getFirstWord()
-    if (contains<string>(['const', 'var', 'let'], word)) {
+    if (contains(['const', 'var', 'let'], word)) {
       this.pos += word.length;
       this.current = this.newToken(TOKEN_VAR, word)
       const nextToken = this.checkNextAccessGrammar()
 
       if (nextToken.type !== TOKEN_NAME) {
-        throw new Error(`"${word}" ${nextToken.value} : This syntax Not as expected, should be "${TOKEN_NAME}", but is "${nextToken}"`)
+        throw new Error(`${word} ${nextToken.value} : This syntax Not as expected, should be "${TOKEN_NAME}", but is "${nextToken}"`)
+      } else if(contains(this.ceval.consts, nextToken.value)){
+        throw new SyntaxError(`SyntaxError:  Unexpected token '${nextToken.value}', it has been stated in consts.`)
       }
       return true
     }
@@ -192,7 +189,7 @@ export default class TokenStream {
 
     number10bitReg.lastIndex = 0;
     if (first === '0' && n.length > 1 && !(/^0\.\d/.test(n))) { // 0.x 不是进制数
-      if (contains<string>(['b', 'x'], this.getSomeCode(1, 1)) && this.getSomeCode(1, n.length) === '.') {
+      if (contains(['b', 'x'], this.getSomeCode(1, 1)) && this.getSomeCode(1, n.length) === '.') {
         // 0b0101.1 0xaf.1 ❌
         // 099.1 属于十进制 ✅
         this.parseError(`number '${n}' cannot is a floating point number, but actual is: '${n}${this.getSomeCode(3, n.length)}'`, SyntaxError)
@@ -259,12 +256,14 @@ export default class TokenStream {
     let matchString: RegExpExecArray | undefined
     let strContent: string | undefined
     if (first === '\"' || first === '\'') {
+      stringGreedyReg.lastIndex = 0;
         // 一种情况是需要贪婪匹配 \'\'a\'\', 判断是否需要贪婪匹配
       matchString = stringGreedyReg.exec(expr)
       strContent = filterUndefine(matchString[1], matchString[2])
       if (!isPalindrome(strContent)) {
         // 不属于回文字符串则需要重新做惰性匹配
         // 另一种则需要惰性 "'a', 'b'" => "a"
+        stringReg.lastIndex = 0;
         matchString = stringReg.exec(expr);
         strContent = filterUndefine(matchString[1], matchString[2])
       }

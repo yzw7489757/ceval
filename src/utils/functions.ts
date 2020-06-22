@@ -80,6 +80,10 @@ export function greaterThanEqual(a, b) {
   return a >= b;
 }
 
+export function _typeof(a){
+  return Object.prototype.toString.call(a).match(/^\[object\s*(\w+?)\]$/)[1].toLowerCase()
+}
+
 export function lessThanEqual(a, b) {
   return a <= b;
 }

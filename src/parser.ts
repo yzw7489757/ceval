@@ -14,12 +14,12 @@ export default class Parser {
   /**
    * @desc 当前TOKEN指针
    */
-  current: TypeInstruction | null = null;
+  current: TypeToken | null = null;
 
   /**
    * @desc 暂存指针
    */
-  savedCurrent: TypeInstruction | null = null;
+  savedCurrent: TypeToken | null = null;
 
   /**
    * @desc 下个TOKEN指针对象
@@ -41,9 +41,10 @@ export default class Parser {
    * 检查是否解析完毕
    */
   private inspectParseEnd = (exprInstr: TypeInstruction[]) => {
+    const len = this.tokens.expression.length
     do {
       this.parseExpression(exprInstr)
-    } while (this.tokens.pos < this.tokens.expression.length) 
+    } while (this.current.index < len && this.nextToken.type !== TOKEN_END) 
   }
 
   /**
@@ -126,7 +127,7 @@ export default class Parser {
     this.current = this.savedCurrent;
     this.nextToken = this.savedNextToken;
     this.tokens.restore()
-    return undefined
+    return void 0;
   }
 
   /**
@@ -156,18 +157,18 @@ export default class Parser {
   parseAssignmentExpression = (exprInstr: TypeInstruction[]): void => {
     this.parseConditionalExpression(exprInstr)
     while (this.accept(TOKEN_OPERATOR, '=')) {
-      let ident
-      if (exprInstr[exprInstr.length - 1].type === INSTR_VAR) {
+      let ident: TypeInstruction
+      if(exprInstr[exprInstr.length - 1].type === INSTR_VAR){
         ident = exprInstr.pop()
-      }
-      if (exprInstr[exprInstr.length - 1].type === INSTR_NAME) {
-        exprInstr.push(new Instruction(INSTR_VARNAME, exprInstr.pop().value))
-      }
+      };
       const instr: TypeInstruction[] = []
-      this.parseExpression(instr)
-      exprInstr.push(new Instruction(INSTR_EXPRE, instr))
-      if (ident) exprInstr.push(ident)
-      exprInstr.push(new Instruction(INSTR_OPERA2, '='))
+      this.parseConditionalExpression(instr)
+      exprInstr.push(new Instruction(INSTR_EXPRE, instr));
+      if(ident) {
+        exprInstr.push(ident)
+      } else {
+        exprInstr.push(new Instruction(INSTR_OPERA2, '='))
+      }
     }
   }
 
@@ -385,7 +386,7 @@ export default class Parser {
     this.parseField(exprInstr);
     while (
       this.accept(TOKEN_OPERATOR, '.') ||
-      (contains<string>([TOKEN_SQUARE, TOKEN_NAME], this.current.type) && this.accept(TOKEN_SQUARE, '['))) {
+      (contains([TOKEN_SQUARE, TOKEN_NAME], this.current.type) && this.accept(TOKEN_SQUARE, '['))) {
       if (!this.ceval.getOptions().allowMemberAccess) {
         throw new Error(`options "allowMemberAccess": You have disabled member access and cannot use syntax such as "a.b" "a['b']"`)
       }
@@ -410,7 +411,11 @@ export default class Parser {
       exprInstr.push(new Instruction(INSTR_OPERA1, this.current.value));
     } else if (this.accept(TOKEN_NAME)) {
       // 变量名称
-      exprInstr.push(new Instruction(INSTR_NAME, this.current.value));
+      if(this.accept(TOKEN_OPERATOR, '=', false)) {// 赋值操作，避免转成TOKEN_NAME去取值了。
+        exprInstr.push(new Instruction(INSTR_VARNAME, this.current.value));
+      } else {
+        exprInstr.push(new Instruction(INSTR_NAME, this.current.value));
+      }
     } else if (this.accept(TOKEN_NUMBER)) {
       // 数字类型
       exprInstr.push(new Instruction(INSTR_NUMBER, this.current.value));
@@ -427,16 +432,16 @@ export default class Parser {
     } else if (this.accept(TOKEN_CURLY, '{', false)) {
       // Object字面量声明
       this.parseObjectLiteralDeclaration(exprInstr)
-    } else if (this.accept(TOKEN_CURLY, '}', false)) {
-      // return
     } else if (this.accept(TOKEN_VAR, ['const', 'var', 'let'])) {
+      // 赋值表达式 需要收集ident 和 variableName 避免variableName识别成varName 引发error
       const identifier = this.current
-      this.parseField(exprInstr)
+      this.expect(TOKEN_NAME)
+      exprInstr.push(new Instruction(INSTR_VARNAME, this.current.value));
       exprInstr.push(new Instruction(INSTR_VAR, identifier.value))
     } else if (this.accept(TOKEN_FUNC, undefined, false)) {
       this.parseFunctionDefinedDeclaration(exprInstr);
     } else if (this.accept(TOKEN_SEMICOLON)) {
-      // 
+      // empty, fault tolerant 
     } else {
       throw new Error('unexpected ' + this.nextToken);
     }
@@ -513,7 +518,7 @@ export default class Parser {
       const instr = [];
       do {
         this.parseExpression(instr)
-      } while (this.accept(TOKEN_SEMICOLON, ';'))
+      } while (this.accept(TOKEN_SEMICOLON, ';') && !this.accept(TOKEN_CURLY, '}', false))
       if(this.current.type !== TOKEN_SEMICOLON) {
         throw new SyntaxError(`Function parse error: Function body each line must end with semicolon ';'`)
       }

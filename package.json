@@ -20,9 +20,9 @@
     "test"
   ],
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --config script/webpack.dev.js --hot --inline",
+    "start": "set NODE_ENV=development && webpack-dev-server --config script/webpack.dev.js --hot --inline",
     "https": "HTTPS=true npm start",
-    "build:umd": "webpack --config script/webpack.umd.js --hide-modules --progress --colors",
+    "build:umd": "cross-env NODE_ENV=production webpack --config script/webpack.umd.js --hide-modules --progress --colors",
     "build:typings": "tsc -p tsconfig.d.json",
     "build:docs": "webpack --config script/webpack.doc.js --hide-modules --progress --colors",
     "build:rollup": "rollup -c",

@@ -76,7 +76,7 @@ export const jsAttr = {
   "isPrototypeOf": false, 
   "length": false,
   "Math": false, 
-  "NaN": false, 
+  "NaN": true, 
   "name": false, 
   "Number": false, 
   "Object": false,
@@ -85,16 +85,6 @@ export const jsAttr = {
   "toString": false, 
   "undefined": false, 
   "valueOf": false, 
-}
-
-/** @desc java保留字 */
-export const javaWord = {
-  "getClass": false, 
-  "java": false, 
-  "JavaArray": false, 
-  "javaClass": false, 
-  "JavaObject": false, 
-  "JavaPackage": false
 }
 
 /** @desc window保留字 */

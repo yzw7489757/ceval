@@ -120,7 +120,7 @@ test('options allowOperatorsCovered = false', () => {
   expect(parseString(`0.1-0.2`)).toBe(-.1);
   expect(parseString(`-0.1`)).toBe(-.1);
 
-  expect(parseString(`typeof([])`)).toBe(typeof []);
+  expect(parseString(`typeof([])`)).toBe('array');
   expect(parseString(`++1`)).toBe(2);
   
   expect(parseString(`1 == true`)).toBe(true);

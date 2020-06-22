@@ -37,11 +37,7 @@ const presetVal = {
     }
   }
 }
-new Parser().parseString(`function abs(a,b,c) { 
-  a = 5;
-  {};
-  return(a+b);
-}`)
+
 export default (): JSX.Element => {
   const parser = React.useRef((() => {
     const instance = new Parser({

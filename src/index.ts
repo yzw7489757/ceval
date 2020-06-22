@@ -45,10 +45,21 @@ export default class Ceval {
    */
   parseString = (expression: string, values: Record<string, any> = {}) => {
     const instr: TypeInstruction[] = [];
-    
-    Parser.generatorParser(this, new TokenStream(this, expression), instr)
+    const isDev = process.env.NODE_ENV !== 'development';
+    let value
+    if(isDev) {
+        Parser.generatorParser(this, new TokenStream(this, expression), instr)
+        value = this.injectValueToCalc(instr, values)
+    } else {
+      try {
+        Parser.generatorParser(this, new TokenStream(this, expression), instr)
+        value = this.injectValueToCalc(instr, values)
+      } catch (e) {
+        console.error(e)
+      }
+    }
 
-    return this.injectValueToCalc(instr, values)
+    return value
   }
 
   /**
