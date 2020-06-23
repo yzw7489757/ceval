@@ -5,12 +5,10 @@ const example = () => {
   var parse = new Ceval({
   }).parseString;
   console.log(parse(`
-  var p_inf=+Infinity;
-  var inf=Infinity;
-  return p_inf!==inf
-  return 2
+  var a = { b: 2, c: 3 };
+  var b = 'c';
+  a[b]
   `))
-  console.log(parse(`1 in [1, 2, 3]`))
   return (
     <div>
       

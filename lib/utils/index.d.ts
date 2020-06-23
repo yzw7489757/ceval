@@ -56,3 +56,19 @@ export declare function hasAttribute(obj: object, name: string): any;
  */
 export declare function mapToObject(arr: string[] | Instruction<any>[], defaultValue?: undefined | ((key: string) => any)): any;
 export declare function someCondition(...args: any[]): void;
+/**
+ *
+ * @param keyQueue ["obj", "arr"] key path
+ * @param scope 当前作用域
+ * @param values 顶层作用域
+ */
+export declare function getReference(keyQueue: string[], scope: Record<string, any>, values: Record<string, any>): Reference;
+export declare class Reference {
+    target: any;
+    path: string;
+    destoryed: boolean;
+    constructor(target: any, path: string);
+    setValue(value: any): any;
+    getValue(): any;
+    destory(): void;
+}

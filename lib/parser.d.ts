@@ -130,7 +130,6 @@ export default class Parser {
     /**
      * 解析内置函数调用
      */
-    parsePersetFuncCallExpression: (exprInstr: TypeInstruction[]) => void;
     /**
      * 解析调用函数的实参
      */

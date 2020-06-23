@@ -1,6 +1,6 @@
 import Instruction, { INSTR_EXPRE, INSTR_FUNCDEF, INSTR_EXECUTBODY, INSTR_VARNAME, INSTR_NAME, INSTR_OBJECT, INSTR_ARRAY, INSTR_FUNCALL, INSTR_MEMBER, INSTR_NUMBER, INSTR_VAR, INSTR_OPERA2, INSTR_PLAIN, INSTR_OPERA3, INSTR_OPERA1 } from './instruction';
 import Ceval from './index';
-import { hasAttribute, mapToObject, merge, someCondition } from './utils/index';
+import { hasAttribute, mapToObject, merge, someCondition, getReference, Reference } from './utils/index';
 
 /**
  * 运算
@@ -76,14 +76,19 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
       case INSTR_OPERA2: { // 二元运算，需要有两个操作数
         if(stack.length < 2) break;
         [n1, n2] = stack.splice(-2, 2)
-        fn = specifyAttr<Function>(value, [values, binaryOps], options.allowOperatorsCovered)
-        // fn = binaryOps[value] as Function;
+          fn = specifyAttr<Function>(value, [values, binaryOps], options.allowOperatorsCovered)
         if (value === '&&') { // 1&&0&&3可能是连续的
           stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), false)); // true && true && false
         } else if (value === '=') {
-          someCondition(hasAttribute(scope, n1), hasAttribute(values, n1), `${n1} is not define in values or current scope, if you are declaring a new variable, please add var, const or let operator`)
+          // 写操作分为属性赋值和引用赋值
+          if(n1 instanceof Reference) { // left hide 为引用
+            n1.setValue(n2);
+            n1.destory();
+          } else {
+            someCondition(hasAttribute(scope, n1), hasAttribute(values, n1), `${n1} is not define in values or current scope, if you are declaring a new variable, please add var, const or let operator`)
+            fn(n1, n2, hasAttribute(scope, n1) ? scope : values)
           // 如果当前作用域含有该属性，作用域优先
-          fn(n1, n2, hasAttribute(scope, n1) ? scope : values)
+          }
         } else {
           stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), options));
         }
@@ -101,14 +106,18 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
         break;
       }
       case INSTR_MEMBER: { // 成员访问
-        if (stack.length < 1) break;
-        if (!value) { // a["b"]
-          [n1, n2] = stack.splice(-2, 2);
-          stack.push(n1[n2]);
-          break
+        // 有可能是读，也有可能是写；
+        const nextItem = tokens[i+2]; // 解析顺序 INSTR_MEMBER => INSTR_EXPRE => INSTR_OP2
+        const ref = getReference(value, scope, values)
+        
+        if(nextItem && nextItem.type === INSTR_OPERA2 && nextItem.value === '=') {
+          // 写操作, JavaScript是拿不到引用的，push到stack，等待引用赋值
+          stack.push(ref)
+        } else {
+          stack.push(ref.getValue())
+          ref.destory();
         }
-        n1 = stack.pop(); // a.b
-        stack.push(n1[value])
+        
         break
       }
       case INSTR_ARRAY: { // 数组字面量
@@ -201,6 +210,10 @@ function specifyAttr<T>(value: string, [customValues, defaultValues], shouldCust
   }
   return fn
 };
+
+// class Data {
+//   constructor()
+// }
 
 class CustomFunc {
   args: string[];

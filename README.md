@@ -13,9 +13,7 @@
 
 [online demo](https://yzw7489757.github.io/ceval/);
 
-<!-- https://s1.ax1x.com/2020/06/05/tsAW3q.jpg -->
-
-零依赖，借鉴了 `expr-eval` 底层实现，重构为更适合表达式运算的 `ceval`; 
+零依赖，适合表达式运算; 
 
 No dependence, the achieve basics `expr-cval`, Refactoring to ceval is more suitable for calculating expressions; 
 
@@ -92,7 +90,7 @@ const analysis = new Parser({
 Parser Instance API
 
 | api | desc | type |
-|:----|----|:----:|:----:|
+|----|----|----|----|
 | operatorMap | Operators mapping table, which can be used in preset values overlay operation | Record<string, Function>|
 | getSupportOperationMap | The name of the operator method supported by the query can be overridden | (ops: string) => null | Function;| 
 | parseString | Parsing strings, exposing methods to the outside world | (expression: string, values?: Record<string, any>) => any;|
@@ -103,6 +101,7 @@ Parser Instance API
 
 about Options example [test case](https://github.com/yzw7489757/ceval/blob/master/test/options.test.js);
 
+use [test262](https://github.com/tc39/test262/tree/master/test/language) test case;
 ## basic
 
 ``` ts

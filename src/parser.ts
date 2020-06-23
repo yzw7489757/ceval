@@ -354,10 +354,10 @@ export default class Parser {
   /**
    * 解析内置函数调用
    */
-  parsePersetFuncCallExpression = (exprInstr: TypeInstruction[]): void => {
-      this.parseMemberAccessExpression(exprInstr); // a.b()
-      this.parseArguments(exprInstr)
-  }
+  // parsePersetFuncCallExpression = (exprInstr: TypeInstruction[]): void => {
+  //     this.parseMemberAccessExpression(exprInstr); // a.b()
+  //     this.parseArguments(exprInstr)
+  // }
 
   /**
    * 解析调用函数的实参
@@ -385,20 +385,29 @@ export default class Parser {
    */
   parseMemberAccessExpression = (exprInstr: TypeInstruction[]): void => {
     this.parseField(exprInstr);
+    const refPath = [];
+    const currentItem = exprInstr[exprInstr.length - 1];
+    if(currentItem && currentItem.type === INSTR_NAME) {
+      refPath.push(currentItem.value) // 尝试最后一个是否是NAME变量
+    }
     while (
       this.accept(TOKEN_OPERATOR, '.') ||
       (contains([TOKEN_SQUARE, TOKEN_NAME], this.current.type) && this.accept(TOKEN_SQUARE, '['))) {
+        
       if (!this.ceval.getOptions().allowMemberAccess) {
         throw new Error(`options "allowMemberAccess": You have disabled member access and cannot use syntax such as "a.b" "a['b']"`)
       }
       if (this.current.value === '.') {
         this.expect(TOKEN_NAME); // a.name ✔️  a.1×
-        exprInstr.push(new Instruction(INSTR_MEMBER, this.current.value))
-      } else if (this.current.value === '[') {
-        this.parseExpression(exprInstr);
+        refPath.push(this.current.value)
+      } else if (this.current.value === '[' && (this.accept(TOKEN_NAME) || this.accept(TOKEN_NUMBER) || this.accept(TOKEN_STRING))) {
+        refPath.push(this.current.value)
         this.expect(TOKEN_SQUARE, ']')
-        exprInstr.push(new Instruction(INSTR_MEMBER))
       }
+    }
+    if(refPath.length > 1) {
+      exprInstr.pop(); // 拿到全部引用
+      exprInstr.push(new Instruction(INSTR_MEMBER, refPath))
     }
   }
 

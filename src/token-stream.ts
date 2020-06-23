@@ -127,13 +127,17 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isComment = (): boolean => {
-    if (this.getSomeCode() === '/' && this.getSomeCode(1, 1) === '*') {
-      commentReg.lastIndex = 0;
-      const matchResult = commentReg.exec(this.getSomeCode(Infinity))
-      if (matchResult && matchResult[1]) {
-        this.pos += matchResult[1].length + 2 + 2; // /*matchResult[1]*/
-        return true
-      }
+    const prefixCm = this.getSomeCode(2);
+    let matchResult: string | undefined
+    if (prefixCm === '/*') {
+      matchResult = execFactoryReg(commentReg, this.getSomeCode(Infinity))
+    } else if(prefixCm === '//') { // comment break line
+      matchResult = execFactoryReg(/^(\/\/.*\n?)/, this.getSomeCode(Infinity));
+    }
+
+    if (matchResult) {
+      this.pos += matchResult.length +(prefixCm === '/*'? (2 + 2):0); // /*matchResult*/
+      return true
     }
     return false
   }

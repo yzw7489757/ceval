@@ -15,7 +15,7 @@ export function isObject(obj): obj is object {
  * @returns {boolean}
  */
 export function contains(source: any[] | Record<any, any> | string, value: string): boolean {
-  if(isObject(source)) {
+  if (isObject(source)) {
     return Object.prototype.hasOwnProperty.call(source, value)
   } else if (Array.isArray(source)) {
     return source.some(v => v === value)
@@ -33,9 +33,9 @@ export function getTime(offset = 0): string[] {
   const o = new Date(Date.now() + offset);
   const date = `${o.getFullYear()}-${o.getMonth() + 1}-${o.getDate()}`
   const clock = `${o.getHours()}:${o.getMinutes()}:${o.getSeconds()}`.replace(/\d+/g, (t) => {
-    return parseInt(t, 10) < 10 ? `0${t}`: t
+    return parseInt(t, 10) < 10 ? `0${t}` : t
   })
-  
+
   return [date, clock]
 }
 
@@ -68,7 +68,7 @@ export function merge<T>(target: T, source: T) {
     if (Object.prototype.hasOwnProperty.call(target, key)) return
     if (Array.isArray(val)) {
       merge(target[key] = [], val)
-    }else if (isObject(val)) {
+    } else if (isObject(val)) {
       merge(target[key] = {}, val)
     } else {
       target[key] = val
@@ -146,8 +146,56 @@ export function mapToObject(arr: string[] | Instruction<any>[], defaultValue: un
 
 export function someCondition(...args) {
   const errMsg = args.pop();
-  
-  if(!args.find( d => !!d)) {
+
+  if (!args.find(d => !!d)) {
     throw new Error(errMsg)
+  }
+}
+/**
+ * 
+ * @param keyQueue ["obj", "arr"] key path
+ * @param scope 当前作用域
+ * @param values 顶层作用域
+ */
+export function getReference(keyQueue: string[], scope: Record<string, any>, values: Record<string, any>): Reference {
+  if (keyQueue.length < 2) return hasAttribute(scope, keyQueue[0]) ? scope[keyQueue[0]] : values[keyQueue[0]];
+  let path = keyQueue.shift();
+  const lastKey = keyQueue.pop();
+  let target = hasAttribute(scope, path) ? scope : values;
+  while (path) {
+    if (hasAttribute(target, path)) {
+      target = target[path];
+    } else if (!target) {
+      throw new TypeError(`Uncaught TypeError: Cannot read property '${path}' of ${target}`)
+    } else {
+      target = undefined
+    }
+    path = keyQueue.shift()
+  }
+  console.log('target: ', target, lastKey);
+  return new Reference(target, lastKey)
+}
+
+export class Reference {
+  destoryed: boolean;
+
+  constructor(public target: any, public path: string) {
+    this.destoryed = false
+  }
+
+  setValue(value) {
+    if(this.destoryed) return value
+    return (this.target[this.path] = value)
+  }
+
+  getValue() {
+    if(this.destoryed) return undefined
+    return this.target[this.path]
+  }
+
+  destory() {
+    // 使用一次就释放掉内存
+    this.destoryed = true
+    this.target = null;
   }
 }

@@ -1,4 +1,4 @@
-/*! ceval@1.0.6 */
+/*! ceval@1.1.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("react"), require("react-dom"), require("antd"));
@@ -110,7 +110,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
 var _package_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(4, 1);
 /* harmony import */ var _ui_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5);
-/* harmony import */ var _index_less__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1731);
+/* harmony import */ var _index_less__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1732);
 /* harmony import */ var _index_less__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_index_less__WEBPACK_IMPORTED_MODULE_5__);
 
 
@@ -30251,7 +30251,7 @@ exports.push([module.i, "* {\n  box-sizing: border-box;\n  margin: 0;\n  padding
 /* 4 */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.6\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"cross-env NODE_ENV=development webpack-dev-server --config script/webpack.dev.js --hot --inline\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test &&npm run build:docs && npm run build:typings && npm run build:rollup\",\"release\":\"standard-version --release-as\",\"publish:major\":\"npm run build && npm run release -- major && npm publish\",\"publish:minor\":\"npm run build && npm run release -- minor && npm publish\",\"publish:patch\":\"npm run build && npm run release -- patch && npm publish\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/lodash\":\"^4.14.155\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"cross-env\":\"^7.0.2\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.7\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"MIT\"}");
+module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.1.0\",\"description\":\"calculation expression\",\"main\":\"./lib/index.js\",\"types\":\"./lib/index.d.ts\",\"keywords\":[\"eval\",\"eval expression\",\"eval-expression\",\"calculation expression\"],\"files\":[\"lib\"],\"precommit.silent\":true,\"pre-commit\":[\"lint\",\"build:typings\",\"test\"],\"scripts\":{\"start\":\"set NODE_ENV=development && webpack-dev-server --config script/webpack.dev.js --hot --inline\",\"https\":\"HTTPS=true npm start\",\"build:umd\":\"cross-env NODE_ENV=production webpack --config script/webpack.umd.js --hide-modules --progress --colors\",\"build:typings\":\"tsc -p tsconfig.d.json\",\"build:docs\":\"webpack --config script/webpack.doc.js --hide-modules --progress --colors\",\"build:rollup\":\"rollup -c\",\"build\":\"rm -rf lib/ && npm run test &&npm run build:docs && npm run build:typings && npm run build:rollup\",\"release\":\"standard-version --release-as\",\"publish:major\":\"npm run build && npm run release -- major && npm publish\",\"publish:minor\":\"npm run build && npm run release -- minor && npm publish\",\"publish:patch\":\"npm run build && npm run release -- patch && npm publish\",\"lint\":\"eslint --quiet ./src --no-error-on-unmatched-pattern\",\"test\":\"jest\",\"test:watch\":\"jest --watch\"},\"devDependencies\":{\"@ant-design/icons\":\"^4.1.0\",\"@babel/core\":\"^7.0.0\",\"@babel/plugin-proposal-async-generator-functions\":\"^7.0.0\",\"@babel/plugin-proposal-class-properties\":\"^7.0.0\",\"@babel/plugin-proposal-decorators\":\"^7.8.3\",\"@babel/plugin-proposal-object-rest-spread\":\"^7.0.0\",\"@babel/plugin-proposal-optional-chaining\":\"^7.7.0\",\"@babel/plugin-transform-runtime\":\"^7.5.5\",\"@babel/preset-env\":\"^7.0.0\",\"@babel/preset-react\":\"^7.0.0\",\"@babel/preset-typescript\":\"^7.0.0\",\"@babel/runtime\":\"^7.5.5\",\"@rollup/plugin-json\":\"^4.0.3\",\"@types/antd\":\"^1.0.0\",\"@types/lodash\":\"^4.14.155\",\"@types/react\":\"^16.9.2\",\"@types/react-dom\":\"^16.9.5\",\"@types/react-router-dom\":\"^5.1.5\",\"@typescript-eslint/eslint-plugin\":\"^2.0.0\",\"@typescript-eslint/parser\":\"^2.0.0\",\"babel-cli\":\"^6.26.0\",\"babel-loader\":\"^8.0.0\",\"cross-env\":\"^7.0.2\",\"css-loader\":\"^1.0.0\",\"dev-dashboard\":\"^2.0.7\",\"eslint\":\"^6.8.0\",\"eslint-config-airbnb\":\"^18.0.0\",\"eslint-config-prettier\":\"^4.2.0\",\"eslint-loader\":\"^3.0.0\",\"eslint-plugin-import\":\"^2.17.2\",\"eslint-plugin-jsx-a11y\":\"^6.2.3\",\"eslint-plugin-prettier\":\"^3.0.0\",\"eslint-plugin-react\":\"^7.13.0\",\"eslint-plugin-react-hooks\":\"^1.7.0\",\"html-webpack-plugin\":\"^4.3.0\",\"jest\":\"^25.0.0\",\"less\":\"^3.0.0\",\"less-loader\":\"^5.0.0\",\"pre-commit\":\"^1.2.2\",\"prettier\":\"~1.17.0\",\"react\":\"^16.13.0\",\"rollup\":\"^2.10.5\",\"rollup-plugin-filesize\":\"^9.0.0\",\"rollup-plugin-sourcemaps\":\"^0.6.2\",\"rollup-plugin-terser\":\"^5.3.0\",\"rollup-plugin-typescript\":\"^1.0.1\",\"standard-version\":\"^8.0.0\",\"style-loader\":\"^1.0.0\",\"tslib\":\"^2.0.0\",\"typescript\":\"^3.7.3\",\"webpack\":\"^4.16.3\",\"webpack-cli\":\"^3.1.0\",\"webpack-dev-server\":\"^3.1.5\",\"webpack-notifier\":\"^1.8.0\"},\"repository\":{\"type\":\"git\",\"url\":\"git@github.com:yzw7489757/ceval.git\"},\"publishConfig\":{\"registry\":\"https://registry.npmjs.org/\"},\"bugs\":{\"url\":\"https://github.com/yzw7489757/ceval/issues\"},\"homepage\":\"https://github.com/yzw7489757/ceval#readme\",\"author\":\"yzw7489757\",\"license\":\"MIT\"}");
 
 /***/ }),
 /* 5 */
@@ -30261,6 +30261,8 @@ module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.0.6\",\"descrip
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 /* harmony import */ var _demo_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1606);
+/* harmony import */ var _demo_example__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1731);
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ([{
@@ -30268,6 +30270,11 @@ __webpack_require__.r(__webpack_exports__);
   path: '/demo',
   icon: _ant_design_icons__WEBPACK_IMPORTED_MODULE_0__["NumberOutlined"],
   component: _demo_index__WEBPACK_IMPORTED_MODULE_1__["default"]
+}, {
+  name: 'example',
+  path: '/example',
+  icon: _ant_design_icons__WEBPACK_IMPORTED_MODULE_0__["NumberOutlined"],
+  component: _demo_example__WEBPACK_IMPORTED_MODULE_2__["default"]
 }]);
 
 /***/ }),
@@ -66473,7 +66480,6 @@ var presetVal = {
     }
   }
 };
-new _src_index__WEBPACK_IMPORTED_MODULE_2__["default"]().parseString("function abs(a,b,c) { \n  a = 5;\n  {};\n  return(a+b);\n}");
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var parser = react__WEBPACK_IMPORTED_MODULE_0___default.a.useRef(function () {
     var instance = new _src_index__WEBPACK_IMPORTED_MODULE_2__["default"]({
@@ -66629,8 +66635,22 @@ function Ceval() {
   _defineProperty(this, "parseString", function (expression) {
     var values = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var instr = [];
-    _parser__WEBPACK_IMPORTED_MODULE_1__["default"].generatorParser(_this, new _token_stream__WEBPACK_IMPORTED_MODULE_3__["default"](_this, expression), instr);
-    return _this.injectValueToCalc(instr, values);
+    var isDev = "none" !== 'development';
+    var value;
+
+    if (isDev) {
+      _parser__WEBPACK_IMPORTED_MODULE_1__["default"].generatorParser(_this, new _token_stream__WEBPACK_IMPORTED_MODULE_3__["default"](_this, expression), instr);
+      value = _this.injectValueToCalc(instr, values);
+    } else {
+      try {
+        _parser__WEBPACK_IMPORTED_MODULE_1__["default"].generatorParser(_this, new _token_stream__WEBPACK_IMPORTED_MODULE_3__["default"](_this, expression), instr);
+        value = _this.injectValueToCalc(instr, values);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    return value;
   });
 
   _defineProperty(this, "getCurrentValues", function () {
@@ -70068,9 +70088,11 @@ function Parser(ceval, tokens, _exprInstr) {
   _defineProperty(this, "savedNextToken", null);
 
   _defineProperty(this, "inspectParseEnd", function (exprInstr) {
+    var len = _this.tokens.expression.length;
+
     do {
       _this.parseExpression(exprInstr);
-    } while (_this.tokens.pos < _this.tokens.expression.length);
+    } while (_this.current.index < len && _this.nextToken.type !== _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_END"]);
   });
 
   _defineProperty(this, "next", function () {
@@ -70130,7 +70152,7 @@ function Parser(ceval, tokens, _exprInstr) {
 
     _this.tokens.restore();
 
-    return undefined;
+    return void 0;
   });
 
   _defineProperty(this, "parseExpression", function (instr) {
@@ -70161,17 +70183,18 @@ function Parser(ceval, tokens, _exprInstr) {
         ident = exprInstr.pop();
       }
 
-      if (exprInstr[exprInstr.length - 1].type === _instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_NAME"]) {
-        exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_VARNAME"], exprInstr.pop().value));
-      }
-
+      ;
       var instr = [];
 
-      _this.parseExpression(instr);
+      _this.parseConditionalExpression(instr);
 
       exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_EXPRE"], instr));
-      if (ident) exprInstr.push(ident);
-      exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_OPERA2"], '='));
+
+      if (ident) {
+        exprInstr.push(ident);
+      } else {
+        exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_OPERA2"], '='));
+      }
     }
   });
 
@@ -70329,16 +70352,30 @@ function Parser(ceval, tokens, _exprInstr) {
         exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_OPERA1"], op.value));
       } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_PAREN"], '(', false)) {
         // typeof(
-        _this.restore();
+        var _op = _this.current;
 
-        _this.parsePersetFuncCallExpression(exprInstr);
+        _this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_PAREN"], '(');
+
+        _this.parseConditionalExpression(exprInstr);
+
+        _this.expect(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_PAREN"], ')');
+
+        exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_OPERA1"], _op.value));
       } else if ([_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_COMMA"], _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"], _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_END"]].indexOf(_this.nextToken.type) !== -1 || // typeof, typeof; typeof
       _this.nextToken.type === _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_PAREN"] && _this.nextToken.value === ')' // typeof)
       ) {
           _this.restore();
 
           _this.parseField(exprInstr);
-        }
+        } else {
+        // 需要支持typeof 1 ; typeof typeof 1 === typeof(typeof(1)) === typeof(typeof 1);
+        var _op2 = _this.current;
+
+        _this.parseUnaryExpression(exprInstr); // 外置函数 || 内声明函数
+
+
+        exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_OPERA1"], _op2.value));
+      }
     } else {
       _this.parseOuterFunctionCallExpression(exprInstr); // 外置函数 || 内声明函数
 
@@ -70349,21 +70386,6 @@ function Parser(ceval, tokens, _exprInstr) {
     _this.parseMemberAccessExpression(exprInstr);
 
     if (_this.current.type === _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"] && _this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_PAREN"], '(', false)) {
-      _this.parseArguments(exprInstr);
-    }
-  });
-
-  _defineProperty(this, "parsePersetFuncCallExpression", function (exprInstr) {
-    if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_OPERATOR"], _utils_regExp__WEBPACK_IMPORTED_MODULE_2__["isUnaryOpeator"])) {
-      var op = _this.current;
-
-      _this.parseField(exprInstr);
-
-      exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_OPERA1"], op.value));
-    } else {
-      _this.parseMemberAccessExpression(exprInstr); // a.b()
-
-
       _this.parseArguments(exprInstr);
     }
   });
@@ -70392,6 +70414,13 @@ function Parser(ceval, tokens, _exprInstr) {
   _defineProperty(this, "parseMemberAccessExpression", function (exprInstr) {
     _this.parseField(exprInstr);
 
+    var refPath = [];
+    var currentItem = exprInstr[exprInstr.length - 1];
+
+    if (currentItem && currentItem.type === _instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_NAME"]) {
+      refPath.push(currentItem.value); // 尝试最后一个是否是NAME变量
+    }
+
     while (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_OPERATOR"], '.') || Object(_utils_index__WEBPACK_IMPORTED_MODULE_3__["contains"])([_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SQUARE"], _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"]], _this.current.type) && _this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SQUARE"], '[')) {
       if (!_this.ceval.getOptions().allowMemberAccess) {
         throw new Error("options \"allowMemberAccess\": You have disabled member access and cannot use syntax such as \"a.b\" \"a['b']\"");
@@ -70401,14 +70430,18 @@ function Parser(ceval, tokens, _exprInstr) {
         _this.expect(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"]); // a.name ✔️  a.1×
 
 
-        exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_MEMBER"], _this.current.value));
-      } else if (_this.current.value === '[') {
-        _this.parseExpression(exprInstr);
+        refPath.push(_this.current.value);
+      } else if (_this.current.value === '[' && (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"]) || _this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NUMBER"]) || _this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_STRING"]))) {
+        refPath.push(_this.current.value);
 
         _this.expect(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SQUARE"], ']');
-
-        exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_MEMBER"]));
       }
+    }
+
+    if (refPath.length > 1) {
+      exprInstr.pop(); // 拿到全部引用
+
+      exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_MEMBER"], refPath));
     }
   });
 
@@ -70418,7 +70451,12 @@ function Parser(ceval, tokens, _exprInstr) {
       exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_OPERA1"], _this.current.value));
     } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"])) {
       // 变量名称
-      exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_NAME"], _this.current.value));
+      if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_OPERATOR"], '=', false)) {
+        // 赋值操作，避免转成TOKEN_NAME去取值了。
+        exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_VARNAME"], _this.current.value));
+      } else {
+        exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_NAME"], _this.current.value));
+      }
     } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NUMBER"])) {
       // 数字类型
       exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_NUMBER"], _this.current.value));
@@ -70436,16 +70474,17 @@ function Parser(ceval, tokens, _exprInstr) {
     } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_CURLY"], '{', false)) {
       // Object字面量声明
       _this.parseObjectLiteralDeclaration(exprInstr);
-    } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_CURLY"], '}', false)) {// return
     } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_VAR"], ['const', 'var', 'let'])) {
+      // 赋值表达式 需要收集ident 和 variableName 避免variableName识别成varName 引发error
       var identifier = _this.current;
 
-      _this.parseField(exprInstr);
+      _this.expect(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"]);
 
+      exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_VARNAME"], _this.current.value));
       exprInstr.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_VAR"], identifier.value));
     } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_FUNC"], undefined, false)) {
       _this.parseFunctionDefinedDeclaration(exprInstr);
-    } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"])) {// 
+    } else if (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"])) {// empty, fault tolerant 
     } else {
       throw new Error('unexpected ' + _this.nextToken);
     }
@@ -70532,7 +70571,7 @@ function Parser(ceval, tokens, _exprInstr) {
 
       do {
         _this.parseExpression(instr);
-      } while (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"], ';'));
+      } while (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"], ';') && !_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_CURLY"], '}', false));
 
       if (_this.current.type !== _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SEMICOLON"]) {
         throw new SyntaxError("Function parse error: Function body each line must end with semicolon ';'");
@@ -70752,16 +70791,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "number010bitReg", function() { return number010bitReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "number10bitReg", function() { return number10bitReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "number16bitReg", function() { return number16bitReg; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "numberEbitReg", function() { return numberEbitReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "variableReg", function() { return variableReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "operatorReg", function() { return operatorReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unaryMapReg", function() { return unaryMapReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "unarySymbolMapReg", function() { return unarySymbolMapReg; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "execNumberReg", function() { return execNumberReg; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "constsMapReg", function() { return constsMapReg; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "execFactoryReg", function() { return execFactoryReg; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isUnaryOpeator", function() { return isUnaryOpeator; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isBinaryOpeator", function() { return isBinaryOpeator; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "isTernaryOpeator", function() { return isTernaryOpeator; });
 /* harmony import */ var _systemMap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1723);
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1724);
+/** 
+ * @desc   : desc 
+ * @author : ziwen
+ * @date   : 2020-6-2 10:55:30
+ */
 
 
 var BLACK_LIST_OPERATORS = [];
@@ -70785,9 +70831,11 @@ var number010bitReg = /^(0\d*[8-9]{1,}\d*(\.\d+)?)$/; // 0开头的十进制 019
 var number10bitReg = /(^([1-9]\d*(\.\d+)|(\d*(\.\d+)?)))/; // 1-9 或者.开头的十进制
 
 var number16bitReg = /^(0x[0-9a-fA-F]{1,})$/;
+var numberEbitReg = /^((\d*\.?\d*)[e|E]((\-|\+)?\d+))/; // 科学计数法
+
 var variableReg = /^((_|$)?[0-9a-zA-Z|$|_]{1,})/;
 var operatorReg = new RegExp("^(".concat(supportOperator.map(function (r) {
-  return "(\\".concat(/\b\w+\b/.test(r) ? r : r.split('').join('\\'), ")");
+  return "(\\".concat(/\b\w+\b/.test(r) ? "".concat(r, "\\s+") : r.split('').join('\\'), ")");
 }).join('|'), ")"));
 var unaryMapReg = new RegExp("^(".concat(Object.keys(_systemMap__WEBPACK_IMPORTED_MODULE_0__["default"].unaryOps).filter(function (item) {
   return /\b\w+\b/.test(item);
@@ -70797,7 +70845,10 @@ var unarySymbolMapReg = new RegExp("^(".concat(Object.keys(_systemMap__WEBPACK_I
 }).map(function (r) {
   return "\\s*\\".concat(r, "\\s*");
 }).join('|'), ")"));
-var execNumberReg = function execNumberReg(reg, expr) {
+var constsMapReg = new RegExp("^(".concat(Object.keys(_systemMap__WEBPACK_IMPORTED_MODULE_0__["default"].consts).map(function (k) {
+  return "".concat(k);
+}).join('|'), ")"));
+var execFactoryReg = function execFactoryReg(reg, expr) {
   var cb = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : function (v) {
     return v;
   };
@@ -70832,8 +70883,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "operatorMap", function() { return operatorMap; });
 /* harmony import */ var _utils_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1724);
 /* harmony import */ var _utils_functions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1725);
-function _typeof2(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
-
 
 
 var system = {
@@ -70841,7 +70890,8 @@ var system = {
     random: _utils_functions__WEBPACK_IMPORTED_MODULE_1__["random"],
     min: _utils_functions__WEBPACK_IMPORTED_MODULE_1__["min"],
     max: _utils_functions__WEBPACK_IMPORTED_MODULE_1__["max"],
-    map: _utils_functions__WEBPACK_IMPORTED_MODULE_1__["arrayMap"]
+    map: _utils_functions__WEBPACK_IMPORTED_MODULE_1__["arrayMap"],
+    pow: Math.pow
   },
   consts: {
     E: Math.E,
@@ -70849,7 +70899,9 @@ var system = {
     'true': true,
     'false': false,
     "undefined": undefined,
-    "null": null
+    "null": null,
+    "NaN": Number.NaN,
+    "Infinity": Infinity
   },
   binaryOps: {
     '+': _utils_functions__WEBPACK_IMPORTED_MODULE_1__["add"],
@@ -70896,15 +70948,14 @@ var system = {
       return v -= 1;
     },
     'typeof': function _typeof(v) {
-      return _typeof2(v);
+      return Object(_utils_functions__WEBPACK_IMPORTED_MODULE_1__["_typeof"])(v);
     },
     'return': function _return(v) {
       return v;
     },
     sin: Math.sin,
     cos: Math.cos,
-    tan: Math.tan,
-    pow: Math.pow
+    tan: Math.tan
   },
   syntaxOperator: {
     ':': null,
@@ -70946,7 +70997,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hasAttribute", function() { return hasAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mapToObject", function() { return mapToObject; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "someCondition", function() { return someCondition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getReference", function() { return getReference; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Reference", function() { return Reference; });
 /* harmony import */ var _instruction__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1720);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -70967,15 +71028,21 @@ function isObject(obj) {
 /**
  * @export
  * @template T
- * @param {T[]} arr
- * @param {T} value
+ * @param {array|object|string} source 
+ * @param {string} value
  * @returns {boolean}
  */
 
-function contains(arr, value) {
-  return arr.some(function (v) {
-    return v === value;
-  });
+function contains(source, value) {
+  if (isObject(source)) {
+    return Object.prototype.hasOwnProperty.call(source, value);
+  } else if (Array.isArray(source)) {
+    return source.some(function (v) {
+      return v === value;
+    });
+  }
+
+  return source.indexOf(value) > -1;
 }
 /**
  * 获取日期时间
@@ -71122,6 +71189,69 @@ function someCondition() {
     throw new Error(errMsg);
   }
 }
+/**
+ * 
+ * @param keyQueue ["obj", "arr"] key path
+ * @param scope 当前作用域
+ * @param values 顶层作用域
+ */
+
+function getReference(keyQueue, scope, values) {
+  if (keyQueue.length < 2) return hasAttribute(scope, keyQueue[0]) ? scope[keyQueue[0]] : values[keyQueue[0]];
+  var path = keyQueue.shift();
+  var lastKey = keyQueue.pop();
+  var target = hasAttribute(scope, path) ? scope : values;
+
+  while (path) {
+    if (hasAttribute(target, path)) {
+      target = target[path];
+    } else if (!target) {
+      throw new TypeError("Uncaught TypeError: Cannot read property '".concat(path, "' of ").concat(target));
+    } else {
+      target = undefined;
+    }
+
+    path = keyQueue.shift();
+  }
+
+  console.log('target: ', target, lastKey);
+  return new Reference(target, lastKey);
+}
+var Reference = /*#__PURE__*/function () {
+  function Reference(target, path) {
+    _classCallCheck(this, Reference);
+
+    this.target = target;
+    this.path = path;
+
+    _defineProperty(this, "destoryed", void 0);
+
+    this.destoryed = false;
+  }
+
+  _createClass(Reference, [{
+    key: "setValue",
+    value: function setValue(value) {
+      if (this.destoryed) return value;
+      return this.target[this.path] = value;
+    }
+  }, {
+    key: "getValue",
+    value: function getValue() {
+      if (this.destoryed) return undefined;
+      return this.target[this.path];
+    }
+  }, {
+    key: "destory",
+    value: function destory() {
+      // 使用一次就释放掉内存
+      this.destoryed = true;
+      this.target = null;
+    }
+  }]);
+
+  return Reference;
+}();
 
 /***/ }),
 /* 1725 */
@@ -71141,6 +71271,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "greaterThan", function() { return greaterThan; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lessThan", function() { return lessThan; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "greaterThanEqual", function() { return greaterThanEqual; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_typeof", function() { return _typeof; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lessThanEqual", function() { return lessThanEqual; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "inTheTarget", function() { return inTheTarget; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bitWiseOr", function() { return bitWiseOr; });
@@ -71154,7 +71285,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "arrayMap", function() { return arrayMap; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "random", function() { return random; });
 /* harmony import */ var _index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1724);
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof2(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 
 
 
@@ -71228,11 +71359,14 @@ function lessThan(a, b) {
 function greaterThanEqual(a, b) {
   return a >= b;
 }
+function _typeof(a) {
+  return Object.prototype.toString.call(a).match(/^\[object\s*(\w+?)\]$/)[1].toLowerCase();
+}
 function lessThanEqual(a, b) {
   return a <= b;
 }
 function inTheTarget(a, b) {
-  if (_typeof(b) !== 'object' || String(a) !== "".concat(a)) throw new Error('first argument must be original type, second must be Array or Object');
+  if (_typeof2(b) !== 'object' || String(a) !== "".concat(a)) throw new Error('first argument must be original type, second must be Array or Object');
   return Object(_index__WEBPACK_IMPORTED_MODULE_0__["isObject"])(b) ? Object.prototype.hasOwnProperty.call(b, Object(_index__WEBPACK_IMPORTED_MODULE_0__["eliminateQuote"])(a)) : Object(_index__WEBPACK_IMPORTED_MODULE_0__["contains"])(b, a);
 }
 function bitWiseOr(a, b) {
@@ -71358,13 +71492,12 @@ function TokenStream(ceval, expression) {
   _defineProperty(this, "savedCurrent", null);
 
   _defineProperty(this, "checkNextAccessGrammar", function () {
-    var pos = _this.pos;
-    var current = _this.current;
+    _this.temporarySaved();
 
     var next = _this.next();
 
-    _this.current = current;
-    _this.pos = pos;
+    _this.restore();
+
     return next;
   });
 
@@ -71427,15 +71560,21 @@ function TokenStream(ceval, expression) {
   });
 
   _defineProperty(this, "isComment", function () {
-    if (_this.getSomeCode() === '/' && _this.getSomeCode(1, 1) === '*') {
-      _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["commentReg"].lastIndex = 0;
-      var matchResult = _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["commentReg"].exec(_this.getSomeCode(Infinity));
+    var prefixCm = _this.getSomeCode(2);
 
-      if (matchResult && matchResult[1]) {
-        _this.pos += matchResult[1].length + 2 + 2; // /*matchResult[1]*/
+    var matchResult;
 
-        return true;
-      }
+    if (prefixCm === '/*') {
+      matchResult = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execFactoryReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["commentReg"], _this.getSomeCode(Infinity));
+    } else if (prefixCm === '//') {
+      // comment break line
+      matchResult = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execFactoryReg"])(/^(\/\/.*\n?)/, _this.getSomeCode(Infinity));
+    }
+
+    if (matchResult) {
+      _this.pos += matchResult.length + (prefixCm === '/*' ? 2 + 2 : 0); // /*matchResult*/
+
+      return true;
     }
 
     return false;
@@ -71462,7 +71601,9 @@ function TokenStream(ceval, expression) {
       var nextToken = _this.checkNextAccessGrammar();
 
       if (nextToken.type !== _token__WEBPACK_IMPORTED_MODULE_0__["TOKEN_NAME"]) {
-        throw new Error("\"".concat(word, "\" ").concat(nextToken.value, " : This syntax Not as expected, should be \"").concat(_token__WEBPACK_IMPORTED_MODULE_0__["TOKEN_NAME"], "\", but is \"").concat(nextToken, "\""));
+        throw new Error("".concat(word, " ").concat(nextToken.value, " : This syntax Not as expected, should be \"").concat(_token__WEBPACK_IMPORTED_MODULE_0__["TOKEN_NAME"], "\", but is \"").concat(nextToken, "\""));
+      } else if (Object(_utils_index__WEBPACK_IMPORTED_MODULE_3__["contains"])(_this.ceval.consts, nextToken.value)) {
+        throw new SyntaxError("SyntaxError:  Unexpected token '".concat(nextToken.value, "', it has been stated in consts."));
       }
 
       return true;
@@ -71501,24 +71642,24 @@ function TokenStream(ceval, expression) {
       if (_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number2bitReg"].test(n)) {
         // 2进制
         // @see 0b01 0b1110
-        number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execNumberReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number2bitReg"], n);
+        number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execFactoryReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number2bitReg"], n);
         bit = number === undefined ? undefined : 2;
       } else if (_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number8bitReg"].test(n)) {
         // 8进制
         // @see 012 || 077 ✅ 
         // @warn 080 || 079 ❌都是十进制  并非8进制
-        number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execNumberReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number8bitReg"], n);
+        number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execFactoryReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number8bitReg"], n);
         bit = number === undefined ? undefined : 8;
       } else if (_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number16bitReg"].test(n)) {
         // 16进制 
         // @see 0xadf
-        number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execNumberReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number16bitReg"], n);
+        number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execFactoryReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number16bitReg"], n);
         bit = number === undefined ? undefined : 16;
       } else if (_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number010bitReg"].test(n)) {
         // 0开头十进制 
         // @see 079 || 080  ✅
         // @warn 03.1 || 00.1 || 00.  ❌ 
-        number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execNumberReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number010bitReg"], n);
+        number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execFactoryReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number010bitReg"], n);
         bit = number === undefined ? undefined : 10;
       } else {
         _this.parseError('number bitbase parser error', SyntaxError);
@@ -71530,11 +71671,20 @@ function TokenStream(ceval, expression) {
         // 给出准确的warning 
         throw new Error("options \"endableBitNumber\": You have disabled bitbase number parsing, Not allowed ".concat(number));
       }
+    } else if (_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["numberEbitReg"].test(expr)) {
+      // 科学计数法
+      var _numberEbitReg$exec = _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["numberEbitReg"].exec(expr),
+          _numberEbitReg$exec2 = _slicedToArray(_numberEbitReg$exec, 4),
+          base = _numberEbitReg$exec2[2],
+          times = _numberEbitReg$exec2[3];
+
+      number = (Number(base) * Math.pow(10, Number(times))).toString();
+      bit = 10;
     } else if (_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number10bitReg"].test(expr)) {
       // 十进制
       // 100 || 100.1 || 0.1 || .100 || .0  ✅ 
       // parseFloat是支持 0100.1 的。
-      number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execNumberReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number10bitReg"], expr);
+      number = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execFactoryReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["number10bitReg"], expr);
       bit = number === undefined ? undefined : 10;
     } else {
       return false;
@@ -71559,13 +71709,15 @@ function TokenStream(ceval, expression) {
     var strContent;
 
     if (first === '\"' || first === '\'') {
-      // 一种情况是需要贪婪匹配 \'\'a\'\', 判断是否需要贪婪匹配
+      _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["stringGreedyReg"].lastIndex = 0; // 一种情况是需要贪婪匹配 \'\'a\'\', 判断是否需要贪婪匹配
+
       matchString = _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["stringGreedyReg"].exec(expr);
       strContent = Object(_utils_index__WEBPACK_IMPORTED_MODULE_3__["filterUndefine"])(matchString[1], matchString[2]);
 
       if (!Object(_utils_index__WEBPACK_IMPORTED_MODULE_3__["isPalindrome"])(strContent)) {
         // 不属于回文字符串则需要重新做惰性匹配
         // 另一种则需要惰性 "'a', 'b'" => "a"
+        _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["stringReg"].lastIndex = 0;
         matchString = _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["stringReg"].exec(expr);
         strContent = Object(_utils_index__WEBPACK_IMPORTED_MODULE_3__["filterUndefine"])(matchString[1], matchString[2]);
       }
@@ -71617,32 +71769,42 @@ function TokenStream(ceval, expression) {
       return false;
     }
 
-    if (_utils_reservedWord__WEBPACK_IMPORTED_MODULE_2__["jsWord"][result[1]] === false) {
+    result = result[1];
+
+    if (_utils_reservedWord__WEBPACK_IMPORTED_MODULE_2__["jsWord"][result] === false) {
       // 检测到保留字
-      _this.parseError("parser an reserved word: ".concat(result[1]));
+      _this.parseError("parser an reserved word: ".concat(result));
 
       return false;
     }
 
-    if (_utils_reservedWord__WEBPACK_IMPORTED_MODULE_2__["jsAttr"][result[1]] === false) {
+    if (_utils_reservedWord__WEBPACK_IMPORTED_MODULE_2__["jsAttr"][result] === false) {
       // 检测到window属性 TODO: 应该命中 window.xxx
-      _this.parseError("parser an window native attributes or methods: ".concat(result[1]));
+      _this.parseError("parser an window native attributes or methods: ".concat(result));
 
       return false;
     }
 
-    _this.pos += result[1].length;
-    _this.current = _this.newToken(_token__WEBPACK_IMPORTED_MODULE_0__["TOKEN_NAME"], result[1]);
+    _this.pos += result.length;
+    _this.current = _this.newToken(_token__WEBPACK_IMPORTED_MODULE_0__["TOKEN_NAME"], result);
     return true;
   });
 
   _defineProperty(this, "isConst", function () {
-    var keys = Object.keys(_this.ceval.consts);
-    var result = new RegExp("^(".concat(keys.join('|'), ")")).exec(_this.getSomeCode(Infinity));
+    _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["constsMapReg"].lastIndex = 0;
+    var result = _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["constsMapReg"].exec(_this.getSomeCode(Infinity));
 
     if (result && result[1]) {
       _this.current = _this.newToken(_token__WEBPACK_IMPORTED_MODULE_0__["TOKEN_NAME"], result[1]);
       _this.pos += result[1].length;
+
+      var constKey = _this.checkNextAccessGrammar(); // 检查是否是const常量赋值
+
+
+      if (constKey.type === _token__WEBPACK_IMPORTED_MODULE_0__["TOKEN_OPERATOR"] && constKey.value === '=') {
+        _this.parseError("parser error: consts of ".concat(_this.current.value, " can not assignment;"), SyntaxError);
+      }
+
       return true;
     }
 
@@ -71696,21 +71858,20 @@ function TokenStream(ceval, expression) {
     var result;
 
     if (_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["operatorReg"].test(str)) {
-      _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["operatorReg"].lastIndex = 0;
-      result = _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["operatorReg"].exec(str);
+      result = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execFactoryReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["operatorReg"], str);
     } else if (_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["unaryMapReg"].test(str)) {
-      _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["unaryMapReg"].lastIndex = 0;
-      result = _utils_regExp__WEBPACK_IMPORTED_MODULE_1__["unaryMapReg"].exec(str);
+      result = Object(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["execFactoryReg"])(_utils_regExp__WEBPACK_IMPORTED_MODULE_1__["unaryMapReg"], str);
     }
 
     if (!result) return false;
 
     if (_this.ceval.getOptions().endableOperators === false) {
-      throw new Error("options \"endableOperators\": You disabled the operator, Therefore, \"".concat(result[1], "\" it can not be used"));
+      throw new Error("options \"endableOperators\": You disabled the operator, Therefore, \"".concat(result, "\" it can not be used"));
     }
 
-    _this.pos += result[1].length;
-    _this.current = _this.newToken(_token__WEBPACK_IMPORTED_MODULE_0__["TOKEN_OPERATOR"], result[1]);
+    result = result.replace(/\s/g, '');
+    _this.pos += result.length;
+    _this.current = _this.newToken(_token__WEBPACK_IMPORTED_MODULE_0__["TOKEN_OPERATOR"], result);
     return true;
   });
 
@@ -71741,7 +71902,7 @@ function TokenStream(ceval, expression) {
   });
 }
 /**
- * @desc 适用语法校验检查
+ * @desc 获取nextToken，适用语法前置校验
  * @memberof TokenStream
  */
 ;
@@ -71756,7 +71917,6 @@ function TokenStream(ceval, expression) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "jsWord", function() { return jsWord; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "jsAttr", function() { return jsAttr; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "javaWord", function() { return javaWord; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "windowWord", function() { return windowWord; });
 /** @desc javascript保留字 */
 var jsWord = {
@@ -71836,7 +71996,7 @@ var jsAttr = {
   "isPrototypeOf": false,
   "length": false,
   "Math": false,
-  "NaN": false,
+  "NaN": true,
   "name": false,
   "Number": false,
   "Object": false,
@@ -71845,16 +72005,6 @@ var jsAttr = {
   "toString": false,
   "undefined": false,
   "valueOf": false
-};
-/** @desc java保留字 */
-
-var javaWord = {
-  "getClass": false,
-  "java": false,
-  "JavaArray": false,
-  "javaClass": false,
-  "JavaObject": false,
-  "JavaPackage": false
 };
 /** @desc window保留字 */
 
@@ -72009,8 +72159,8 @@ function calculation(tokens) {
   var n1, n2, n3;
   var fn;
 
-  var _loop = function _loop(i) {
-    var item = tokens[i];
+  var _loop = function _loop(_i) {
+    var item = tokens[_i];
 
     var _ref = item || {},
         type = _ref.type,
@@ -72018,6 +72168,7 @@ function calculation(tokens) {
 
     if (!type) {
       stack.push(item);
+      i = _i;
       return "continue";
     }
 
@@ -72032,7 +72183,7 @@ function calculation(tokens) {
 
       case _instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_NAME"]:
         {
-          // 变量名称，范围作用域有 consts values _scope 后者优先
+          // 变量名称，范围作用域有functions consts values _scope 后者优先
           if (Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(scope, value)) {
             // scope,作用域
             stack.push(scope[value]);
@@ -72042,6 +72193,9 @@ function calculation(tokens) {
           } else if (Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(ceval.consts, value)) {
             // 常量
             stack.push(ceval.consts[value]);
+          } else if (Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(ceval.functions, value)) {
+            // 内置函数
+            stack.push(ceval.functions[value]);
           } else {
             throw new Error("".concat(value, " is not defined in values or consts"));
           }
@@ -72059,7 +72213,12 @@ function calculation(tokens) {
 
           n1 = _stack$splice2[0];
           fn = specifyAttr(value, [values, unaryOps], options.allowOperatorsCovered);
-          stack.push(fn(n1));
+          stack.push(fn(n1)); // 当操作符是return 时，终止该运算循环
+
+          if (value === 'return') {
+            _i = length;
+          }
+
           break;
         }
 
@@ -72074,15 +72233,21 @@ function calculation(tokens) {
 
           n1 = _stack$splice4[0];
           n2 = _stack$splice4[1];
-          fn = specifyAttr(value, [values, binaryOps], options.allowOperatorsCovered); // fn = binaryOps[value] as Function;
+          fn = specifyAttr(value, [values, binaryOps], options.allowOperatorsCovered);
 
           if (value === '&&') {
             // 1&&0&&3可能是连续的
             stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), false)); // true && true && false
           } else if (value === '=') {
-            Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["someCondition"])(Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(scope, n1), Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(values, n1), "".concat(n1, " is not define in values or current scope, if you are declaring a new variable, please add var, const or let Operator")); // 如果当前作用域含有该属性，作用域优先
-
-            fn(n1, n2, Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(scope, n1) ? scope : values);
+            // 写操作分为属性赋值和引用赋值
+            if (n1 instanceof _utils_index__WEBPACK_IMPORTED_MODULE_1__["Reference"]) {
+              // left hide 为引用
+              n1.setValue(n2);
+              n1.destory();
+            } else {
+              Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["someCondition"])(Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(scope, n1), Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(values, n1), "".concat(n1, " is not define in values or current scope, if you are declaring a new variable, please add var, const or let operator"));
+              fn(n1, n2, Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["hasAttribute"])(scope, n1) ? scope : values); // 如果当前作用域含有该属性，作用域优先
+            }
           } else {
             stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), options));
           }
@@ -72117,23 +72282,19 @@ function calculation(tokens) {
       case _instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_MEMBER"]:
         {
           // 成员访问
-          if (stack.length < 1) break;
+          // 有可能是读，也有可能是写；
+          var nextItem = tokens[_i + 2]; // 解析顺序 INSTR_MEMBER => INSTR_EXPRE => INSTR_OP2
 
-          if (!value) {
-            // a["b"]
-            var _stack$splice7 = stack.splice(-2, 2);
+          var ref = Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["getReference"])(value, scope, values);
 
-            var _stack$splice8 = _slicedToArray(_stack$splice7, 2);
-
-            n1 = _stack$splice8[0];
-            n2 = _stack$splice8[1];
-            stack.push(n1[n2]);
-            break;
+          if (nextItem && nextItem.type === _instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_OPERA2"] && nextItem.value === '=') {
+            // 写操作, JavaScript是拿不到引用的，push到stack，等待引用赋值
+            stack.push(ref);
+          } else {
+            stack.push(ref.getValue());
+            ref.destory();
           }
 
-          n1 = stack.pop(); // a.b
-
-          stack.push(n1[value]);
           break;
         }
 
@@ -72158,12 +72319,12 @@ function calculation(tokens) {
       case _instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_VAR"]:
         {
           // 赋值语句
-          var _stack$splice9 = stack.splice(-2, 2);
+          var _stack$splice7 = stack.splice(-2, 2);
 
-          var _stack$splice10 = _slicedToArray(_stack$splice9, 2);
+          var _stack$splice8 = _slicedToArray(_stack$splice7, 2);
 
-          n1 = _stack$splice10[0];
-          n2 = _stack$splice10[1];
+          n1 = _stack$splice8[0];
+          n2 = _stack$splice8[1];
 
           switch (value) {
             case 'let':
@@ -72204,6 +72365,7 @@ function calculation(tokens) {
           if (typeof fn === 'function') {
             // 外置函数，即在consts内声明的
             stack.push(fn.apply(null, args));
+            i = _i;
             return "continue";
           } else if (fn.value instanceof CustomFunc) {
             // 内置函数
@@ -72220,12 +72382,16 @@ function calculation(tokens) {
           if (typeof value !== 'string') {
             stack.push(value); // 函数体
 
+            i = _i;
             return "continue";
           }
 
-          if (stack.length === 0) return {
-            v: void 0
-          };
+          if (stack.length === 0) {
+            i = _i;
+            return {
+              v: void 0
+            };
+          }
 
           var _scope2 = Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["merge"])(Object.create(null), scope); // 作用域
           // done: 嵌套函数区分, 挂载到当前_scope上
@@ -72253,6 +72419,8 @@ function calculation(tokens) {
           }
         }
     }
+
+    i = _i;
   };
 
   for (var i = 0; i < length; i++) {
@@ -72287,7 +72455,9 @@ function specifyAttr(value, _ref2) {
   return fn;
 }
 
-;
+; // class Data {
+//   constructor()
+// }
 
 var CustomFunc = function CustomFunc(func, values, _scope, ceval) {
   var _this = this;
@@ -72383,10 +72553,30 @@ var CevalOptions = function CevalOptions() {
 
 /***/ }),
 /* 1731 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1608);
+
+
+
+var example = function example() {
+  var parse = new _src_index__WEBPACK_IMPORTED_MODULE_1__["default"]({}).parseString;
+  console.log(parse("\n  var a = { b: 2, c: 3 };\n  var b = 'c';\n  a[b]\n  "));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (example);
+
+/***/ }),
+/* 1732 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var api = __webpack_require__(1732);
-            var content = __webpack_require__(1733);
+var api = __webpack_require__(1733);
+            var content = __webpack_require__(1734);
 
             content = content.__esModule ? content.default : content;
 
@@ -72406,7 +72596,7 @@ var update = api(content, options);
 module.exports = content.locals || {};
 
 /***/ }),
-/* 1732 */
+/* 1733 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72681,10 +72871,10 @@ module.exports = function (list, options) {
 };
 
 /***/ }),
-/* 1733 */
+/* 1734 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1734)(true);
+exports = module.exports = __webpack_require__(1735)(true);
 // imports
 
 
@@ -72695,7 +72885,7 @@ exports.push([module.i, ".cardWrap {\n  display: flex;\n  justify-content: space
 
 
 /***/ }),
-/* 1734 */
+/* 1735 */
 /***/ (function(module, exports) {
 
 /*
