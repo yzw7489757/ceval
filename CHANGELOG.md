@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/yzw7489757/ceval/compare/v1.1.0...v1.2.0) (2020-06-23)
+
+
+### Features
+
+* **single function:** support obj.arr = xxx & obj[variable] left hide handle ([ef11834](https://github.com/yzw7489757/ceval/commit/ef118342050192743a7313dc860381e6d8843e55))
+
 ## [1.1.0](https://github.com/yzw7489757/ceval/compare/v1.0.7...v1.1.0) (2020-06-23)
 
 
