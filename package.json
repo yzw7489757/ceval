@@ -1,6 +1,6 @@
 {
   "name": "ceval",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "calculation expression",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",

@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/yzw7489757/ceval/compare/v1.0.7...v1.1.0) (2020-06-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **single function:** support typeof 1 && typeof(1); Declare errors caused by some variables, e.g. var inf, 'in' is
+keyword; functions Unused; return function of Interrupt the current operation cycle;
+ add
+consts:NaN、Infinity;
+
+### Bug Fixes
+
+* **single function:** use functions,reg of keyword, add consts ([d0f7203](https://github.com/yzw7489757/ceval/commit/d0f72032fb6d1b1e97926d6ae9c2a9449b4f16bd))
+
 ### [1.0.7](https://github.com/yzw7489757/ceval/compare/v1.0.6...v1.0.7) (2020-06-18)
 
 
