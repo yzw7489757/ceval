@@ -2,12 +2,15 @@ import React from 'react';
 import Ceval from '../../src/index';
 
 const example = () => {
-  var parse = new Ceval().parseString;
-  console.log(parse(`function abs(a,b,c) { 
-    a = 5;
-    return(a);
-  };
-  abs(3,4,8)`))
+  var parse = new Ceval({
+  }).parseString;
+  console.log(parse(`
+  var p_inf=+Infinity;
+  var inf=Infinity;
+  return p_inf!==inf
+  return 2
+  `))
+  console.log(parse(`1 in [1, 2, 3]`))
   return (
     <div>
       

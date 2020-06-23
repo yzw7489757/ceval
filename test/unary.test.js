@@ -51,8 +51,41 @@ test('unary typeof', () => {
   expect(parse('typeof(false)')).toEqual('boolean')
   expect(parse('typeof(undefined)')).toEqual('undefined')
   expect(parse('typeof(null)')).toEqual('null')
+
+  expect(parse('typeof 1')).toEqual('number')
+  expect(parse('typeof \'1\'')).toEqual('string')
+  expect(parse('typeof true')).toEqual('boolean')
+  expect(parse('typeof false')).toEqual('boolean')
+  expect(parse('typeof undefined')).toEqual('undefined')
+  expect(parse('typeof null')).toEqual('null')
 }, 0)
 
+test('unary return', () => {
+  expect(parse('return(1)')).toEqual(1)
+  expect(parse('return(\'1\')')).toEqual('1')
+  expect(parse('return(true)')).toEqual(true)
+  expect(parse('return(false)')).toEqual(false)
+  expect(parse('return(undefined)')).toEqual("") // defaultValue is ""
+  expect(parse('return(null)')).toEqual(null)
+
+  expect(parse('return 1')).toEqual(1)
+  expect(parse('return \'1\'')).toEqual('1')
+  expect(parse('return true')).toEqual(true)
+  expect(parse('return false')).toEqual(false)
+  expect(parse('return undefined')).toEqual("")//defaultValue is ""
+  expect(parse('return null')).toEqual(null)
+
+  expect(parse(`
+  return 1;
+  return 2;
+  `)).toEqual(1)
+
+  expect(parse(`
+  return true;
+  return false; 
+  `)).toEqual(true)
+
+}, 0)
 
 test('unary Math', () => {
   expect(parse('sin(1)')).toEqual(Math.sin(1))

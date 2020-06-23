@@ -5,6 +5,7 @@ declare const system: {
         min: typeof min;
         max: typeof max;
         map: typeof map;
+        pow: (x: number, y: number) => number;
     };
     consts: {
         E: number;
@@ -13,6 +14,8 @@ declare const system: {
         false: boolean;
         undefined: any;
         null: any;
+        NaN: number;
+        Infinity: number;
     };
     binaryOps: {
         '+': typeof add;
@@ -50,7 +53,6 @@ declare const system: {
         sin: (x: number) => number;
         cos: (x: number) => number;
         tan: (x: number) => number;
-        pow: (x: number, y: number) => number;
     };
     syntaxOperator: {
         ':': any;
