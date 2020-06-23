@@ -320,14 +320,21 @@ export default class Parser {
         this.parseUnaryExpression(exprInstr); // 兼容 ++-1
         exprInstr.push(new Instruction(INSTR_OPERA1, op.value))
       } else if (this.accept(TOKEN_PAREN, '(', false)) { // typeof(
-        this.restore()
-        this.parsePersetFuncCallExpression(exprInstr)
+        const op = this.current
+        this.accept(TOKEN_PAREN, '(')
+        this.parseConditionalExpression(exprInstr);
+        this.expect(TOKEN_PAREN, ')')
+        exprInstr.push(new Instruction(INSTR_OPERA1, op.value))
       } else if (
         [TOKEN_COMMA, TOKEN_SEMICOLON, TOKEN_END].indexOf(this.nextToken.type) !== -1 || // typeof, typeof; typeof
         (this.nextToken.type === TOKEN_PAREN && this.nextToken.value === ')') // typeof)
       ) {
         this.restore();
         this.parseField(exprInstr);
+      } else { // 需要支持typeof 1 ; typeof typeof 1 === typeof(typeof(1)) === typeof(typeof 1);
+        const op = this.current
+        this.parseUnaryExpression(exprInstr) // 外置函数 || 内声明函数
+        exprInstr.push(new Instruction(INSTR_OPERA1, op.value))
       }
     } else {
       this.parseOuterFunctionCallExpression(exprInstr) // 外置函数 || 内声明函数
@@ -348,14 +355,8 @@ export default class Parser {
    * 解析内置函数调用
    */
   parsePersetFuncCallExpression = (exprInstr: TypeInstruction[]): void => {
-    if (this.accept(TOKEN_OPERATOR, isUnaryOpeator)) {
-      var op = this.current
-      this.parseField(exprInstr)
-      exprInstr.push(new Instruction(INSTR_OPERA1, op.value))
-    } else {
       this.parseMemberAccessExpression(exprInstr); // a.b()
       this.parseArguments(exprInstr)
-    }
   }
 
   /**

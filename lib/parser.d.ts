@@ -11,11 +11,11 @@ export default class Parser {
     /**
      * @desc 当前TOKEN指针
      */
-    current: TypeInstruction | null;
+    current: TypeToken | null;
     /**
      * @desc 暂存指针
      */
-    savedCurrent: TypeInstruction | null;
+    savedCurrent: TypeToken | null;
     /**
      * @desc 下个TOKEN指针对象
      */

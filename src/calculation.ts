@@ -42,7 +42,7 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
         break
       }
       case INSTR_NAME: {
-        // 变量名称，范围作用域有 consts values _scope 后者优先
+        // 变量名称，范围作用域有functions consts values _scope 后者优先
         if (hasAttribute(scope, value)) {
           // scope,作用域
           stack.push(scope[value])
@@ -52,6 +52,9 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
         } else if (hasAttribute(ceval.consts, value)) {
           // 常量
           stack.push(ceval.consts[value])
+        } else if(hasAttribute(ceval.functions, value)) {
+          // 内置函数
+          stack.push(ceval.functions[value])
         } else {
           throw new Error(`${value} is not defined in values or consts`)
         }
@@ -62,7 +65,12 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
         // 一元运算，需要一个操作数
         [n1] = stack.splice(-1, 1);
         fn = specifyAttr<Function>(value, [values, unaryOps], options.allowOperatorsCovered)
+        
         stack.push(fn(n1));
+        // 当操作符是return 时，终止该运算循环
+        if(value === 'return') {
+          i = length
+        }
         break
       }
       case INSTR_OPERA2: { // 二元运算，需要有两个操作数

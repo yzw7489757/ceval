@@ -1,7 +1,7 @@
 import { mapVal } from './utils/index';
 import {
   // 功能性
-  random, min, max, arrayMap as map,_typeof,
+  random, min, max, arrayMap as map, _typeof,
   // 二元
   add, sub, mul, divide, mod, withOr, withAlso, equal, notEqual, greaterThan, lessThan, greaterThanEqual, lessThanEqual, inTheTarget, setVar, arrayIndex, bitWiseOr, strictNotEqual,
   // 三元
@@ -14,7 +14,8 @@ const system = {
     random,
     min,
     max,
-    map
+    map,
+    pow: Math.pow,
   },
   consts: {
     E: Math.E,
@@ -23,6 +24,8 @@ const system = {
     'false': false,
     "undefined": undefined,
     "null": null,
+    "NaN": Number.NaN,
+    "Infinity": Infinity
   },
   binaryOps: {
     '+': add,
@@ -61,7 +64,6 @@ const system = {
     sin: Math.sin,
     cos: Math.cos,
     tan: Math.tan,
-    pow: Math.pow,
   },
   syntaxOperator: {
     ':': null,

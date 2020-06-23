@@ -85,15 +85,6 @@ export declare const jsAttr: {
     undefined: boolean;
     valueOf: boolean;
 };
-/** @desc java保留字 */
-export declare const javaWord: {
-    getClass: boolean;
-    java: boolean;
-    JavaArray: boolean;
-    javaClass: boolean;
-    JavaObject: boolean;
-    JavaPackage: boolean;
-};
 /** @desc window保留字 */
 export declare const windowWord: {
     alert: boolean;

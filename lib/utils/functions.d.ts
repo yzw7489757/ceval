@@ -11,6 +11,7 @@ export declare function strictNotEqual(a: any, b: any): boolean;
 export declare function greaterThan(a: any, b: any): boolean;
 export declare function lessThan(a: any, b: any): boolean;
 export declare function greaterThanEqual(a: any, b: any): boolean;
+export declare function _typeof(a: any): any;
 export declare function lessThanEqual(a: any, b: any): boolean;
 export declare function inTheTarget(a: any, b: any): any;
 export declare function bitWiseOr(a: any, b: any): number;

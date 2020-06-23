@@ -1,3 +1,8 @@
+/** 
+ * @desc   : desc 
+ * @author : ziwen
+ * @date   : 2020-6-2 10:55:30
+ */
 import system from '../systemMap';
 import { contains } from './index';
 
@@ -25,13 +30,15 @@ export const number8bitReg = /^(0[0-7]{1,})$/;
 export const number010bitReg = /^(0\d*[8-9]{1,}\d*(\.\d+)?)$/; // 0开头的十进制 019 038 078
 export const number10bitReg = /(^([1-9]\d*(\.\d+)|(\d*(\.\d+)?)))/; // 1-9 或者.开头的十进制
 export const number16bitReg = /^(0x[0-9a-fA-F]{1,})$/;
+export const numberEbitReg =  /^((\d*\.?\d*)[e|E]((\-|\+)?\d+))/; // 科学计数法
 
 export const variableReg = /^((_|$)?[0-9a-zA-Z|$|_]{1,})/;
-export const operatorReg = new RegExp(`^(${supportOperator.map(r => `(\\${/\b\w+\b/.test(r) ? r : r.split('').join('\\')})`).join('|')})`);
+export const operatorReg = new RegExp(`^(${supportOperator.map(r => `(\\${/\b\w+\b/.test(r) ? `${r}\\s+` : r.split('').join('\\')})`).join('|')})`);
 export const unaryMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => /\b\w+\b/.test(item)).join('|')})`);
 export const unarySymbolMapReg = new RegExp(`^(${Object.keys(system.unaryOps).filter(item => !(/\b\w+\b/.test(item))).map(r => `\\s*\\${r}\\s*`).join('|')})`);
+export const constsMapReg = new RegExp(`^(${Object.keys(system.consts).map(k=>`${k}`).join('|')})`)
 
-export const execNumberReg = (reg: RegExp, expr: string, cb: <T>(v: T) => T = (v => v)): string | undefined => {
+export const execFactoryReg = (reg: RegExp, expr: string, cb: <T>(v: T) => T = (v => v)): string | undefined => {
   reg.lastIndex = 0;
   const result = reg.exec(expr);
   if (result === null || result[0] === '') {

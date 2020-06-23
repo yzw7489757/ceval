@@ -1,13 +1,13 @@
 import Instruction from '../instruction';
-export declare function isObject(obj: object): obj is object;
+export declare function isObject(obj: any): obj is object;
 /**
  * @export
  * @template T
- * @param {T[]} arr
- * @param {T} value
+ * @param {array|object|string} source
+ * @param {string} value
  * @returns {boolean}
  */
-export declare function contains<T extends any>(arr: T[], value: T): boolean;
+export declare function contains(source: any[] | Record<any, any> | string, value: string): boolean;
 /**
  * 获取日期时间
  * @export getTime

@@ -1,6 +1,6 @@
 import Token, { TOKEN_END, TOKEN_STRING, TOKEN_COMMA, TOKEN_FUNC, TOKEN_CURLY, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR, TOKEN_SQUARE } from './token';
 import { TypeToken, TypeCeval } from './interface';
-import { whitespaceReg, commentReg, stringReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execNumberReg, number010bitReg, stringGreedyReg } from './utils/regExp';
+import { whitespaceReg, commentReg, stringReg, constsMapReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execFactoryReg, number010bitReg, stringGreedyReg, numberEbitReg } from './utils/regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
 import { contains, isPalindrome, filterUndefine } from './utils/index';
 
@@ -22,7 +22,7 @@ export default class TokenStream {
   savedCurrent: null | TypeToken = null;
 
   // eslint-disable-next-line
-  constructor(public ceval: TypeCeval, public expression: string) { }
+  constructor(public ceval: TypeCeval, public expression: string) {}
 
   /**
    * @desc 获取nextToken，适用语法前置校验
@@ -186,7 +186,6 @@ export default class TokenStream {
     if ((/\d|\./.test(first) === false) || (first === '.' && /\.\d/.test(this.getSomeCode(2)) === false)) return false
 
     const [n] = expr.match(/^(0(x|b)+[0-9a-zA-Z]{1,})|(^0?\d*(\.\d+)?)/); // 019 可能会被8进制拦截掉01， 所以必须要做^$
-
     number10bitReg.lastIndex = 0;
     if (first === '0' && n.length > 1 && !(/^0\.\d/.test(n))) { // 0.x 不是进制数
       if (contains(['b', 'x'], this.getSomeCode(1, 1)) && this.getSomeCode(1, n.length) === '.') {
@@ -199,24 +198,24 @@ export default class TokenStream {
       if (number2bitReg.test(n)) {
         // 2进制
         // @see 0b01 0b1110
-        number = execNumberReg(number2bitReg, n)
+        number = execFactoryReg(number2bitReg, n)
         bit = number === undefined ? undefined : 2
       } else if (number8bitReg.test(n)) {
         // 8进制
         // @see 012 || 077 ✅ 
         // @warn 080 || 079 ❌都是十进制  并非8进制
-        number = execNumberReg(number8bitReg, n)
+        number = execFactoryReg(number8bitReg, n)
         bit = number === undefined ? undefined : 8
       } else if (number16bitReg.test(n)) {
         // 16进制 
         // @see 0xadf
-        number = execNumberReg(number16bitReg, n)
+        number = execFactoryReg(number16bitReg, n)
         bit = number === undefined ? undefined : 16
       } else if (number010bitReg.test(n)) {
         // 0开头十进制 
         // @see 079 || 080  ✅
         // @warn 03.1 || 00.1 || 00.  ❌ 
-        number = execNumberReg(number010bitReg, n)
+        number = execFactoryReg(number010bitReg, n)
         bit = number === undefined ? undefined : 10
       } else {
         this.parseError('number bitbase parser error', SyntaxError)
@@ -225,10 +224,14 @@ export default class TokenStream {
       if (number !== undefined && !this.ceval.getOptions().endableBitNumber) { // 给出准确的warning 
         throw new Error(`options "endableBitNumber": You have disabled bitbase number parsing, Not allowed ${number}`)
       }
-    } else if (number10bitReg.test(expr)) { // 十进制
+    } else if(numberEbitReg.test(expr)) { // 科学计数法
+      const [, , base, times] = numberEbitReg.exec(expr);
+      number = (Number(base) * Math.pow(10, Number(times))).toString()
+      bit = 10;
+    }else if (number10bitReg.test(expr)) { // 十进制
       // 100 || 100.1 || 0.1 || .100 || .0  ✅ 
       // parseFloat是支持 0100.1 的。
-      number = execNumberReg(number10bitReg, expr)
+      number = execFactoryReg(number10bitReg, expr)
       bit = number === undefined ? undefined : 10
     } else {
       
@@ -311,20 +314,22 @@ export default class TokenStream {
       return false
     }
 
-    if (jsWord[result[1]] === false) {
+    result = result[1];
+
+    if (jsWord[result] === false) {
       // 检测到保留字
-      this.parseError(`parser an reserved word: ${result[1]}`)
+      this.parseError(`parser an reserved word: ${result}`)
       return false
     }
 
-    if (jsAttr[result[1]] === false) {
+    if (jsAttr[result] === false) {
       // 检测到window属性 TODO: 应该命中 window.xxx
-      this.parseError(`parser an window native attributes or methods: ${result[1]}`)
+      this.parseError(`parser an window native attributes or methods: ${result}`)
       return false
     }
 
-    this.pos += result[1].length
-    this.current = this.newToken(TOKEN_NAME, result[1])
+    this.pos += result.length
+    this.current = this.newToken(TOKEN_NAME, result)
     return true
   }
 
@@ -334,13 +339,17 @@ export default class TokenStream {
    * @memberof TokenStream
    */
   isConst = (): boolean => {
-    const keys = Object.keys(this.ceval.consts)
-
-    const result = new RegExp(`^(${keys.join('|')})`).exec(this.getSomeCode(Infinity))
+    constsMapReg.lastIndex = 0;
+    const result = constsMapReg.exec(this.getSomeCode(Infinity))
 
     if (result && result[1]) {
       this.current = this.newToken(TOKEN_NAME, result[1])
       this.pos += result[1].length;
+      const constKey = this.checkNextAccessGrammar();
+      // 检查是否是const常量赋值
+      if(constKey.type === TOKEN_OPERATOR && constKey.value === '=') {
+        this.parseError(`parser error: consts of ${this.current.value} can not assignment;`, SyntaxError)
+      }
       return true
     }
 
@@ -404,23 +413,21 @@ export default class TokenStream {
    */
   isOperator = (): boolean => {
     const str = this.getSomeCode(Infinity);
-    let result: RegExpExecArray
+    let result: string | undefined
     if (operatorReg.test(str)) {
-      operatorReg.lastIndex = 0;
-      result = operatorReg.exec(str)
+      result = execFactoryReg(operatorReg, str)
     } else if (unaryMapReg.test(str)) {
-      unaryMapReg.lastIndex = 0
-      result = unaryMapReg.exec(str)
+      result = execFactoryReg(unaryMapReg, str)
     }
-
+    
     if (!result) return false
 
     if(this.ceval.getOptions().endableOperators === false) {
-      throw new Error(`options "endableOperators": You disabled the operator, Therefore, "${result[1]}" it can not be used`)
+      throw new Error(`options "endableOperators": You disabled the operator, Therefore, "${result}" it can not be used`)
     }
-
-    this.pos += result[1].length
-    this.current = this.newToken(TOKEN_OPERATOR, result[1])
+    result = result.replace(/\s/g, '')
+    this.pos += result.length
+    this.current = this.newToken(TOKEN_OPERATOR, result)
     return true
   }
 

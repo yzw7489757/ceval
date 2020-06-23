@@ -12,7 +12,7 @@ export default class TokenStream {
     savedCurrent: null | TypeToken;
     constructor(ceval: TypeCeval, expression: string);
     /**
-     * @desc 适用语法校验检查
+     * @desc 获取nextToken，适用语法前置校验
      * @memberof TokenStream
      */
     checkNextAccessGrammar: () => TypeToken;
