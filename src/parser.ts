@@ -399,9 +399,9 @@ export default class Parser {
       }
       if (this.current.value === '.') {
         this.expect(TOKEN_NAME); // a.name ✔️  a.1×
-        refPath.push(this.current.value)
+        refPath.push(new Instruction(INSTR_PLAIN, this.current.value))
       } else if (this.current.value === '[' && (this.accept(TOKEN_NAME) || this.accept(TOKEN_NUMBER) || this.accept(TOKEN_STRING))) {
-        refPath.push(this.current.value)
+        refPath.push(new Instruction(this.current.type === TOKEN_NAME ? INSTR_NAME : INSTR_PLAIN, this.current.value))
         this.expect(TOKEN_SQUARE, ']')
       }
     }

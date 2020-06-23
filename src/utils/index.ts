@@ -172,7 +172,6 @@ export function getReference(keyQueue: string[], scope: Record<string, any>, val
     }
     path = keyQueue.shift()
   }
-  console.log('target: ', target, lastKey);
   return new Reference(target, lastKey)
 }
 

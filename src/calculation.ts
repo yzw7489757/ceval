@@ -108,7 +108,8 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
       case INSTR_MEMBER: { // 成员访问
         // 有可能是读，也有可能是写；
         const nextItem = tokens[i+2]; // 解析顺序 INSTR_MEMBER => INSTR_EXPRE => INSTR_OP2
-        const ref = getReference(value, scope, values)
+        const keys = calculation(value, values, ceval, true, scope)
+        const ref = getReference(keys, scope, values)
         
         if(nextItem && nextItem.type === INSTR_OPERA2 && nextItem.value === '=') {
           // 写操作, JavaScript是拿不到引用的，push到stack，等待引用赋值

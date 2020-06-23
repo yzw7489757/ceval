@@ -7,7 +7,7 @@ const example = () => {
   console.log(parse(`
   var a = { b: 2, c: 3 };
   var b = 'c';
-  a[b]
+  return a[b]
   `))
   return (
     <div>
