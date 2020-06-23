@@ -70430,9 +70430,9 @@ function Parser(ceval, tokens, _exprInstr) {
         _this.expect(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"]); // a.name ✔️  a.1×
 
 
-        refPath.push(_this.current.value);
+        refPath.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_PLAIN"], _this.current.value));
       } else if (_this.current.value === '[' && (_this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"]) || _this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NUMBER"]) || _this.accept(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_STRING"]))) {
-        refPath.push(_this.current.value);
+        refPath.push(new _instruction__WEBPACK_IMPORTED_MODULE_0__["default"](_this.current.type === _token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_NAME"] ? _instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_NAME"] : _instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_PLAIN"], _this.current.value));
 
         _this.expect(_token__WEBPACK_IMPORTED_MODULE_1__["TOKEN_SQUARE"], ']');
       }
@@ -71214,7 +71214,6 @@ function getReference(keyQueue, scope, values) {
     path = keyQueue.shift();
   }
 
-  console.log('target: ', target, lastKey);
   return new Reference(target, lastKey);
 }
 var Reference = /*#__PURE__*/function () {
@@ -72285,7 +72284,8 @@ function calculation(tokens) {
           // 有可能是读，也有可能是写；
           var nextItem = tokens[_i + 2]; // 解析顺序 INSTR_MEMBER => INSTR_EXPRE => INSTR_OP2
 
-          var ref = Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["getReference"])(value, scope, values);
+          var keys = calculation(value, values, ceval, true, scope);
+          var ref = Object(_utils_index__WEBPACK_IMPORTED_MODULE_1__["getReference"])(keys, scope, values);
 
           if (nextItem && nextItem.type === _instruction__WEBPACK_IMPORTED_MODULE_0__["INSTR_OPERA2"] && nextItem.value === '=') {
             // 写操作, JavaScript是拿不到引用的，push到stack，等待引用赋值
@@ -72565,7 +72565,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var example = function example() {
   var parse = new _src_index__WEBPACK_IMPORTED_MODULE_1__["default"]({}).parseString;
-  console.log(parse("\n  var a = { b: 2, c: 3 };\n  var b = 'c';\n  a[b]\n  "));
+  console.log(parse("\n  var a = { b: 2, c: 3 };\n  var b = 'c';\n  return a[b]\n  "));
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
 };
 
