@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/yzw7489757/ceval/compare/v1.2.0...v1.2.1) (2020-06-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* **single function:** 8.98846567431158 * Math.pow(10, 307) === 8.988465674311586e+307 ❎
+
+### Bug Fixes
+
+* **single function:** node v10 bug,8.98846567431158 * Math.pow(10, 307) !==  8.98846567431158e+307 ([8636d7a](https://github.com/yzw7489757/ceval/commit/8636d7a353587b07b14985c9b001e894d2c931d5))
+
 ## [1.2.0](https://github.com/yzw7489757/ceval/compare/v1.1.0...v1.2.0) (2020-06-23)
 
 
