@@ -13,13 +13,13 @@ import { hasAttribute, mapToObject, merge, someCondition, getReference, Referenc
  * @returns result or result[]
  */
 export default function calculation(tokens: Instruction<any>[], values = Object.create(null), ceval: Ceval, statis = false, scope = Object.create(null)) {
-  if (window.name) {
-   console.group('calclation Dev')
-    console.log('tokens: ', tokens);
-    console.log('values', values)
-    console.log('scope', scope)
-   console.groupEnd()
-  }
+  // if (window && window.name) {
+  //  console.group('calclation Dev')
+  //   console.log('tokens: ', tokens);
+  //   console.log('values', values)
+  //   console.log('scope', scope)
+  //  console.groupEnd()
+  // }
   const options = ceval.getOptions();
   const { unaryOps, binaryOps, ternaryOps } = ceval
   const stack = [];
@@ -90,7 +90,7 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
           // 如果当前作用域含有该属性，作用域优先
           }
         } else {
-          stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), options));
+          stack.push(fn(n1, (typeof n2 === 'string' || typeof n2 === 'number') ? n2: calculation([n2], values, ceval, statis, scope), options));
         }
         break
       }

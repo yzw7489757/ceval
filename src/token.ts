@@ -30,9 +30,7 @@ export const TOKEN_SEMICOLON = 'TOKEN_SEMICOLON';
  */
 export default class Token {
   constructor(public type: string, public value: any, public index: number) {
-    if ((window as any)._debug) {
-      console.log(`type: ${type}; value: ${value}; index: ${index}`)
-    }
+    this.toString = this.toString.bind(this);
   }
 
   toString = () => {

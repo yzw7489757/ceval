@@ -62,7 +62,7 @@ export default class TokenStream {
    * 创建新的fieldType实例
    * @memberof TokenStream
    */
-  newToken = (type: string, value: any, pos?: number): TypeToken => {
+  newToken = (type: string, value: number | string, pos?: number): TypeToken => {
     return new Token(type, value, pos != null ? pos : this.pos);
   }
 
@@ -99,12 +99,12 @@ export default class TokenStream {
     }
   }
 
-  temporarySaved = () => {
+  temporarySaved = (): void => {
     this.savedPosition = this.pos;
     this.savedCurrent = this.current;
   }
 
-  restore = () => {
+  restore = (): void => {
     this.pos = this.savedPosition;
     this.current = this.savedCurrent
   }
@@ -225,20 +225,23 @@ export default class TokenStream {
         this.parseError('number bitbase parser error', SyntaxError)
         return false
       }
+      this.pos += number.length
       if (number !== undefined && !this.ceval.getOptions().endableBitNumber) { // 给出准确的warning 
         throw new Error(`options "endableBitNumber": You have disabled bitbase number parsing, Not allowed ${number}`)
       }
     } else if(numberEbitReg.test(expr)) { // 科学计数法
-      const [, , base, times] = numberEbitReg.exec(expr);
-      number = (Number(base) * Math.pow(10, Number(times))).toString()
+      numberEbitReg.lastIndex = 0;
+      const [, match, base, times] = numberEbitReg.exec(expr);
+      this.pos += (match.length || (base.length + times.length + 1));
+      number = match || (Number(base) * Math.pow(10, Number(times))).toString()
       bit = 10;
     }else if (number10bitReg.test(expr)) { // 十进制
       // 100 || 100.1 || 0.1 || .100 || .0  ✅ 
       // parseFloat是支持 0100.1 的。
       number = execFactoryReg(number10bitReg, expr)
       bit = number === undefined ? undefined : 10
+      this.pos += number.length
     } else {
-      
       return false
     }
 
@@ -247,8 +250,6 @@ export default class TokenStream {
     } else {
       this.current = this.newToken(TOKEN_NUMBER, parseInt(number.replace('0b', '').replace('0x', ''), bit))
     }
-
-    this.pos += number.length
     return true
   }
 
@@ -318,7 +319,7 @@ export default class TokenStream {
       return false
     }
 
-    result = result[1];
+    [, result] = result;
 
     if (jsWord[result] === false) {
       // 检测到保留字
@@ -365,7 +366,7 @@ export default class TokenStream {
    * @see ;
    * @memberof TokenStream
    */
-  isSemicolon = () => {
+  isSemicolon = (): boolean => {
     var first = this.getSomeCode();
     if (first === ';') {
       this.current = this.newToken(TOKEN_SEMICOLON, ';');
@@ -380,7 +381,7 @@ export default class TokenStream {
    * @see ,
    * @memberof TokenStream
    */
-  isComma = () => {
+  isComma = (): boolean => {
     var first = this.getSomeCode();
     if (first === ',') {
       this.current = this.newToken(TOKEN_COMMA, ',');
@@ -395,7 +396,7 @@ export default class TokenStream {
    * @see ;
    * @memberof TokenStream
    */
-  isParenthesis = () => {
+  isParenthesis = (): boolean => {
     var first = this.getSomeCode();
     if (contains(['(', ')'], first)) {
       this.current = this.newToken(TOKEN_PAREN, first);
@@ -460,7 +461,7 @@ export default class TokenStream {
    * 解析出错
    * @memberof TokenStream
    */
-  parseError = (msg: string, ErrorType: ErrorConstructor | SyntaxErrorConstructor | TypeErrorConstructor = Error) => {
+  parseError = (msg: string, ErrorType: ErrorConstructor | SyntaxErrorConstructor | TypeErrorConstructor = Error): never => {
     var coords = this.getCoordinates();
     throw new ErrorType('parse error [' + coords.line + ':' + coords.column + '] => ' + msg);
   };

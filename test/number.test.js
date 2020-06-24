@@ -366,9 +366,10 @@ test('', () => {
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A13_T2.js
  */
 test('', () => {
-  expect(parse(`(1*pow(2,52)*pow(2,971)) === 8.98846567431158e+307`)).toBe(true)
-  expect(parse(`(1*(pow(2,53)-1)*pow(2,971)) === 1.7976931348623157e+308`)).toBe(true)
-  expect(parse(`(-1*pow(2,52)*pow(2,971)) === -8.98846567431158e+307`)).toBe(true)
+const p = new Parser().parseString
+  expect(p(`(1*pow(2,52)*pow(2,971)) === 8.98846567431158e+307`)).toEqual(true)
+  expect(p(`(1*(pow(2,53)-1)*pow(2,971)) === 1.7976931348623157e+308`)).toEqual(true)
+  expect(p(`(-1*pow(2,52)*pow(2,971)) === -8.98846567431158e+307`)).toEqual(true)
 }, 0)
 
 /** 
@@ -378,8 +379,8 @@ test('', () => {
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A14_T1.js
  */
 test('', () => {
-  expect(parse(`1e+308*2 === Infinity`)).toBe(true)
-  expect(parse(`(1*(pow(2,53))*(pow(2,971))) === Infinity`)).toBe(true)
+  expect(parse(`1e+308*2 === Infinity`)).toEqual(true)
+  expect(parse(`(1*(pow(2,53))*(pow(2,971))) === Infinity`)).toEqual(true)
 }, 0)
 
 /** 
@@ -389,7 +390,7 @@ test('', () => {
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A14_T2.js
  */
 test('', () => {
-  expect(parse(`-1e+308*3 === -Infinity`)).toBe(true)
-  expect(parse(`(-1*(pow(2,53))*(pow(2,971))) === -Infinity`)).toBe(true)
+  expect(parse(`-1e+308*3 === -Infinity`)).toEqual(true)
+  expect(parse(`(-1*(pow(2,53))*(pow(2,971))) === -Infinity`)).toEqual(true)
 }, 0)
 

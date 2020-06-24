@@ -10,7 +10,7 @@ const base = {
 
   output: {
     library: name,
-    libraryTarget: 'umd',
+    libraryTarget: 'commonjs',
     filename: '[name].js',
     path: resolve(__dirname, '../lib')
   },

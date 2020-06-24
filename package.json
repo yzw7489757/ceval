@@ -24,6 +24,7 @@
     "https": "HTTPS=true npm start",
     "build:umd": "cross-env NODE_ENV=production webpack --config script/webpack.umd.js --hide-modules --progress --colors",
     "build:typings": "tsc -p tsconfig.d.json",
+    "build:debuging": "tsc -p tsconfig.json",
     "build:docs": "webpack --config script/webpack.doc.js --hide-modules --progress --colors",
     "build:rollup": "rollup -c",
     "build": "rm -rf lib/ && npm run test &&npm run build:docs && npm run build:typings && npm run build:rollup",

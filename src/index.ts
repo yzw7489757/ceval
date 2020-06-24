@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash/cloneDeep'
 import Parser from './parser';
 import systemMap, { TypeUnary, TypeBinary, TypeTernary, TypeConst, TypeFunction, operatorMap } from './systemMap';
 import TokenStream from './token-stream';
@@ -23,7 +22,7 @@ export default class Ceval {
    */
   operatorMap = operatorMap;
 
-  private currentValues: Record<string, any> = cloneDeep(presetVariable);
+  private currentValues: Record<string, any> = { ...presetVariable};
 
   constructor(private options: Readonly<CevalOptions> = {}) {
     Object.assign(this, systemMap);
@@ -67,7 +66,7 @@ export default class Ceval {
    * @returns 数据池
    * @memberof Ceval
    */
-  getCurrentValues = (): Record<string, any> => cloneDeep(this.currentValues);
+  getCurrentValues = (): Record<string, any> => ({ ... this.currentValues});
 
   /**
    * 传入指令集开始计算
@@ -106,7 +105,7 @@ export default class Ceval {
    * @memberof Ceval
    */
   getOptions = () => {
-    return cloneDeep(this.options);
+    return {...this.options};
   }
 
 } 

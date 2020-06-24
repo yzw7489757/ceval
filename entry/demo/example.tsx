@@ -1,14 +1,12 @@
 import React from 'react';
 import Ceval from '../../src/index';
 
+var parse = new Ceval({
+}).parseString;
+console.log(parse(`(1*pow(2,52)*pow(2,971)) === 8.98846567431158e+307`))
+
 const example = () => {
-  var parse = new Ceval({
-  }).parseString;
-  console.log(parse(`
-  var a = { b: 2, c: 3 };
-  var b = 'c';
-  return a[b]
-  `))
+  
   return (
     <div>
       

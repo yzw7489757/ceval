@@ -122,12 +122,20 @@ export function hasAttribute(obj: object, name: string) {
   return Object.prototype.hasOwnProperty.call(obj, name)
 }
 
+export function unique(source:any[]) {
+  const arr = [];
+  source.forEach(element => {
+    if (arr.indexOf(element) === -1) arr.push(arr);
+  });
+  return arr
+}
+
 /**
  * Array to Object e.g. ['a', 'b'] => { a: undefined, b: undefined }
  * @param {string[]} arr 
  */
 export function mapToObject(arr: string[] | Instruction<any>[], defaultValue: undefined | ((key: string) => any) = undefined) {
-  if (typeof arr[0] === 'string' && arr.length !== [...new Set(arr as any)].length) {
+  if (typeof arr[0] === 'string' && arr.length !== unique(arr).length) {
     // 参数重复
     throw new Error(`Duplicate parameter: ${arr.join(',')}`)
   }
