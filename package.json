@@ -1,7 +1,7 @@
 {
   "name": "ceval",
   "version": "1.2.1",
-  "description": "calculation expression",
+  "description": "calculation expression, support broswer and node",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "keywords": [

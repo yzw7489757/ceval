@@ -1,6 +1,15 @@
 /*! ceval@1.2.0 */
-exports["ceval"] =
-/******/ (function(modules) { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("react"), require("react-dom"), require("antd"));
+	else if(typeof define === 'function' && define.amd)
+		define("ceval", ["react", "react-dom", "antd"], factory);
+	else if(typeof exports === 'object')
+		exports["ceval"] = factory(require("react"), require("react-dom"), require("antd"));
+	else
+		root["ceval"] = factory(root["React"], root["ReactDOM"], root["antd"]);
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE__1__, __WEBPACK_EXTERNAL_MODULE__2__, __WEBPACK_EXTERNAL_MODULE__1607__) {
+return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -101,7 +110,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _package_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4);
 var _package_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(4, 1);
 /* harmony import */ var _ui_json__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5);
-/* harmony import */ var _index_less__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1622);
+/* harmony import */ var _index_less__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1621);
 /* harmony import */ var _index_less__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_index_less__WEBPACK_IMPORTED_MODULE_5__);
 
 
@@ -119,13 +128,13 @@ Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WE
 /* 1 */
 /***/ (function(module, exports) {
 
-module.exports = require("react");
+module.exports = __WEBPACK_EXTERNAL_MODULE__1__;
 
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
-module.exports = require("react-dom");
+module.exports = __WEBPACK_EXTERNAL_MODULE__2__;
 
 /***/ }),
 /* 3 */
@@ -30252,8 +30261,6 @@ module.exports = JSON.parse("{\"name\":\"ceval\",\"version\":\"1.2.0\",\"descrip
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ant_design_icons__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
 /* harmony import */ var _demo_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1606);
-/* harmony import */ var _demo_example__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1621);
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ([{
@@ -30261,11 +30268,6 @@ __webpack_require__.r(__webpack_exports__);
   path: '/demo',
   icon: _ant_design_icons__WEBPACK_IMPORTED_MODULE_0__["NumberOutlined"],
   component: _demo_index__WEBPACK_IMPORTED_MODULE_1__["default"]
-}, {
-  name: 'example',
-  path: '/example',
-  icon: _ant_design_icons__WEBPACK_IMPORTED_MODULE_0__["NumberOutlined"],
-  component: _demo_example__WEBPACK_IMPORTED_MODULE_2__["default"]
 }]);
 
 /***/ }),
@@ -66561,7 +66563,7 @@ var presetVal = {
 /* 1607 */
 /***/ (function(module, exports) {
 
-module.exports = require("antd");
+module.exports = __WEBPACK_EXTERNAL_MODULE__1607__;
 
 /***/ }),
 /* 1608 */
@@ -69209,30 +69211,10 @@ var CevalOptions = function CevalOptions() {
 
 /***/ }),
 /* 1621 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _src_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1608);
-
-
-var parse = new _src_index__WEBPACK_IMPORTED_MODULE_1__["default"]({}).parseString;
-console.log(parse("(1*pow(2,52)*pow(2,971)) === 8.98846567431158e+307"));
-
-var example = function example() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null);
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (example);
-
-/***/ }),
-/* 1622 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var api = __webpack_require__(1623);
-            var content = __webpack_require__(1624);
+var api = __webpack_require__(1622);
+            var content = __webpack_require__(1623);
 
             content = content.__esModule ? content.default : content;
 
@@ -69252,7 +69234,7 @@ var update = api(content, options);
 module.exports = content.locals || {};
 
 /***/ }),
-/* 1623 */
+/* 1622 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -69527,10 +69509,10 @@ module.exports = function (list, options) {
 };
 
 /***/ }),
-/* 1624 */
+/* 1623 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(1625)(true);
+exports = module.exports = __webpack_require__(1624)(true);
 // imports
 
 
@@ -69541,7 +69523,7 @@ exports.push([module.i, ".cardWrap {\n  display: flex;\n  justify-content: space
 
 
 /***/ }),
-/* 1625 */
+/* 1624 */
 /***/ (function(module, exports) {
 
 /*
@@ -69624,4 +69606,5 @@ function toComment(sourceMap) {
 
 /***/ })
 /******/ ]);
+});
 //# sourceMappingURL=index.js.map

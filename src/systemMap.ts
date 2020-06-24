@@ -25,7 +25,8 @@ const system = {
     "undefined": undefined,
     "null": null,
     "NaN": Number.NaN,
-    "Infinity": Infinity
+    "Infinity": Infinity,
+    "Map": Object.create(null)
   },
   binaryOps: {
     '+': add,
@@ -47,7 +48,7 @@ const system = {
     '[': arrayIndex,
     '===': strictEqual,
     'in': inTheTarget,
-    // 'instanceOf'
+    // 'instanceOf' // 没必要做这个 Object都访问不了的
   },
   ternaryOps: {
     '?': condition
@@ -71,6 +72,10 @@ const system = {
   }
 }
 
+Object.defineProperty(system.consts, 'Map', {
+  get:() => Object.create(null)
+})
+
 export default system;
 
 /** @desc 功能函数 */
@@ -87,17 +92,18 @@ export type TypeTernary = typeof system.ternaryOps;
 export type TypeSyntax = typeof system.syntaxOperator;
 
 // 有些运算符不能被修改。
-
 const excludeOperator = ['=', '['];
 
 /** @desc 运算符映射表 */
-export const operatorMap = mapVal(Object.create(null), {
-  functions: system.functions,
-  consts: system.consts,
+export const operatorMap = Object.assign(mapVal(Object.create(null), {
+  binaryOps: system.binaryOps,
   unaryOps: system.unaryOps,
   ternaryOps: system.ternaryOps,
 }, (maps, key, val) => {
   if(!excludeOperator.includes(key)) {
     maps[key] = val
   }
+}), { 
+  functions: system.functions,
+  consts: system.consts
 })

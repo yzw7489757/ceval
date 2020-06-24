@@ -128,7 +128,7 @@ test('NaN expression has a type Number', () => {
   description: Create variable entitled NaN
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A4_T1.js
  */
-test('', () => {
+test('NaN is not a keyword', () => {
   expect(() => parse('var NaN')).toThrow(SyntaxError)
 }, 0)
 
@@ -139,7 +139,7 @@ test('', () => {
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A4_T2.js
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A9.js
  */
-test('', () => {
+test('NaN is not a keyword', () => {
   // JavaScript is support statement, but not here
   expect(() => parse('NaN = 1')).toThrow(SyntaxError)
   expect(() => parse('NaN = "asdf"')).toThrow(SyntaxError)
@@ -153,7 +153,7 @@ test('', () => {
   description: Compare NaN with zero
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A5.js
  */
-test('', () => {
+test('NaN not greater or equal zero', () => {
 // CHECK#1
   expect(parse(`
   var x = NaN;
@@ -190,7 +190,7 @@ test('', () => {
   description: Check type of -Infinity
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A6.js
  */
-test('', () => {
+test('-Infinity expression has a type Number', () => {
 // CHECK#1
   expect(parse(`
   var x=-Infinity;
@@ -209,7 +209,7 @@ test('', () => {
   description: Check type of +Infinity
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A7.js
  */
-test('', () => {
+test('+Infinity expression has a type Number', () => {
   // CHECK#1
   expect(parse(`
   var x=+Infinity;
@@ -228,7 +228,7 @@ test('', () => {
   description: Compare Infinity and +Infinity
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A8.js
  */
-test('', () => {
+test('Infinity is the same as +Infinity', () => {
   expect(parse(`
   var p_inf=+Infinity;
   var inf=Infinity;
@@ -265,7 +265,7 @@ test('Infinity statement', () => {
   description: Check 1.0/p_zero !== 1.0/n_zero
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A11_T1.js
  */
-test('', () => {
+test('The integer 0 has two representations, +0 and -0', () => {
   expect(parse(`
   var p_zero=+0;
   var n_zero=-0;
@@ -279,7 +279,7 @@ test('', () => {
   description: Compare positive_zero and negative_zero
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A11_T2.js
  */
-test('', () => {
+test('The integer 0 has two representations, +0 and -0', () => {
 //CHECK #1
   expect(parse(`
   var p_zero=+0;
@@ -322,7 +322,7 @@ test('', () => {
   description: Compare Infinity and +Infinity with Number.POSITIVE_INFINITY
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A12.1.js
  */
-test('', () => {
+test('+Infinity and Infinity are the same as Number.POSITIVE_INFINITY', () => {
 //CHECK #1 
   expect(parse(`
   var p_inf=+Infinity;
@@ -347,7 +347,7 @@ test('', () => {
   description: Compare -Infinity with Number.NEGATIVE_INFINITY
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A12.2.js
  */
-test('', () => {
+test('-Infinity is the same as Number.NEGATIVE_INFINITY', () => {
   expect(parse(`
   var n_inf=-Infinity;
   return(n_inf === NEGATIVE_INFINITY)
@@ -365,11 +365,10 @@ test('', () => {
   description: Finite Non zero values where e is 971
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A13_T2.js
  */
-test('', () => {
-const p = new Parser().parseString
-  expect(p(`(1*pow(2,52)*pow(2,971)) === 8.98846567431158e+307`)).toEqual(true)
-  expect(p(`(1*(pow(2,53)-1)*pow(2,971)) === 1.7976931348623157e+308`)).toEqual(true)
-  expect(p(`(-1*pow(2,52)*pow(2,971)) === -8.98846567431158e+307`)).toEqual(true)
+test('Finite nonzero values', () => {
+  expect(parse(`(1*pow(2,52)*pow(2,971)) === 8.98846567431158e+307`)).toEqual(true)
+  expect(parse(`(1*(pow(2,53)-1)*pow(2,971)) === 1.7976931348623157e+308`)).toEqual(true)
+  expect(parse(`(-1*pow(2,52)*pow(2,971)) === -8.98846567431158e+307`)).toEqual(true)
 }, 0)
 
 /** 
@@ -378,7 +377,7 @@ const p = new Parser().parseString
   description: Create number bigger of 2**1024
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A14_T1.js
  */
-test('', () => {
+test('1e+309 === Infinity', () => {
   expect(parse(`1e+308*2 === Infinity`)).toEqual(true)
   expect(parse(`(1*(pow(2,53))*(pow(2,971))) === Infinity`)).toEqual(true)
 }, 0)
@@ -389,7 +388,7 @@ test('', () => {
   description: Create number smaller of -2**1024
  * https://github.com/tc39/test262/blob/5908ed29ac04a9f5582bb774ca07f8089d3cddfd/test/language/types/number/S8.5_A14_T2.js
  */
-test('', () => {
+test('-1e+309 === -Infinity', () => {
   expect(parse(`-1e+308*3 === -Infinity`)).toEqual(true)
   expect(parse(`(-1*(pow(2,53))*(pow(2,971))) === -Infinity`)).toEqual(true)
 }, 0)

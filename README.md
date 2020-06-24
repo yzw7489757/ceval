@@ -43,34 +43,35 @@ npm i ceval -S
 const Parser = require('ceval')
 const analysis = new Parser({
    /**
-   * @desc 允许使用运算符
+   * @desc Allow operators
    * @type {boolean}
    */
   endableOperators?: boolean = true;
 
   /**
-   * @desc 允许启用多位进制Number
+   * @desc number enable multi bit base
    * @type {boolean}
    */
   endableBitNumber?: boolean = true;
 
   /**
-   * @desc 允许访问成员
+   * @desc Allow access to members
    * @type {boolean}
    */
   allowMemberAccess?: boolean = true;
 
   /**
-   * @desc 默认允许放大计算，以处理四则运算的结果 e.g 0.1+0.2 !== 0.3  || 1.0-0.9 !== 0.1
-   * 在超出边界的情况下（ta > Number.MAX_SAFE_INTEGER || ta < Number.MIN_SAFE_INTEGER）会不做处理，还原四则运算
+   * @desc Zoom in calculation allowed by default
+   * @see To process the results of arithmetic e.g 0.1+0.2 !== 0.3  || 1.0-0.9 !== 0.1
+   * Beyond the boundary（ta > Number.MAX_SAFE_INTEGER || ta < Number.MIN_SAFE_INTEGER）will not do processing, restore arithmetic
    * @requires false 
    * @type {boolean}
    */
   allowHandleNumberPrecision?: boolean = true;
 
   /**
-   * @desc 默认不允许操作符被 presetValue 覆盖
-   * @see 某些情况下开发者想制定更加精确的计算,例如BigInt,那么就在根据operatorMap声明presetValue={'+':Function}
+   * @desc Operators are not allowed to be overridden by presetvalue by default
+   * @see In some cases, developers want to make more accurate calculations, such as BigInt, presetValue={'+':Function}
    * @requires false
    * @type {boolean}
    * @memberof CevalOptions
@@ -78,7 +79,7 @@ const analysis = new Parser({
   allowOperatorsCovered?: boolean;
 
   /**
-   * @desc 当没有返回值或为undefined时触发默认返回值
+   * @desc Trigger default return value when there is no return value or undefined
    * @type {any}
    */
   defaultReturnValues?: any = '' // done
@@ -89,7 +90,7 @@ const analysis = new Parser({
 Parser Instance API
 
 | api | desc | type |
-|----|----|----|----|
+| --- | --- | --- | --- |
 | operatorMap | Operators mapping table, which can be used in preset values overlay operation | Record<string, Function>|
 | getSupportOperationMap | The name of the operator method supported by the query can be overridden | (ops: string) => null | Function;| 
 | parseString | Parsing strings, exposing methods to the outside world | (expression: string, values?: Record<string, any>) => any;|
@@ -101,58 +102,144 @@ Parser Instance API
 about Options example [test case](https://github.com/yzw7489757/ceval/blob/master/test/options.test.js);
 
 use [test262](https://github.com/tc39/test262/tree/master/test/language) test case;
+
+## rule
+
+There are two rules:
+
+### Semicolon at the end
+
+e.g.
+``` ts
+parse('0b01 + 0b01;') // 2 
+```
+Although it is not necessary in a simple expression operation, but it's a good habit.The parser can know exactly where the end is, Although it doesn't have too many restrictions.
+
+e.g.
+```ts
+parse(`
+  function abs(a,b,c) { 
+    let b = 1 /* ⚠️ error, must has semicolon */
+    c = 2;
+    return(a+b+c);
+  };
+  abs(3,4,8);
+`)
+```
+
+### statement
+"var" statement does not affect "scope", it's inserted into values 
+"let" and "const" assigned to the current scope, warn if the current scope exists
+
+``` ts
+var Parser = require('ceval');
+
+var instance = new Parser({/*...*/});
+var parse = instance.parseString;
+
+parse(`
+  var obj = { foo:'foo', bar: 'bar'};
+
+  function abs(a,b,c) {
+    var d = 'global';
+    return (a+b+c);
+  }
+  abs(1,2,3)
+`)
+
+console.log(instance.getCurrentValues().obj); // { foo:'foo', bar: 'bar'}
+console.log(instance.getCurrentValues().d); // 'global'
+
+parse(`
+  let foo = 'foo';
+  const bar = 'bar';
+  function abs(a,b,c) {
+    let d = 'scope';
+    const e = 'scope';
+    return (a+b+c);
+  }
+  abs(1,2,3)
+`)
+console.log(instance.getCurrentValues().foo); // undefined
+console.log(instance.getCurrentValues().bar); // undefined
+console.log(instance.getCurrentValues().d); // undefined
+console.log(instance.getCurrentValues().e); // undefined
+```
+
 ## basic
 
 ``` ts
-const { parseString } = analysis
+const { parse: parse } = analysis
 ```
 
 ### Number
 ``` ts
-parseString('0b01') // 1
-parseString('0b11') // 3
-parseString('0b010101') // 21
+parse('0b01') // 1
+parse('0b11') // 3
+parse('0b010101') // 21
 
-parseString('01') // 1
-parseString('077') // 63
-parseString('01111') // 585
+parse('01') // 1
+parse('077') // 63
+parse('01111') // 585
 
-parseStrin('.1') // 1
-parseStrin('33') // 33
-parseStrin('100.00') // 100
+parse('.1') // 1
+parse('33') // 33
+parse('100.00') // 100
 
-parseString('0x01') // 1
-parseString('0xaf') // 175
-parseString('0x9fac') // 40876
+parse('0x01') // 1
+parse('0xaf') // 175
+parse('0x9fac') // 40876
+
+parse(`1e+308*2 === Infinity`) // true
+
+parse(`
+    var x = NaN;
+    var y = NaN;
+    return (x !== y);
+  `) // true
+
+parse(`
+  var x = NaN;
+  return(typeof(x) === 'number');
+  `) // true
+
+parse(`
+  var x = NaN;
+  var x_geq_0=(x >= 0.0);
+  return(x_geq_0)
+  `) // false
+
+parse(`
+  var x=+Infinity;
+  return(typeof(x) === 'number')
+  `) // true
 ```
+More testcase [here](https://github.com/yzw7489757/ceval/blob/master/test/number.test.js)
 
-### 运算
+### calculation
 ``` ts
 const obj = `{ a: 1, b: 2, c: 3, d: { e: 4, f: 5}}`
-parseString(`1+1`);                       // 2
-parseString(`-1-2-3`);                    // -6
-parseString(`1*2*3`);                     // 6
-parseString(`1/2/4`);                     // 0.125
-parseString(`undefined || 2`);            // 2
-parseString(`~-1 || -2 || 3`);            // -2
-parseString(`-0 == +0`);                  // true
-parseString(`~1 > 1`);                    // false
-parseString(`false > false > 1`);         // false
-parseString(`5 >= 0`);                    // true
-parseString(`1 in [1, 2, 3]`);            // true
-parseString(`undefined in [1, 2, true]`); // false
-parseString(`'a' in ${obj}`);             // true
-parseString(`\'\'a\'\' in ${obj}`);       // true
-parseString(`1 === true`);                // false
-parseString(`3%2`);                       // 1
+parse(`1+1`);                       // 2
+parse(`-1-2-3`);                    // -6
+parse(`1*2*3`);                     // 6
+parse(`1/2/4`);                     // 0.125
+parse(`undefined || 2`);            // 2
+parse(`~-1 || -2 || 3`);            // -2
+parse(`-0 == +0`);                  // true
+parse(`~1 > 1`);                    // false
+parse(`false > false > 1`);         // false
+parse(`5 >= 0`);                    // true
+parse(`1 in [1, 2, 3]`);            // true
+parse(`undefined in [1, 2, true]`); // false
+parse(`'a' in ${obj}`);             // true
+parse(`\'\'a\'\' in ${obj}`);       // true ('"a"'  === 'a') is Palindrome
+parse(`1 === true`);                // false
+parse(`3%2`);                       // 1
 ```
 
 ### Function
 ``` ts
-// var 申明语句不会影响到 scope, 而是 inject 到 values 
-// let 和 const 都赋值到当前 scope 上, 当前scope如果存在则warn
-
-parseString(`
+parse(`
   function abs(a,b,c) { 
     var a = 5; /* => inject to presetValues */
     let b = 1; /* => inject to current scope */
@@ -166,32 +253,80 @@ parseString(`
 
 ### Object & Array
 ``` ts
-parseString(`[1*2, false, true, undefined, null]`); // Array[]
-parseString(`var a = { b: { c: ['a','b','c','d']} };'e' in a.b.c`); // false
-parseString(`{ a: 1, b: 2, c: { d: undefined, e: { f: false, g: { h: null }}}}`); // object
+parse(`[1*2, false, true, undefined, null]`); // Array[]
+parse(`var a = { b: { c: ['a','b','c','d']} };'e' in a.b.c`); // false
+parse(`{ a: 1, b: 2, c: { d: undefined, e: { f: false, g: { h: null }}}}`); // object
+
+parse(`var a = { b: 2 };a.b`) //2;
+parse(`var a = { b: 2 };a["b"]`) //2;
+parse(`var a = { b: 2, c:3 };var b='c';a[b]`) //3;
+
+// data reference
+parse(`
+  var a = { b: 2, c:[1,2,3]};
+  var b='c';
+  a[b][0] = '0';
+  return a[b];
+`) // ['0',2,3]
+
+parse(`
+  var arr = [1,2,3];
+  arr[0] = 0;
+  return arr;
+`) // [0,2,3]
 ```
 
 ### Variable
 
 ``` ts
-parseString(`
-var a = { a: 2 };
-var b = { b: a };
+parse(`
+var a = { foo: 1 };
+var b = { bar: 2 };
+let a = { state: 1 } // ⚠️, Raise warning, current scope exists key
+const b = { state: 1 } // ⚠️, Raise warning, current scope exists key
+
+let c = { coo: 1} // success;
+const d = { coo: 1} // success;
 `)
 
-parseString(`
+parse(`
 var a = { a: [false, true, undefined, null, ''] };
 var b = { b: true, c: undefined, d:{ e: a, f: '1', g: {}}};
-`)
+`) // Can be obtained from the instance. api: getCurrentValues
+```
+### this
+
+### Operator
+Through `instance.operatorMap` Get all operators；
+
+#### return 
+`return` interrupt this operation cycle; but it doesn't affect the outside world.
+``` ts
+parse(`
+return 1;
+return 2;
+`) // 1
+
+parse(`
+  var foo = 'foo'
+  function abs(a,b,c) {
+    return a;
+    return b;
+  }
+  var bar = abs(1,2,3)
+  return (bar + foo);
+`) // foo1
 ```
 
 ### Other
 
-更多examples请移步测试用例。
+Please move to test case for more [examples](https://github.com/yzw7489757/ceval/tree/master/test)。
 
-TODO: [Test39](https://github.com/tc39/test262/tree/master/test/language/types) 部分测试用例
+### TODO: [Test39](https://github.com/tc39/test262/tree/master/test/language/types) Some test cases, 
+#### speed of progress
+2020-06-24 done: number, null, boolean
 
-更多功能扩展中，欢迎提出 feature 和 参与。
+In more function extension, welcome to participate or propose feature.
 
 ## development
 
@@ -202,10 +337,10 @@ npm start
 
 ### build
 ``` shell
-# webapck build umd module, 无压缩
+# webapck build umd module, No compression
 npm run build:umd
 
-# rollup build umd module, 压缩版本
+# rollup build umd module, Compressed version
 npm run build:rollup
 
 # webpack build docs

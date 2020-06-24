@@ -17,6 +17,18 @@ test('Object literal declaration {}', () => {
   expect(parse(`var a = { b: 2 };a.b`)).toEqual(2);
   expect(parse(`var a = { b: 2 };a["b"]`)).toEqual(2);
   expect(parse(`var a = { b: 2, c:3 };var b='c';a[b]`)).toEqual(3);
+  expect(parse(`var a = { b: 2, c:[1,2,3]};var b='c';a[b]`)).toEqual([1,2,3]);
+  expect(parse(`
+    var a = { b: 2, c:[1,2,3]};
+    var b='c';
+    a[b][0] = '0'
+    return a[b]
+  `)).toEqual(['0',2,3]);
+  expect(parse(`
+      var arr = [1,2,3];
+      arr[0] = '0';
+      return arr
+  `)).toEqual(['0',2,3]);
 
   expect(parse(`var a = { b: { c: ['a','b','c','d']} };'c' in a.b`)).toEqual(true);
   expect(parse(`var a = { b: { c: ['a','b','c','d']} };\'c\' in a.b`)).toEqual(true);
