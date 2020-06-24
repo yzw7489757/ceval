@@ -90,7 +90,7 @@ const analysis = new Parser({
 Parser Instance API
 
 | api | desc | type |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | operatorMap | Operators mapping table, which can be used in preset values overlay operation | Record<string, Function>|
 | getSupportOperationMap | The name of the operator method supported by the query can be overridden | (ops: string) => null | Function;| 
 | parseString | Parsing strings, exposing methods to the outside world | (expression: string, values?: Record<string, any>) => any;|
