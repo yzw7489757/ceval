@@ -7,13 +7,11 @@
     "baseUrl": ".",
     "experimentalDecorators": true,
     "sourceMap": true,
-    // "noEmit": true,
+    "noEmit": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
-    "target": "es5",
-    "jsx": "react",
-    "module": "commonjs",
-    "outDir": "out"
+    "target": "esnext",
+    "jsx": "react"
   },
   "include": [
     "src",

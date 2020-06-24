@@ -15,8 +15,7 @@
 
 零依赖，适合表达式运算; 
 
-No dependence, the achieve basics `expr-cval`, Refactoring to ceval is more suitable for calculating expressions; 
-
+No dependence, suitable for calculating expressions; 
 
 ``` ts
 ┌───────────────────────────────┐

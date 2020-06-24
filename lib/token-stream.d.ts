@@ -33,7 +33,7 @@ export default class TokenStream {
      * 创建新的fieldType实例
      * @memberof TokenStream
      */
-    newToken: (type: string, value: any, pos?: number) => TypeToken;
+    newToken: (type: string, value: number | string, pos?: number) => TypeToken;
     /**
      * 解析下一个 field
      * @memberof TokenStream

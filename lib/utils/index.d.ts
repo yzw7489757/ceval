@@ -50,6 +50,7 @@ export declare function isPalindrome(str: string): boolean;
  */
 export declare function filterUndefine(...args: any[]): any;
 export declare function hasAttribute(obj: object, name: string): any;
+export declare function unique(source: any[]): any[];
 /**
  * Array to Object e.g. ['a', 'b'] => { a: undefined, b: undefined }
  * @param {string[]} arr

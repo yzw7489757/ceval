@@ -4,7 +4,7 @@ const base = require('./webpack.base');
 const umdConfig = {
   ...base,
 
-  mode: process.env.BUILD_ENV ? 'production' : 'none',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'none',
 
   devtool: 'source-map',
 }

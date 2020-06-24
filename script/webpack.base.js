@@ -10,9 +10,11 @@ const base = {
 
   output: {
     library: name,
-    libraryTarget: 'commonjs',
+    libraryTarget: 'umd',
     filename: '[name].js',
-    path: resolve(__dirname, '../lib')
+    path: resolve(__dirname, '../lib'),
+    umdNamedDefine: true,
+    globalObject: 'typeof self !== \'undefined\' ? self : this'
   },
 
   module: {

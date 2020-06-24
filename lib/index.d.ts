@@ -53,5 +53,12 @@ export default class Ceval {
      * get Options
      * @memberof Ceval
      */
-    getOptions: () => Readonly<CevalOptions>;
+    getOptions: () => {
+        endableOperators?: boolean;
+        endableBitNumber?: boolean;
+        allowMemberAccess?: boolean;
+        allowHandleNumberPrecision?: boolean;
+        allowOperatorsCovered?: boolean;
+        defaultReturnValues?: any;
+    };
 }
