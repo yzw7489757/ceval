@@ -16,6 +16,7 @@ declare const system: {
         null: any;
         NaN: number;
         Infinity: number;
+        Map: any;
     };
     binaryOps: {
         '+': typeof add;
