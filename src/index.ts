@@ -26,7 +26,6 @@ export default class Ceval {
 
   constructor(private options: Readonly<CevalOptions> = {}) {
     Object.assign(this, systemMap);
-    console.log(operatorMap)
     merge(this.options, new CevalOptions())
   }
 
