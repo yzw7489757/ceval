@@ -1,15 +1,12 @@
 ## Ceval
 
-![](https://img.shields.io/npm/dt/ceval?style=flat-square)
 ![](https://img.shields.io/npm/dm/ceval?style=flat-square)
-![](https://img.shields.io/npm/dw/ceval?style=flat-square)
-![](https://img.shields.io/npm/l/ceval)
-![](https://img.shields.io/npm/v/ceval)
-![](https://img.shields.io/github/issues/yzw7489757/ceval)
+<!-- ![](https://img.shields.io/npm/l/ceval) -->
+<!-- ![](https://img.shields.io/npm/v/ceval) -->
+![](https://img.shields.io/travis/yzw7489757/ceval?label=Travis%20Build)
 ![CI](https://github.com/yzw7489757/ceval/workflows/CI/badge.svg?branch=master)
 ![Node.js CI](https://github.com/yzw7489757/ceval/workflows/Node.js%20CI/badge.svg)
-![](https://img.shields.io/github/size/yzw7489757/ceval/lib/index.js)
-![](https://img.shields.io/travis/yzw7489757/ceval?label=Travis%20Build)
+<!-- ![](https://img.shields.io/github/size/yzw7489757/ceval/lib/index.js) -->
 
 [online demo](https://yzw7489757.github.io/ceval/);
 
