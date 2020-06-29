@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.4](https://github.com/yzw7489757/ceval/compare/v1.2.3...v1.2.4) (2020-06-29)
+
+
+### ⚠ BREAKING CHANGES
+
+* **single function:** fix: pos offset
+
+### Bug Fixes
+
+* **single function:** customFunc: an error is caused without parameters; ([8e0b836](https://github.com/yzw7489757/ceval/commit/8e0b8367be1868db3c3665804d24dbf414bed9c5))
+
 ### [1.2.3](https://github.com/yzw7489757/ceval/compare/v1.2.2...v1.2.3) (2020-06-24)
 
 ### [1.2.2](https://github.com/yzw7489757/ceval/compare/v1.2.1...v1.2.2) (2020-06-24)
