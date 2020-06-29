@@ -9,6 +9,12 @@ test('binary =', () => {
   expect(parse(`var obj = { a: '1'};`)).toEqual(''); // 没有指定返回语句
 
   expect(parse(`
+    function abs() { 
+      return 1;
+    };
+    return abs()`, value)).toEqual(1);
+    
+  expect(parse(`
     function abs(a,b,c) { 
       return(a);
     };

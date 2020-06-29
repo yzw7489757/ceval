@@ -20,7 +20,7 @@
     "test"
   ],
   "scripts": {
-    "start": "set NODE_ENV=development && webpack-dev-server --config script/webpack.dev.js --hot --inline",
+    "start": "cross-env NODE_ENV=development && webpack-dev-server --config script/webpack.dev.js --hot --inline",
     "https": "HTTPS=true npm start",
     "build:umd": "cross-env NODE_ENV=production webpack --config script/webpack.umd.js --hide-modules --progress --colors",
     "build:typings": "tsc -p tsconfig.d.json",
@@ -33,7 +33,7 @@
     "publish:minor": "npm run build && npm run release -- minor && npm publish",
     "publish:patch": "npm run build && npm run release -- patch && npm publish",
     "lint": "eslint --quiet ./src --no-error-on-unmatched-pattern",
-    "test": "jest",
+    "test": "cross-env NODE_ENV=development jest",
     "test:watch": "jest --watch"
   },
   "devDependencies": {

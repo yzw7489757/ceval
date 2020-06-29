@@ -19,7 +19,6 @@ const supportOperator = Array.from(new Set(
 ))
 
 export const whitespaceReg = /(\t|\n|\r|\s+)/;
-export const booleanReg = /^(false|true)/;
 export const commentReg = /^\/\*(.*?)\*\//;
 export const stringReg = /^\'(.*?)\'|^\"(.*?)\"/;
 export const stringGreedyReg = /^\'(.*)\'|^\"(.*)\"/;

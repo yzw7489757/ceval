@@ -1,6 +1,6 @@
 import Token, { TOKEN_END, TOKEN_STRING, TOKEN_COMMA, TOKEN_FUNC, TOKEN_CURLY, TOKEN_PAREN, TOKEN_SEMICOLON, TOKEN_VAR, TOKEN_NUMBER, TOKEN_NAME, TOKEN_OPERATOR, TOKEN_SQUARE } from './token';
 import { TypeToken, TypeCeval } from './interface';
-import { whitespaceReg, commentReg, stringReg, constsMapReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, booleanReg, execFactoryReg, number010bitReg, stringGreedyReg, numberEbitReg } from './utils/regExp';
+import { whitespaceReg, commentReg, stringReg, constsMapReg, number2bitReg, number8bitReg, number10bitReg, number16bitReg, variableReg, operatorReg, unaryMapReg, execFactoryReg, number010bitReg, stringGreedyReg, numberEbitReg } from './utils/regExp';
 import { jsWord, jsAttr } from './utils/reservedWord';
 import { contains, isPalindrome, filterUndefine } from './utils/index';
 
@@ -83,7 +83,6 @@ export default class TokenStream {
     } else if (
       this.isNumber() ||
       this.isString() ||
-      this.isBoolean() ||
       this.isParenthesis() ||
       this.isComma() ||
       this.isOperator() ||
@@ -143,27 +142,13 @@ export default class TokenStream {
   }
 
   /**
-   * 过滤空格 \t \r \n
-   * @memberof TokenStream
-   */
-  isBoolean = (): boolean => {
-    const matchWS = booleanReg.exec(this.getSomeCode())
-    while (matchWS && matchWS[1]) {
-      this.pos++
-      return true
-    }
-    return false
-  }
-
-  /**
    * 申明变量 TODO:support
    * @memberof TokenStream
    */
   isVariable = (): boolean => {
     const word = this.getFirstWord()
     if (contains(['const', 'var', 'let'], word)) {
-      this.pos += word.length;
-      this.current = this.newToken(TOKEN_VAR, word)
+      this.current = this.newToken(TOKEN_VAR, word, (this.pos += word.length))
       const nextToken = this.checkNextAccessGrammar()
 
       if (nextToken.type !== TOKEN_NAME) {
@@ -185,6 +170,7 @@ export default class TokenStream {
     const first = this.getSomeCode()
     let number: string | undefined
     let bit: number
+    let len = 0
     const expr = this.getSomeCode(this.expression.length - this.pos)
 
     if ((/\d|\./.test(first) === false) || (first === '.' && /\.\d/.test(this.getSomeCode(2)) === false)) return false
@@ -225,14 +211,14 @@ export default class TokenStream {
         this.parseError('number bitbase parser error', SyntaxError)
         return false
       }
-      this.pos += number.length
+      len = number.length
       if (number !== undefined && !this.ceval.getOptions().endableBitNumber) { // 给出准确的warning 
         throw new Error(`options "endableBitNumber": You have disabled bitbase number parsing, Not allowed ${number}`)
       }
     } else if(numberEbitReg.test(expr)) { // 科学计数法
       numberEbitReg.lastIndex = 0;
       const [, match, base, times] = numberEbitReg.exec(expr);
-      this.pos += (match.length || (base.length + times.length + 1));
+      len = (match.length || (base.length + times.length + 1));
       number = match || (Number(base) * Math.pow(10, Number(times))).toString()
       bit = 10;
     }else if (number10bitReg.test(expr)) { // 十进制
@@ -240,15 +226,15 @@ export default class TokenStream {
       // parseFloat是支持 0100.1 的。
       number = execFactoryReg(number10bitReg, expr)
       bit = number === undefined ? undefined : 10
-      this.pos += number.length
+      len = number.length
     } else {
       return false
     }
 
     if (bit === 10) {
-      this.current = this.newToken(TOKEN_NUMBER, parseFloat(number))
+      this.current = this.newToken(TOKEN_NUMBER, parseFloat(number), (this.pos += len))
     } else {
-      this.current = this.newToken(TOKEN_NUMBER, parseInt(number.replace('0b', '').replace('0x', ''), bit))
+      this.current = this.newToken(TOKEN_NUMBER, parseInt(number.replace('0b', '').replace('0x', ''), bit), (this.pos += len))
     }
     return true
   }
@@ -277,8 +263,8 @@ export default class TokenStream {
       }
 
       if (strContent !== undefined) {
-        this.current = this.newToken(TOKEN_STRING, strContent, this.pos)
-        this.pos += (strContent.length + first.length * 2); // "" 是没有长度的，会导致Token指针一直处于 "" 
+        this.current = this.newToken(TOKEN_STRING, strContent, (this.pos += (strContent.length + first.length * 2))) // // "" 是没有长度的，会导致Token指针一直处于 "" 
+         
         return true
       }
     }
@@ -290,8 +276,8 @@ export default class TokenStream {
     const word = this.getFirstWord();
     if(word === 'function') {
       // TODO: 初期只支持 第一种, 同时支持 function fn() {} || const a = () => {} || const b = function(){}
-      this.current = this.newToken(TOKEN_FUNC, undefined);
-      this.pos+=word.length
+      this.current = this.newToken(TOKEN_FUNC, undefined, (this.pos += word.length));
+      
       const nextToken = this.checkNextAccessGrammar(); 
       if(nextToken.type !== TOKEN_NAME) {
         this.parseError('function definition should have function name')
@@ -333,8 +319,7 @@ export default class TokenStream {
       return false
     }
 
-    this.pos += result.length
-    this.current = this.newToken(TOKEN_NAME, result)
+    this.current = this.newToken(TOKEN_NAME, result, (this.pos += result.length))
     return true
   }
 
@@ -348,8 +333,7 @@ export default class TokenStream {
     const result = constsMapReg.exec(this.getSomeCode(Infinity))
 
     if (result && result[1]) {
-      this.current = this.newToken(TOKEN_NAME, result[1])
-      this.pos += result[1].length;
+      this.current = this.newToken(TOKEN_NAME, result[1], (this.pos += result[1].length))
       const constKey = this.checkNextAccessGrammar();
       // 检查是否是const常量赋值
       if(constKey.type === TOKEN_OPERATOR && constKey.value === '=') {
@@ -369,8 +353,7 @@ export default class TokenStream {
   isSemicolon = (): boolean => {
     var first = this.getSomeCode();
     if (first === ';') {
-      this.current = this.newToken(TOKEN_SEMICOLON, ';');
-      this.pos++;
+      this.current = this.newToken(TOKEN_SEMICOLON, ';', ++this.pos);
       return true;
     }
     return false;
@@ -384,8 +367,7 @@ export default class TokenStream {
   isComma = (): boolean => {
     var first = this.getSomeCode();
     if (first === ',') {
-      this.current = this.newToken(TOKEN_COMMA, ',');
-      this.pos++;
+      this.current = this.newToken(TOKEN_COMMA, ',', ++this.pos);
       return true;
     }
     return false;
@@ -399,15 +381,14 @@ export default class TokenStream {
   isParenthesis = (): boolean => {
     var first = this.getSomeCode();
     if (contains(['(', ')'], first)) {
-      this.current = this.newToken(TOKEN_PAREN, first);
+      this.current = this.newToken(TOKEN_PAREN, first, ++this.pos);
     } else if (contains(['[', ']'], first)) {
-      this.current = this.newToken(TOKEN_SQUARE, first);
+      this.current = this.newToken(TOKEN_SQUARE, first, ++this.pos);
     } else if (contains(['{', '}'], first)) {
-      this.current = this.newToken(TOKEN_CURLY, first);
+      this.current = this.newToken(TOKEN_CURLY, first, ++this.pos);
     } else {
       return false
     }
-    this.pos++;
     return true;
   };
 
@@ -431,8 +412,7 @@ export default class TokenStream {
       throw new Error(`options "endableOperators": You disabled the operator, Therefore, "${result}" it can not be used`)
     }
     result = result.replace(/\s/g, '')
-    this.pos += result.length
-    this.current = this.newToken(TOKEN_OPERATOR, result)
+    this.current = this.newToken(TOKEN_OPERATOR, result, (this.pos += result.length))
     return true
   }
 

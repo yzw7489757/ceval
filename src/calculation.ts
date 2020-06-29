@@ -15,7 +15,7 @@ import { hasAttribute, mapToObject, merge, someCondition, getReference, Referenc
 export default function calculation(tokens: Instruction<any>[], values = Object.create(null), ceval: Ceval, statis = false, scope = Object.create(null)) {
   // if (window && window.name) {
   //  console.group('calclation Dev')
-  //   console.log('tokens: ', tokens);
+    // console.log('tokens: ', tokens);
   //   console.log('values', values)
   //   console.log('scope', scope)
   //  console.groupEnd()
@@ -78,7 +78,7 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
         [n1, n2] = stack.splice(-2, 2)
           fn = specifyAttr<Function>(value, [values, binaryOps], options.allowOperatorsCovered)
         if (value === '&&') { // 1&&0&&3可能是连续的
-          stack.push(fn(n1, calculation([n2], values, ceval, statis, scope), false)); // true && true && false
+          stack.push(fn(n1, calculation([n2], values, ceval, statis, scope))); // true && true && false
         } else if (value === '=') {
           // 写操作分为属性赋值和引用赋值
           if(n1 instanceof Reference) { // left hide 为引用
@@ -118,7 +118,6 @@ export default function calculation(tokens: Instruction<any>[], values = Object.
           stack.push(ref.getValue())
           ref.destory();
         }
-        
         break
       }
       case INSTR_ARRAY: { // 数组字面量

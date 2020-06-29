@@ -44,7 +44,7 @@ export default class Ceval {
    */
   parseString = (expression: string, values: Record<string, any> = {}) => {
     const instr: TypeInstruction[] = [];
-    const isDev = process.env.NODE_ENV !== 'development';
+    const isDev = process.env.NODE_ENV === 'development';
     let value
     if(isDev) {
         Parser.generatorParser(this, new TokenStream(this, expression), instr)

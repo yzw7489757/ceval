@@ -458,7 +458,7 @@ export default class Parser {
   }
 
   /**
-   * 解析对象字面量 { a: 1, b: 2, c: {}}
+   * 解析对象字面量 [1,2,3]
    */
   parseArrayLiteralDeclaration = (exprInstr: TypeInstruction[]) => {
     // Array字面量声明 TODO: 需要和 obj['a'] 做区分
@@ -507,7 +507,7 @@ export default class Parser {
       if (this.accept(TOKEN_NAME)) { // function fn(){}
         const funcName = this.current.value;
         const instr = []; // 参数 与 函数体
-        if (this.accept(TOKEN_PAREN, '(')) {
+        if (this.accept(TOKEN_PAREN, '(') && !this.accept(TOKEN_PAREN, ')')) {
           do {
             this.parseField(instr); // TODO fn(a=1) 待兼容
           } while (this.accept(TOKEN_COMMA))
