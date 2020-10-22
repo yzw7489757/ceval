@@ -30,12 +30,12 @@ const transfer = (key, value) => {
 }
 
 const presetVal = {
-  target:{
-    array: [1,2,3,4],
-    fn: function fn() {
-      return this.array
-    }
-  }
+  // target:{
+  //   array: [1,2,3,4],
+  //   fn: function fn() {
+  //     return this.array
+  //   }
+  // }
 }
 
 export default (): JSX.Element => {

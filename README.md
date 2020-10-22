@@ -90,12 +90,12 @@ Parser Instance API
 | api | desc | type |
 | --- | --- | --- |
 | operatorMap | Operators mapping table, which can be used in preset values overlay operation | Record<string, Function>|
-| getSupportOperationMap | The name of the operator method supported by the query can be overridden | (ops: string) => null | Function;| 
+| getSupportOperationMap | The name of the operator method supported by the query can be overridden | (ops: string) => null \| Function;| 
 | parseString | Parsing strings, exposing methods to the outside world | (expression: string, values?: Record<string, any>) => any;|
 | getCurrentValues | Get current datapool preset + external + internal declaration | () => Record<string, any> |
 | updatePresetValues| Update PresetValues |(values: Record<string, any>) => void|
-| updateOptions| Update Option | (Options: Partial<CevalOptions>) => void|
-| getOptions| get Options | () => Readonly<CevalOptions>|
+| updateOptions| Update Option | (Options: Partial\<CevalOptions>) => void|
+| getOptions| get Options | () => Readonly\<CevalOptions>|
 
 about Options example [test case](https://github.com/yzw7489757/ceval/blob/master/test/options.test.js);
 

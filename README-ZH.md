@@ -90,12 +90,12 @@ Parser 实例API
 | api | desc | type |
 | --- | --- | --- |
 | operatorMap | 运算符映射表，可用于覆盖预置值操作 | Record<string, Function>|
-| getSupportOperationMap | 查询支持的运算符方法的名称,以支持operatorMap修改 | (ops: string) => null | Function;| 
+| getSupportOperationMap | 查询支持的运算符方法的名称,以支持operatorMap修改 | (ops: string) => null \| Function;| 
 | parseString | 解析字符串 | (expression: string, values?: Record<string, any>) => any;|
 | getCurrentValues | 获取当前数据池预置+外部+内部声明变量 | () => Record<string, any> |
 | updatePresetValues| 更新预设值 |(values: Record<string, any>) => void|
-| updateOptions| 更新Options | (Options: Partial<CevalOptions>) => void|
-| getOptions| 获取Options | () => Readonly<CevalOptions>|
+| updateOptions| 更新Options | (Options: Partial\<CevalOptions>) => void|
+| getOptions| 获取Options | () => Readonly\<CevalOptions>|
 
 关于Options示例 [test case](https://github.com/yzw7489757/ceval/blob/master/test/options.test.js);
 
