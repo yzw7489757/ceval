@@ -52,11 +52,6 @@ export default class TokenStream {
      */
     isComment: () => boolean;
     /**
-     * 过滤空格 \t \r \n
-     * @memberof TokenStream
-     */
-    isBoolean: () => boolean;
-    /**
      * 申明变量 TODO:support
      * @memberof TokenStream
      */

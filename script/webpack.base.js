@@ -51,7 +51,7 @@ const base = {
             options: {
               quiet: true,
               failOnError: false,
-              fix: false
+              fix: true
             }
           }
         ]

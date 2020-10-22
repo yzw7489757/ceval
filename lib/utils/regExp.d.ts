@@ -1,5 +1,4 @@
 export declare const whitespaceReg: RegExp;
-export declare const booleanReg: RegExp;
 export declare const commentReg: RegExp;
 export declare const stringReg: RegExp;
 export declare const stringGreedyReg: RegExp;

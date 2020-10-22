@@ -143,7 +143,7 @@ export default class Parser {
      */
     parseField: (exprInstr: TypeInstruction[]) => void;
     /**
-     * 解析对象字面量 { a: 1, b: 2, c: {}}
+     * 解析对象字面量 [1,2,3]
      */
     parseArrayLiteralDeclaration: (exprInstr: TypeInstruction[]) => void;
     /**

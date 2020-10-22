@@ -13,10 +13,7 @@
 
 [online demo](https://yzw7489757.github.io/ceval/);
 
-[中文文档](./README.md)
 零依赖，适合表达式运算; 
-
-No dependence, suitable for calculating expressions; 
 
 ``` ts
 ┌───────────────────────────────┐
@@ -29,13 +26,13 @@ No dependence, suitable for calculating expressions;
 └───────────────────────────────┘
 ```
 
-## usage
+## 使用
 
 ``` shell
 npm i ceval -S
 ```
 
-## introduce
+## 介绍
 
 ![alt=流程图](https://user-images.githubusercontent.com/28922129/83138027-c5541680-a11c-11ea-9ef4-aa2ddfa3884b.png)
 
@@ -44,35 +41,35 @@ npm i ceval -S
 const Parser = require('ceval')
 const analysis = new Parser({
    /**
-   * @desc Allow operators
+   * @desc 允许使用操作符，不建议改
    * @type {boolean}
    */
   endableOperators?: boolean = true;
 
   /**
-   * @desc number enable multi bit base
+   * @desc 十进制，默认启用多进制，支持二、八、十六进制
    * @type {boolean}
    */
   endableBitNumber?: boolean = true;
 
   /**
-   * @desc Allow access to members
+   * @desc 允许访问成员 例如 a.b a['b']
    * @type {boolean}
    */
   allowMemberAccess?: boolean = true;
 
   /**
-   * @desc Zoom in calculation allowed by default
-   * @see To process the results of arithmetic e.g 0.1+0.2 !== 0.3  || 1.0-0.9 !== 0.1
-   * Beyond the boundary（ta > Number.MAX_SAFE_INTEGER || ta < Number.MIN_SAFE_INTEGER）will not do processing, restore arithmetic
+   * @desc 默认情况下允许放大计算
+   * @see 以兼容处理算术结果 e.g 0.1+0.2 !== 0.3  || 1.0-0.9 !== 0.1
+   * 边界计算（n > Number.MAX_SAFE_INTEGER || n < Number.MIN_SAFE_INTEGER）不会做处理
    * @requires false 
    * @type {boolean}
    */
   allowHandleNumberPrecision?: boolean = true;
 
   /**
-   * @desc Operators are not allowed to be overridden by presetvalue by default
-   * @see In some cases, developers want to make more accurate calculations, such as BigInt, presetValue={'+':Function}
+   * @desc 默认情况下，不允许预设值覆盖运算符
+   * @see 在某些情况下，如果你希望进行更精确的计算，例如 BigInt、presetValue = {'+': (a, b) => (a+b)|0 }
    * @requires false
    * @type {boolean}
    * @memberof CevalOptions
@@ -80,7 +77,7 @@ const analysis = new Parser({
   allowOperatorsCovered?: boolean;
 
   /**
-   * @desc Trigger default return value when there is no return value or undefined
+   * @desc 当没有返回值或未定义时触发默认返回值
    * @type {any}
    */
   defaultReturnValues?: any = '' // done
@@ -88,33 +85,33 @@ const analysis = new Parser({
 ```
 
 ## API
-Parser Instance API
+Parser 实例API
 
 | api | desc | type |
 | --- | --- | --- |
-| operatorMap | Operators mapping table, which can be used in preset values overlay operation | Record<string, Function>|
-| getSupportOperationMap | The name of the operator method supported by the query can be overridden | (ops: string) => null | Function;| 
-| parseString | Parsing strings, exposing methods to the outside world | (expression: string, values?: Record<string, any>) => any;|
-| getCurrentValues | Get current datapool preset + external + internal declaration | () => Record<string, any> |
-| updatePresetValues| Update PresetValues |(values: Record<string, any>) => void|
-| updateOptions| Update Option | (Options: Partial<CevalOptions>) => void|
-| getOptions| get Options | () => Readonly<CevalOptions>|
+| operatorMap | 运算符映射表，可用于覆盖预置值操作 | Record<string, Function>|
+| getSupportOperationMap | 查询支持的运算符方法的名称,以支持operatorMap修改 | (ops: string) => null | Function;| 
+| parseString | 解析字符串 | (expression: string, values?: Record<string, any>) => any;|
+| getCurrentValues | 获取当前数据池预置+外部+内部声明变量 | () => Record<string, any> |
+| updatePresetValues| 更新预设值 |(values: Record<string, any>) => void|
+| updateOptions| 更新Options | (Options: Partial<CevalOptions>) => void|
+| getOptions| 获取Options | () => Readonly<CevalOptions>|
 
-about Options example [test case](https://github.com/yzw7489757/ceval/blob/master/test/options.test.js);
+关于Options示例 [test case](https://github.com/yzw7489757/ceval/blob/master/test/options.test.js);
 
-use [test262](https://github.com/tc39/test262/tree/master/test/language) test case;
+通过 [TC29/test262](https://github.com/tc39/test262/tree/master/test/language) 大部分测试用例;
 
-## rule
+## 规则
 
-There are two rules:
+只有两条规则：
 
-### Semicolon at the end
+### 结尾分号
 
 e.g.
 ``` ts
 parse('0b01 + 0b01;') // 2 
 ```
-Although it is not necessary in a simple expression operation, but it's a good habit.The parser can know exactly where the end is, Although it doesn't have too many restrictions.
+虽然在一个简单表达式操作中没必要那么麻烦，但确实是一个好习惯。Parser可以准确地知道结尾在哪里，没有什么限制。
 
 e.g.
 ```ts
@@ -128,10 +125,11 @@ parse(`
 `)
 ```
 
-### statement
-"var" statement does not affect "scope", it's inserted into values 
-"let" and "const" assigned to the current scope, warn if the current scope exists
+### 变量
+由var句柄申明的变量不影响 "scope"，会被放到全局数据池中。
+而 "let" 和 "const" 只会分配给当前作用域，如果当前作用域存在则发出警告。但仍然执行复制成功，后续将处理为无视该赋值行为，该变量仍然是赋值前的值。
 
+TODO: 这是个纠结的点，如果你有什么建议欢迎提出。
 ``` ts
 var Parser = require('ceval');
 
@@ -167,7 +165,7 @@ console.log(instance.getCurrentValues().d); // undefined
 console.log(instance.getCurrentValues().e); // undefined
 ```
 
-## basic
+## 基本
 
 ``` ts
 const { parse: parse } = analysis
@@ -217,7 +215,7 @@ parse(`
 ```
 More testcase [here](https://github.com/yzw7489757/ceval/blob/master/test/number.test.js)
 
-### calculation
+### 运算
 ``` ts
 const obj = `{ a: 1, b: 2, c: 3, d: { e: 4, f: 5}}`
 parse(`1+1`);                       // 2
@@ -296,12 +294,13 @@ var b = { b: true, c: undefined, d:{ e: a, f: '1', g: {}}};
 `) // Can be obtained from the instance. api: getCurrentValues
 ```
 ### this
+<!-- TODO: 考虑加入中，仍是个可选的功能。 -->
 
-### Operator
-Through `instance.operatorMap` Get all operators；
+### 操作符
+通过`instance.operatorMap`获取所有操作符；
 
 #### return 
-`return` interrupt this operation cycle; but it doesn't affect the outside world.
+`return` 中断当前操作轮询；但它不影响外部。
 ``` ts
 parse(`
 return 1;
@@ -319,15 +318,15 @@ parse(`
 `) // foo1
 ```
 
-### Other
+### 其他
 
-Please move to test case for more [examples](https://github.com/yzw7489757/ceval/tree/master/test)。
+请转到测试用例以了解更多信息 [examples](https://github.com/yzw7489757/ceval/tree/master/test)。
 
-### TODO: [Test39](https://github.com/tc39/test262/tree/master/test/language/types) Some test cases, 
+### TODO: [Test39](https://github.com/tc39/test262/tree/master/test/language/types) 一些测试用例.
 #### speed of progress
 2020-06-24 done: number, null, boolean
 
-In more function extension, welcome to participate or propose feature.
+更多功能扩展中，欢迎参与或提出feature。
 
 ## development
 
