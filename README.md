@@ -10,7 +10,7 @@
 
 [online demo](https://yzw7489757.github.io/ceval/);
 
-[中文文档](./README.md)
+[中文文档](./README-ZH.md)
 零依赖，适合表达式运算; 
 
 No dependence, suitable for calculating expressions; 
