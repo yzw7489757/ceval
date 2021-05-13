@@ -33,8 +33,6 @@ npm i ceval -S
 
 ## introduce
 
-![alt=流程图](https://user-images.githubusercontent.com/28922129/83138027-c5541680-a11c-11ea-9ef4-aa2ddfa3884b.png)
-
 ### Options
 ``` ts
 const Parser = require('ceval')
