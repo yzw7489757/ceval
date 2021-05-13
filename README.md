@@ -1,6 +1,5 @@
 ## Ceval
 
-![](https://img.shields.io/npm/dm/ceval?style=flat-square)
 <!-- ![](https://img.shields.io/npm/l/ceval) -->
 <!-- ![](https://img.shields.io/npm/v/ceval) -->
 ![](https://img.shields.io/travis/yzw7489757/ceval?label=Travis%20Build)
